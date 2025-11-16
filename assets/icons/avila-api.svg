@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="apiGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0891B2;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#06B6D4;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#apiGradient)" stroke="#0891B2" stroke-width="2"/>
+  <circle cx="30" cy="30" r="6" fill="#fff"/>
+  <circle cx="70" cy="30" r="6" fill="#fff"/>
+  <circle cx="30" cy="70" r="6" fill="#fff"/>
+  <circle cx="70" cy="70" r="6" fill="#fff"/>
+  <line x1="36" y1="30" x2="64" y2="30" stroke="#fff" stroke-width="2"/>
+  <line x1="36" y1="70" x2="64" y2="70" stroke="#fff" stroke-width="2"/>
+  <line x1="30" y1="36" x2="30" y2="64" stroke="#fff" stroke-width="2"/>
+  <line x1="70" y1="36" x2="70" y2="64" stroke="#fff" stroke-width="2"/>
+  <circle cx="50" cy="50" r="8" fill="#fff"/>
+</svg>

@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="bimGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#D97706;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <circle cx="50" cy="50" r="48" fill="url(#bimGradient)" stroke="#D97706" stroke-width="2"/>
+  <path d="M 30,60 L 30,40 L 50,25 L 70,40 L 70,60 Z"
+        fill="none" stroke="#fff" stroke-width="3" stroke-linejoin="round"/>
+  <rect x="40" y="48" width="8" height="12" fill="#fff"/>
+  <rect x="55" y="40" width="10" height="8" fill="#fff"/>
+</svg>

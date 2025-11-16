@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180">
+  <defs>
+    <linearGradient id="appleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a1a;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#4a4a4a;stop-opacity:1" />
+    </linearGradient>
+    <filter id="appleShadow">
+      <feDropShadow dx="0" dy="2" stdDeviation="3" flood-opacity="0.4"/>
+    </filter>
+  </defs>
+  <rect width="180" height="180" rx="40" fill="url(#appleGradient)" filter="url(#appleShadow)"/>
+  <text x="90" y="115" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="80" font-weight="700" fill="#fff" text-anchor="middle">Á</text>
+  <text x="90" y="145" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif"
+        font-size="20" font-weight="400" fill="#ccc" text-anchor="middle">AVILA</text>
+</svg>

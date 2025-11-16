@@ -1,21 +1,27 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- SEO Meta Tags -->
-    <meta name="description" content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho. Soluções empresariais de alta tecnologia.">
-    <meta name="keywords" content="IA, SaaS, Framework Empresarial, Azure, Machine Learning, Automação, Gestão Empresarial, BIM, API, Dashboard">
+    <meta name="description"
+        content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho. Soluções empresariais de alta tecnologia.">
+    <meta name="keywords"
+        content="IA, SaaS, Framework Empresarial, Azure, Machine Learning, Automação, Gestão Empresarial, BIM, API, Dashboard">
     <meta name="author" content="Ávila Inc">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://salmon-island-0f049391e.3.azurestaticapps.net">
 
     <!-- Favicons -->
-    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
-    <link rel="icon" type="image/svg+xml" sizes="16x16" href="assets/icons/favicon-16x16.svg">
-    <link rel="icon" type="image/svg+xml" sizes="32x32" href="assets/icons/favicon-32x32.svg">
-    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon.svg">
+    <link rel="icon" type="image/svg+xml" href="assets/icons/favicon-main.svg">
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="assets/icons/avila-logo.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="assets/icons/avila-logo.svg">
+    <link rel="apple-touch-icon" href="assets/icons/apple-touch-icon-avila.svg">
+    <!-- Additional Function Icons -->
+    <link rel="preload" as="image" href="assets/icons/avila-pulse.svg">
+    <link rel="preload" as="image" href="assets/icons/avila-ai.svg">
 
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -27,8 +33,10 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://salmon-island-0f049391e.3.azurestaticapps.net">
     <meta property="og:title" content="Ávila Inc - O Futuro da Gestão Empresarial">
-    <meta property="og:description" content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho.">
-    <meta property="og:image" content="https://salmon-island-0f049391e.3.azurestaticapps.net/assets/images/og-image.svg">
+    <meta property="og:description"
+        content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho.">
+    <meta property="og:image"
+        content="https://salmon-island-0f049391e.3.azurestaticapps.net/assets/images/og-image.svg">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta property="og:site_name" content="Ávila Inc">
@@ -38,8 +46,10 @@
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:url" content="https://salmon-island-0f049391e.3.azurestaticapps.net">
     <meta name="twitter:title" content="Ávila Inc - O Futuro da Gestão Empresarial">
-    <meta name="twitter:description" content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho.">
-    <meta name="twitter:image" content="https://salmon-island-0f049391e.3.azurestaticapps.net/assets/images/twitter-card.svg">
+    <meta name="twitter:description"
+        content="Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho.">
+    <meta name="twitter:image"
+        content="https://salmon-island-0f049391e.3.azurestaticapps.net/assets/images/twitter-card.svg">
     <meta name="twitter:creator" content="@avilaops">
     <meta name="twitter:site" content="@avilaops">
 
@@ -56,11 +66,11 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5YJE5L1BQG"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-      gtag('config', 'G-5YJE5L1BQG');
+        gtag('config', 'G-5YJE5L1BQG');
     </script>
 
     <title>Ávila Inc - O Futuro da Gestão Empresarial</title>
@@ -73,7 +83,8 @@
         }
 
         :root {
-            --primary: #0A2540; /* Azul escuro premium */
+            --primary: #0A2540;
+            /* Azul escuro premium */
             --primary-accent: #1E3A5F;
             --secondary: #4A5568;
             --bg-main: #F7FAFC;
@@ -143,7 +154,9 @@
         }
 
         @keyframes spin {
-            to { transform: rotate(360deg); }
+            to {
+                transform: rotate(360deg);
+            }
         }
 
         /* Navigation */
@@ -251,6 +264,51 @@
             background: var(--bg-main);
         }
 
+        .hero-video-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            opacity: 0.06;
+            z-index: 0;
+            animation: videoFadeIn 2s ease-in-out forwards, videoPulse 8s ease-in-out infinite 2s;
+        }
+
+        .hero-video-container video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(30%);
+        }
+
+        @keyframes videoFadeIn {
+            from {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.8);
+            }
+
+            to {
+                opacity: 0.06;
+                transform: translate(-50%, -50%) scale(1);
+            }
+        }
+
+        @keyframes videoPulse {
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.06;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.05);
+                opacity: 0.1;
+            }
+        }
+
         .hero-background {
             position: absolute;
             top: 0;
@@ -278,8 +336,15 @@
         }
 
         @keyframes float {
-            0%, 100% { transform: translate(0, 0); }
-            50% { transform: translate(50px, -50px); }
+
+            0%,
+            100% {
+                transform: translate(0, 0);
+            }
+
+            50% {
+                transform: translate(50px, -50px);
+            }
         }
 
         .hero-content {
@@ -310,7 +375,8 @@
             justify-content: center;
         }
 
-        .primary-btn, .secondary-btn {
+        .primary-btn,
+        .secondary-btn {
             padding: 1rem 2.5rem;
             border-radius: 8px;
             font-weight: 600;
@@ -480,6 +546,89 @@
             border: 1px solid var(--border);
         }
 
+        /* Pulse Video Section */
+        .pulse-section {
+            padding: 8rem 2rem;
+            background: var(--gradient);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pulse-container {
+            max-width: 1440px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .pulse-video-wrapper {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 25px 70px rgba(0, 0, 0, 0.5);
+            transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .pulse-video-wrapper:hover {
+            transform: translateY(-12px) scale(1.02);
+            box-shadow: 0 35px 90px rgba(0, 0, 0, 0.7);
+        }
+
+        .pulse-video-wrapper video {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .pulse-content {
+            color: white;
+        }
+
+        .pulse-content h2 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+            color: white;
+        }
+
+        .pulse-content p {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            opacity: 0.95;
+        }
+
+        .pulse-features {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .pulse-features li {
+            padding: 1.2rem 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            display: flex;
+            align-items: center;
+            gap: 1.2rem;
+            font-size: 1.05rem;
+        }
+
+        .pulse-features li::before {
+            content: '⚡';
+            font-size: 1.6rem;
+            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+        }
+
+        @media (max-width: 768px) {
+            .pulse-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+        }
+
         /* AI Section */
         .ai-section {
             padding: 8rem 2rem;
@@ -536,8 +685,17 @@
         }
 
         @keyframes pulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.4; }
-            50% { transform: translate(-50%, -50%) scale(1.08); opacity: 0.2; }
+
+            0%,
+            100% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 0.4;
+            }
+
+            50% {
+                transform: translate(-50%, -50%) scale(1.08);
+                opacity: 0.2;
+            }
         }
 
         .ai-content h2 {
@@ -730,7 +888,8 @@
                 grid-template-columns: 1fr;
             }
 
-            .products-grid, .testimonials-grid {
+            .products-grid,
+            .testimonials-grid {
                 grid-template-columns: 1fr;
             }
         }
@@ -748,6 +907,7 @@
         }
     </style>
 </head>
+
 <body>
     <!-- Loader -->
     <div class="loader">
@@ -772,13 +932,19 @@
 
     <!-- Hero Section -->
     <section class="hero" id="home">
+        <div class="hero-video-container">
+            <video autoplay loop muted playsinline>
+                <source src="assets/images/grok-video-0ee26d9a-860e-4835-93f9-238e4ce0f8be.mp4" type="video/mp4">
+            </video>
+        </div>
         <div class="hero-background">
             <div class="hero-particles" id="particles"></div>
         </div>
         <div class="hero-content">
             <h1 class="hero-title reveal">O Futuro da Gestão Empresarial Está Aqui</h1>
             <p class="hero-subtitle reveal">
-                Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui sozinho.
+                Framework empresarial auto-sustentável com 18 produtos SaaS e sistema de IA que aprende e evolui
+                sozinho.
             </p>
             <div class="hero-buttons reveal">
                 <a href="#produtos" class="primary-btn">Explorar Produtos</a>
@@ -819,7 +985,8 @@
                 <div class="product-icon"><i class="iconoir-building-3d"></i></div>
                 <h3 class="product-title">Shancrys BIM</h3>
                 <p class="product-description">
-                    Gestão completa de construção civil com BIM integration, planejamento 3D e controle de obra em tempo real.
+                    Gestão completa de construção civil com BIM integration, planejamento 3D e controle de obra em tempo
+                    real.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">React</span>
@@ -832,7 +999,8 @@
                 <div class="product-icon"><i class="iconoir-shield-check"></i></div>
                 <h3 class="product-title">Secreta</h3>
                 <p class="product-description">
-                    Sistema de segurança empresarial avançada com monorepo multi-apps, criptografia AES-256 e controle de acesso.
+                    Sistema de segurança empresarial avançada com monorepo multi-apps, criptografia AES-256 e controle
+                    de acesso.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">Next.js</span>
@@ -845,7 +1013,8 @@
                 <div class="product-icon"><i class="iconoir-server-connection"></i></div>
                 <h3 class="product-title">Barbara API</h3>
                 <p class="product-description">
-                    Backend .NET Core de alta performance com arquitetura escalável, microsserviços e APIs RESTful robustas.
+                    Backend .NET Core de alta performance com arquitetura escalável, microsserviços e APIs RESTful
+                    robustas.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">.NET 9</span>
@@ -858,7 +1027,8 @@
                 <div class="product-icon"><i class="iconoir-graph-up"></i></div>
                 <h3 class="product-title">On Dashboard</h3>
                 <p class="product-description">
-                    Dashboards operacionais inteligentes com visualizações em tempo real, métricas personalizadas e analytics.
+                    Dashboards operacionais inteligentes com visualizações em tempo real, métricas personalizadas e
+                    analytics.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">Python</span>
@@ -871,7 +1041,8 @@
                 <div class="product-icon"><i class="iconoir-brain"></i></div>
                 <h3 class="product-title">Archivus AI</h3>
                 <p class="product-description">
-                    Agente bibliotecário com IA que indexa, organiza e busca documentação automaticamente usando RAG e ML local.
+                    Agente bibliotecário com IA que indexa, organiza e busca documentação automaticamente usando RAG e
+                    ML local.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">AI</span>
@@ -884,7 +1055,8 @@
                 <div class="product-icon"><i class="iconoir-activity"></i></div>
                 <h3 class="product-title">Pulse Monitor</h3>
                 <p class="product-description">
-                    Monitoramento em tempo real de todos os sistemas, serviços e métricas com alertas inteligentes e previsões.
+                    Monitoramento em tempo real de todos os sistemas, serviços e métricas com alertas inteligentes e
+                    previsões.
                 </p>
                 <div class="product-tech">
                     <span class="tech-tag">React</span>
@@ -922,17 +1094,45 @@
         </div>
     </section>
 
+    <!-- Pulse Video Section -->
+    <section class="pulse-section">
+        <div class="pulse-container">
+            <div class="pulse-video-wrapper reveal">
+                <video autoplay loop muted playsinline>
+                    <source src="assets/images/grok-video-35c01943-9239-4cac-98a2-47fe9f0891cd.mp4" type="video/mp4">
+                </video>
+            </div>
+            <div class="pulse-content">
+                <h2 class="reveal">Ávila Pulse: Monitoramento Sofisticado</h2>
+                <p class="reveal">
+                    Acompanhe toda sua infraestrutura em tempo real com elegância e precisão.
+                    Visualizações dinâmicas, alertas inteligentes e insights automáticos.
+                </p>
+                <ul class="pulse-features">
+                    <li class="reveal">Dashboard em tempo real com WebSockets</li>
+                    <li class="reveal">Alertas preditivos com Machine Learning</li>
+                    <li class="reveal">Integração nativa com Azure e AWS</li>
+                    <li class="reveal">Animações 3D e visualizações imersivas</li>
+                    <li class="reveal">Otimização automática de recursos</li>
+                </ul>
+                <a href="#contato" class="primary-btn reveal">Experimentar Pulse</a>
+            </div>
+        </div>
+    </section>
+
     <!-- Testimonials Section (Nova) -->
     <section class="testimonials" id="depoimentos">
         <h2 class="section-title reveal">O Que Nossos Clientes Dizem</h2>
         <p class="section-subtitle reveal">Depoimentos reais de empresas transformadas</p>
         <div class="testimonials-grid">
             <div class="testimonial-card reveal">
-                <p class="testimonial-text">"A Ávila Inc revolucionou nossa gestão com IA que realmente evolui sozinha."</p>
+                <p class="testimonial-text">"A Ávila Inc revolucionou nossa gestão com IA que realmente evolui sozinha."
+                </p>
                 <p class="testimonial-author">- CEO, Empresa X</p>
             </div>
             <div class="testimonial-card reveal">
-                <p class="testimonial-text">"Os produtos SaaS são integrados perfeitamente, economizando horas de trabalho."</p>
+                <p class="testimonial-text">"Os produtos SaaS são integrados perfeitamente, economizando horas de
+                    trabalho."</p>
                 <p class="testimonial-author">- Diretor de TI, Empresa Y</p>
             </div>
             <div class="testimonial-card reveal">
@@ -1093,4 +1293,5 @@
         counters.forEach(counter => counterObserver.observe(counter));
     </script>
 </body>
+
 </html>
