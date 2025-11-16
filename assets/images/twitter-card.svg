@@ -21,31 +21,40 @@
             <feDropShadow dx="0" dy="3" stdDeviation="5" flood-opacity="0.35" />
         </filter>
     </defs>
-    
+
     <rect width="512" height="512" fill="#ffffff" />
 
     <!-- Logo metálico 3D centralizado -->
     <g transform="translate(156, 110)">
         <!-- Cloud -->
         <g filter="url(#shadowTwitter)">
-            <path d="M150 40C150 40 175 40 187 52C200 65 200 90 187 102C175 115 150 115 150 115H50C50 115 25 115 13 102C0 90 0 65 13 52C25 40 50 40 50 40C50 32 57 16 75 8C93 0 110 8 120 20C130 32 138 38 150 40Z" fill="url(#metalBlueTwitter)" stroke="url(#metalSilverTwitter)" stroke-width="2" />
+            <path
+                d="M150 40C150 40 175 40 187 52C200 65 200 90 187 102C175 115 150 115 150 115H50C50 115 25 115 13 102C0 90 0 65 13 52C25 40 50 40 50 40C50 32 57 16 75 8C93 0 110 8 120 20C130 32 138 38 150 40Z"
+                fill="url(#metalBlueTwitter)" stroke="url(#metalSilverTwitter)" stroke-width="2" />
         </g>
         <!-- Gear -->
         <g transform="translate(137, 90)" filter="url(#shadowTwitter)">
             <circle cx="0" cy="0" r="25" fill="url(#metalSilverTwitter)" />
-            <circle cx="0" cy="0" r="12" fill="#000000" stroke="url(#metalSilverTwitter)" stroke-width="1.2" />
-            <rect x="-6" y="-2" width="2.5" height="5" fill="#00FF88" rx="0.8" filter="url(#glowTwitter)" />
-            <rect x="-1.5" y="-5" width="2.5" height="7.5" fill="#00FF88" rx="0.8" filter="url(#glowTwitter)" />
-            <rect x="3" y="-4" width="2.5" height="6.5" fill="#00FF88" rx="0.8" filter="url(#glowTwitter)" />
+            <circle cx="0" cy="0" r="12" fill="#000000" stroke="url(#metalSilverTwitter)"
+                stroke-width="1.2" />
+            <rect x="-6" y="-2" width="2.5" height="5" fill="#00FF88" rx="0.8"
+                filter="url(#glowTwitter)" />
+            <rect x="-1.5" y="-5" width="2.5" height="7.5" fill="#00FF88" rx="0.8"
+                filter="url(#glowTwitter)" />
+            <rect x="3" y="-4" width="2.5" height="6.5" fill="#00FF88" rx="0.8"
+                filter="url(#glowTwitter)" />
         </g>
         <!-- Code brackets -->
         <g transform="translate(45, 85)" filter="url(#shadowTwitter)">
-            <path d="M -8,-12 L -17,-4 L -17,4 L -8,12" stroke="url(#metalSilverTwitter)" stroke-width="4" stroke-linecap="round" fill="none" />
-            <path d="M 8,-12 L 17,-4 L 17,4 L 8,12" stroke="url(#metalSilverTwitter)" stroke-width="4" stroke-linecap="round" fill="none" />
+            <path d="M -8,-12 L -17,-4 L -17,4 L -8,12" stroke="url(#metalSilverTwitter)"
+                stroke-width="4" stroke-linecap="round" fill="none" />
+            <path d="M 8,-12 L 17,-4 L 17,4 L 8,12" stroke="url(#metalSilverTwitter)"
+                stroke-width="4" stroke-linecap="round" fill="none" />
         </g>
         <!-- Play arrow -->
         <g transform="translate(100, 85)">
-            <path d="M 0,-10 L 12,0 L 0,10 Z" fill="url(#metalBlueTwitter)" filter="url(#glowTwitter)" />
+            <path d="M 0,-10 L 12,0 L 0,10 Z" fill="url(#metalBlueTwitter)"
+                filter="url(#glowTwitter)" />
         </g>
     </g>
 

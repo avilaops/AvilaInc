@@ -24,7 +24,9 @@
     <rect width="180" height="180" rx="40" fill="#000000" />
     <!-- Cloud -->
     <g filter="url(#shadowApple)">
-        <path d="M133 70C133 70 147 70 154 77C161 84 161 98 154 105C147 112 133 112 133 112H56C56 112 42 112 35 105C28 98 28 84 35 77C42 70 56 70 56 70C56 63 63 49 77 42C91 35 105 42 112 49C119 56 126 63 133 70Z" fill="url(#metalBlueApple)" stroke="url(#metalSilverApple)" stroke-width="2" />
+        <path
+            d="M133 70C133 70 147 70 154 77C161 84 161 98 154 105C147 112 133 112 133 112H56C56 112 42 112 35 105C28 98 28 84 35 77C42 70 56 70 56 70C56 63 63 49 77 42C91 35 105 42 112 49C119 56 126 63 133 70Z"
+            fill="url(#metalBlueApple)" stroke="url(#metalSilverApple)" stroke-width="2" />
     </g>
     <!-- Gear -->
     <g transform="translate(119, 98)" filter="url(#shadowApple)">
@@ -36,8 +38,10 @@
     </g>
     <!-- Code brackets -->
     <g transform="translate(53, 91)" filter="url(#shadowApple)">
-        <path d="M -7,-11 L -14,-4 L -14,4 L -7,11" stroke="url(#metalSilverApple)" stroke-width="3" stroke-linecap="round" fill="none" />
-        <path d="M 7,-11 L 14,-4 L 14,4 L 7,11" stroke="url(#metalSilverApple)" stroke-width="3" stroke-linecap="round" fill="none" />
+        <path d="M -7,-11 L -14,-4 L -14,4 L -7,11" stroke="url(#metalSilverApple)" stroke-width="3"
+            stroke-linecap="round" fill="none" />
+        <path d="M 7,-11 L 14,-4 L 14,4 L 7,11" stroke="url(#metalSilverApple)" stroke-width="3"
+            stroke-linecap="round" fill="none" />
     </g>
     <!-- Play arrow -->
     <g transform="translate(91, 91)">

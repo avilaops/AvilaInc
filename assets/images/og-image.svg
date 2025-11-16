@@ -21,7 +21,7 @@
             <feDropShadow dx="0" dy="4" stdDeviation="6" flood-opacity="0.3" />
         </filter>
     </defs>
-    
+
     <!-- Fundo branco elegante -->
     <rect width="1200" height="630" fill="#ffffff" />
 
@@ -29,20 +29,25 @@
     <g transform="translate(120, 180)">
         <!-- Cloud -->
         <g filter="url(#shadowOG)">
-            <path d="M180 50C180 50 210 50 225 65C240 80 240 110 225 125C210 140 180 140 180 140H60C60 140 30 140 15 125C0 110 0 80 15 65C30 50 60 50 60 50C60 40 70 20 90 10C110 0 130 10 145 25C160 40 165 45 180 50Z" fill="url(#metalBlueOG)" stroke="url(#metalSilverOG)" stroke-width="2" />
+            <path
+                d="M180 50C180 50 210 50 225 65C240 80 240 110 225 125C210 140 180 140 180 140H60C60 140 30 140 15 125C0 110 0 80 15 65C30 50 60 50 60 50C60 40 70 20 90 10C110 0 130 10 145 25C160 40 165 45 180 50Z"
+                fill="url(#metalBlueOG)" stroke="url(#metalSilverOG)" stroke-width="2" />
         </g>
         <!-- Gear -->
         <g transform="translate(165, 110)" filter="url(#shadowOG)">
             <circle cx="0" cy="0" r="30" fill="url(#metalSilverOG)" />
-            <circle cx="0" cy="0" r="15" fill="#000000" stroke="url(#metalSilverOG)" stroke-width="1.5" />
+            <circle cx="0" cy="0" r="15" fill="#000000" stroke="url(#metalSilverOG)"
+                stroke-width="1.5" />
             <rect x="-7" y="-3" width="3" height="6" fill="#00FF88" rx="1" filter="url(#glowOG)" />
             <rect x="-2" y="-6" width="3" height="9" fill="#00FF88" rx="1" filter="url(#glowOG)" />
             <rect x="3" y="-5" width="3" height="8" fill="#00FF88" rx="1" filter="url(#glowOG)" />
         </g>
         <!-- Code brackets -->
         <g transform="translate(55, 105)" filter="url(#shadowOG)">
-            <path d="M -10,-15 L -20,-5 L -20,5 L -10,15" stroke="url(#metalSilverOG)" stroke-width="5" stroke-linecap="round" fill="none" />
-            <path d="M 10,-15 L 20,-5 L 20,5 L 10,15" stroke="url(#metalSilverOG)" stroke-width="5" stroke-linecap="round" fill="none" />
+            <path d="M -10,-15 L -20,-5 L -20,5 L -10,15" stroke="url(#metalSilverOG)"
+                stroke-width="5" stroke-linecap="round" fill="none" />
+            <path d="M 10,-15 L 20,-5 L 20,5 L 10,15" stroke="url(#metalSilverOG)" stroke-width="5"
+                stroke-linecap="round" fill="none" />
         </g>
     </g>
 

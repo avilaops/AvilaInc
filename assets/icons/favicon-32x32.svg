@@ -11,7 +11,9 @@
     </defs>
     <rect width="32" height="32" fill="#000000" />
     <!-- Cloud -->
-    <path d="M24 12C24 12 26 12 27 13C28 14 28 16 27 17C26 18 24 18 24 18H10C10 18 8 18 7 17C6 16 6 14 7 13C8 12 10 12 10 12C10 11 11 9 13 8C15 7 17 8 18 9C19 10 21 11 24 12Z" fill="url(#metalBlue32)" filter="url(#shadow32)" />
+    <path
+        d="M24 12C24 12 26 12 27 13C28 14 28 16 27 17C26 18 24 18 24 18H10C10 18 8 18 7 17C6 16 6 14 7 13C8 12 10 12 10 12C10 11 11 9 13 8C15 7 17 8 18 9C19 10 21 11 24 12Z"
+        fill="url(#metalBlue32)" filter="url(#shadow32)" />
     <!-- Gear -->
     <g transform="translate(21, 17)" filter="url(#shadow32)">
         <circle cx="0" cy="0" r="4" fill="url(#metalBlue32)" />
@@ -20,5 +22,6 @@
         <rect x="0" y="-1" width="0.5" height="1.5" fill="#00FF88" />
     </g>
     <!-- Code bracket -->
-    <path d="M11 15L9 16L11 17" stroke="#6B9EFF" stroke-width="1.5" stroke-linecap="round" fill="none" />
+    <path d="M11 15L9 16L11 17" stroke="#6B9EFF" stroke-width="1.5" stroke-linecap="round"
+        fill="none" />
 </svg>
