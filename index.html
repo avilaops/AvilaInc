@@ -1266,6 +1266,36 @@
                 counterObserver.observe(counter);
             }
         });
+
+        // Force video playback on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const videos = document.querySelectorAll('video');
+            videos.forEach(video => {
+                // Force play on load
+                video.play().catch(error => {
+                    console.log('Autoplay prevented:', error);
+                    // Try to play on user interaction
+                    document.addEventListener('click', function playOnInteraction() {
+                        video.play();
+                        document.removeEventListener('click', playOnInteraction);
+                    }, { once: true });
+                });
+                
+                // Ensure video loops properly
+                video.addEventListener('ended', function() {
+                    video.currentTime = 0;
+                    video.play();
+                });
+            });
+        });
+
+        // Additional check for hero video
+        window.addEventListener('load', function() {
+            const heroVideo = document.querySelector('.hero-video-container video');
+            if (heroVideo && heroVideo.paused) {
+                heroVideo.play().catch(e => console.log('Hero video autoplay prevented:', e));
+            }
+        });
     </script>
 </body>
 
