@@ -53,11 +53,11 @@ function apiRequest(path, method = 'GET', data = null) {
         });
 
         req.on('error', reject);
-        
+
         if (data) {
             req.write(JSON.stringify(data));
         }
-        
+
         req.end();
     });
 }
