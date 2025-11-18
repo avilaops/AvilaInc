@@ -61,11 +61,11 @@ function apiRequest(path, method = 'GET', data = null) {
         });
 
         req.on('error', reject);
-        
+
         if (data) {
             req.write(JSON.stringify(data));
         }
-        
+
         req.end();
     });
 }
@@ -73,20 +73,20 @@ function apiRequest(path, method = 'GET', data = null) {
 async function main() {
     try {
         console.log('\n📋 PASSO 1: Listar registros atuais...\n');
-        
+
         const dnsRecords = await apiRequest(`/zones/${ZONE_ID}/dns_records`);
-        
+
         if (!dnsRecords.success) {
             console.error('❌ Erro ao listar registros:', dnsRecords.errors);
             return;
         }
 
         // Encontrar registros A e CNAME do avila.inc
-        const rootARecords = dnsRecords.result.filter(r => 
+        const rootARecords = dnsRecords.result.filter(r =>
             r.type === 'A' && r.name === 'avila.inc'
         );
-        
-        const wwwCNAME = dnsRecords.result.find(r => 
+
+        const wwwCNAME = dnsRecords.result.find(r =>
             r.type === 'CNAME' && r.name === 'www.avila.inc'
         );
 
@@ -99,7 +99,7 @@ async function main() {
         }
 
         console.log('\n🗑️  PASSO 2: Deletar registros antigos (Azure)...\n');
-        
+
         // Deletar registros A antigos
         for (const record of rootARecords) {
             console.log(`   Deletando A ${record.name} → ${record.content}...`);
