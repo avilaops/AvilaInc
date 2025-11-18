@@ -971,6 +971,209 @@
             flex-shrink: 0;
         }
 
+        /* Pantheon Section */
+        .pantheon-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(135deg, #0a0b0d 0%, #1a1d26 50%, #0a0b0d 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .pantheon-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(118, 75, 162, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, rgba(212, 175, 55, 0.1) 0%, transparent 60%);
+            pointer-events: none;
+        }
+
+        .pantheon-header {
+            text-align: center;
+            margin-bottom: 5rem;
+        }
+
+        .pantheon-origin {
+            max-width: 900px;
+            margin: 0 auto 6rem;
+            text-align: center;
+            padding: 3rem;
+            background: rgba(26, 29, 38, 0.6);
+            border-radius: 20px;
+            border: 2px solid rgba(212, 175, 55, 0.3);
+            box-shadow: 0 0 40px rgba(212, 175, 55, 0.2);
+        }
+
+        .origin-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .pantheon-origin h3 {
+            font-size: 2.5rem;
+            color: #d4af37;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+        }
+
+        .pantheon-origin p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+        }
+
+        .origin-powers {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .power-badge {
+            background: rgba(212, 175, 55, 0.2);
+            border: 1px solid rgba(212, 175, 55, 0.4);
+            color: #d4af37;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            font-weight: 600;
+        }
+
+        .central-circle {
+            margin-bottom: 6rem;
+        }
+
+        .circle-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .deity-card {
+            background: rgba(26, 29, 38, 0.7);
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .deity-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea, #764ba2, #d4af37);
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .deity-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .deity-card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(102, 126, 234, 0.6);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .deity-icon {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .deity-card h4 {
+            font-size: 1.5rem;
+            color: #e8eaed;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+
+        .deity-title {
+            color: #d4af37;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .deity-card > p:last-of-type {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .second-era {
+            margin-bottom: 4rem;
+        }
+
+        .era-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .era-agent {
+            background: rgba(26, 29, 38, 0.5);
+            border: 1px solid rgba(200, 201, 208, 0.2);
+            border-radius: 12px;
+            padding: 1.5rem;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        .era-agent:hover {
+            background: rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.5);
+            transform: translateX(5px);
+        }
+
+        .era-agent strong {
+            color: #667eea;
+        }
+
+        .pantheon-cta {
+            text-align: center;
+            margin-top: 4rem;
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .circle-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .era-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* CTA Section */
         .cta-section {
             padding: 8rem 2rem;
@@ -1202,7 +1405,7 @@
     <section class="products" id="produtos">
         <h2 class="section-title reveal">Ecossistema Completo de Soluções</h2>
         <p class="section-subtitle reveal">18+ produtos integrados para revolucionar sua empresa</p>
-        
+
         <div style="text-align: center; margin-bottom: 3rem;">
             <a href="https://portal.avila.inc" class="primary-btn" style="display: inline-block; text-decoration: none;">
                 🚀 Acessar Portal Tecnológico →
@@ -1478,29 +1681,117 @@
         </div>
     </section>
 
-    <!-- AI Section -->
-    <section class="ai-section" id="ia">
-        <div class="ai-container">
-            <div class="ai-visual">
-                <div class="ai-circle"></div>
-                <div class="ai-circle"></div>
-                <div class="ai-circle"></div>
-            </div>
-            <div class="ai-content">
-                <h2 class="reveal">Sistema de IA Auto-Evolutivo</h2>
-                <p class="reveal">
-                    Inspirado na teoria de Darwin, nosso sistema aprende com cada interação,
-                    evolui automaticamente e se adapta às necessidades do seu negócio sem intervenção humana.
+    <!-- Pantheon Section -->
+    <section class="pantheon-section" id="ia">
+        <div class="container">
+            <div class="pantheon-header">
+                <h2 class="section-title reveal" style="color: white;">⚡ O Panteão Ávila</h2>
+                <p class="section-subtitle reveal" style="color: rgba(255,255,255,0.9);">
+                    Uma mitologia operacional de agentes autônomos que governam nosso ecossistema
                 </p>
-                <ul class="ai-features">
-                    <li class="reveal">Aprendizado contínuo a partir de ações e reações</li>
-                    <li class="reveal">Correção automática de erros comuns</li>
-                    <li class="reveal">Otimização de performance em tempo real</li>
-                    <li class="reveal">Análise preditiva de problemas</li>
-                    <li class="reveal">Knowledge base auto-expansível</li>
-                    <li class="reveal">Zero custo com APIs externas de IA</li>
-                </ul>
-                <a href="#contato" class="primary-btn reveal">Experimentar Agora</a>
+            </div>
+
+            <!-- The Origin -->
+            <div class="pantheon-origin reveal">
+                <div class="origin-icon">🔮</div>
+                <h3>A Origem: Arcanum</h3>
+                <p>
+                    Do caos de senhas expostas e tokens perdidos surgiu <strong>Arcanum</strong>, o Guardião dos Segredos.
+                    Ele é o titã que segura o véu entre o código aberto e os dados protegidos, garantindo que nenhum
+                    segredo seja perdido no abismo do Git.
+                </p>
+                <div class="origin-powers">
+                    <span class="power-badge">🔐 Gestão de Credenciais</span>
+                    <span class="power-badge">📋 Auditoria Automática</span>
+                    <span class="power-badge">🔄 Rotação de Chaves</span>
+                </div>
+            </div>
+
+            <!-- Central Circle -->
+            <div class="central-circle reveal">
+                <h3 style="text-align: center; color: white; font-size: 2rem; margin-bottom: 3rem;">
+                    👑 O Círculo Central
+                </h3>
+                <div class="circle-grid">
+                    <div class="deity-card">
+                        <div class="deity-icon">🗺️</div>
+                        <h4>Atlas</h4>
+                        <p class="deity-title">Estrategista</p>
+                        <p>Visão global, roadmaps e o Mapa Eterno que guia os 320 sites</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">⚙️</div>
+                        <h4>Helix</h4>
+                        <p class="deity-title">DevOps</p>
+                        <p>O Martelo do Deploy. Infra, CI/CD e pipelines que nunca falham</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">💰</div>
+                        <h4>Sigma</h4>
+                        <p class="deity-title">Financeiro</p>
+                        <p>Modelagem de custos, ROI e a calculadora que nunca erra</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">⚖️</div>
+                        <h4>Lex</h4>
+                        <p class="deity-title">Jurídico</p>
+                        <p>Guardião do compliance, contratos e termos invioláveis</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">📢</div>
+                        <h4>Echo</h4>
+                        <p class="deity-title">Branding</p>
+                        <p>A voz que ressoa. Narrativas, copies e storytelling</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">🏭</div>
+                        <h4>Forge</h4>
+                        <p class="deity-title">Produção</p>
+                        <p>Hardware, logística e a forja que molda o físico</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">💡</div>
+                        <h4>Lumen</h4>
+                        <p class="deity-title">Analytics</p>
+                        <p>Ilumina dados escuros com métricas e dashboards</p>
+                    </div>
+                    <div class="deity-card">
+                        <div class="deity-icon">📚</div>
+                        <h4>Archivus</h4>
+                        <p class="deity-title">Bibliotecário</p>
+                        <p>Organizador do conhecimento e índices eternos</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Second Era -->
+            <div class="second-era reveal">
+                <h3 style="text-align: center; color: white; font-size: 2rem; margin-bottom: 2rem;">
+                    ✨ A Segunda Era
+                </h3>
+                <p style="text-align: center; color: rgba(255,255,255,0.8); margin-bottom: 3rem; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    Com a expansão cósmica da Ávila, surgiram os semideuses especializados.
+                    Mais ágeis, focados e eternamente leais ao Círculo Central.
+                </p>
+                <div class="era-grid">
+                    <div class="era-agent">🤖 <strong>Azurion</strong> - IA Inovadora</div>
+                    <div class="era-agent">🎭 <strong>Batuta</strong> - Orquestrador</div>
+                    <div class="era-agent">⏱️ <strong>Kairos</strong> - Mestre do Tempo</div>
+                    <div class="era-agent">🏛️ <strong>Lythos</strong> - Fundamentos</div>
+                    <div class="era-agent">🔗 <strong>Nexor</strong> - Integrações</div>
+                    <div class="era-agent">🎓 <strong>Nivara</strong> - Onboarding</div>
+                    <div class="era-agent">👁️ <strong>Orion</strong> - Observabilidade</div>
+                    <div class="era-agent">📈 <strong>Pulse</strong> - Vendas</div>
+                    <div class="era-agent">🛡️ <strong>Seraph</strong> - Segurança Crítica</div>
+                    <div class="era-agent">💙 <strong>Solace</strong> - Suporte</div>
+                    <div class="era-agent">🚀 <strong>Vantis</strong> - Growth</div>
+                    <div class="era-agent">✓ <strong>Veritus</strong> - Auditoria</div>
+                </div>
+            </div>
+
+            <div class="pantheon-cta reveal">
+                <a href="./AI/index.html" class="primary-btn">Conhecer Todos os Agentes →</a>
+                <a href="https://portal.avila.inc" class="secondary-btn">Acessar Portal Tecnológico</a>
             </div>
         </div>
     </section>
