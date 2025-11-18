@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- SEO Meta Tags -->
+    <meta name="description"
+        content="Agentes de IA e sistemas inteligentes da Ávila Inc. Conheça nossos agentes autônomos, RAG, e soluções de IA auto-evolutiva.">
+    <meta name="keywords"
+        content="IA, Agentes IA, RAG, Machine Learning, Auto-evolutivo, AI Agents, Automação, Ávila Inc">
+    <meta name="author" content="Ávila Inc">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avila.inc/AI">
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/svg+xml" href="../assets/icons/favicon-main.svg">
+    <link rel="icon" type="image/svg+xml" sizes="16x16" href="../assets/icons/avila-logo.svg">
+    <link rel="icon" type="image/svg+xml" sizes="32x32" href="../assets/icons/avila-logo.svg">
+    <link rel="apple-touch-icon" href="../assets/icons/apple-touch-icon-avila.svg">
+
+    <!-- Iconoir Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css">
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://avila.inc/AI">
+    <meta property="og:title" content="Ávila Inc - Agentes de IA e Sistemas Inteligentes">
+    <meta property="og:description"
+        content="Conheça nossos agentes de IA autônomos, sistemas RAG e soluções de inteligência artificial auto-evolutiva.">
+    <meta property="og:image" content="https://avila.inc/assets/images/og-image.svg">
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:url" content="https://avila.inc/AI">
+    <meta name="twitter:title" content="Ávila Inc - Agentes de IA">
+    <meta name="twitter:description"
+        content="Agentes de IA autônomos e sistemas inteligentes da Ávila Inc">
+    <meta name="twitter:image" content="https://avila.inc/assets/images/twitter-card.svg">
+
+    <meta name="theme-color" content="#1a1a1a">
+
+    <title>Ávila Inc - Agentes de IA e Sistemas Inteligentes</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #e8eaed;
+            --primary-accent: #c9ccd1;
+            --secondary: #8e9196;
+            --bg-main: #0a0b0d;
+            --bg-secondary: #12141a;
+            --bg-accent: #1a1d26;
+            --text: #e8eaed;
+            --text-secondary: #9aa0a6;
+            --text-muted: #5f6368;
+            --border: #2d3139;
+            --accent-subtle: #ffffff;
+            --gold-accent: #d4af37;
+            --silver-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+
+        html {
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg-main);
+            color: var(--text);
+            line-height: 1.7;
+            overflow-x: hidden;
+            font-weight: 400;
+            letter-spacing: -0.01em;
+        }
+
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0b0d 0%, #1a1d26 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader.hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(200, 201, 208, 0.2);
+            border-top: 3px solid var(--gold-accent);
+            border-radius: 50%;
+            animation: spin 1s ease-in-out infinite;
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(10, 11, 13, 0.85);
+            backdrop-filter: blur(20px) saturate(180%);
+            z-index: 1000;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 1px solid rgba(200, 201, 208, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.2rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary);
+            letter-spacing: -0.02em;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: 2rem;
+            background: radial-gradient(ellipse at top, #1a1d26 0%, #0a0b0d 100%);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background:
+                radial-gradient(circle at 20% 50%, rgba(102, 126, 234, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(118, 75, 162, 0.15) 0%, transparent 50%);
+            z-index: 1;
+        }
+
+        .hero-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .particle {
+            position: absolute;
+            width: 3px;
+            height: 3px;
+            background: radial-gradient(circle, #d4af37 0%, #667eea 100%);
+            border-radius: 50%;
+            animation: float 30s infinite ease-in-out;
+            opacity: 0.3;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(100px, -100px);
+            }
+            50% {
+                transform: translate(-100px, -50px);
+            }
+            75% {
+                transform: translate(50px, 100px);
+            }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            text-align: center;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: clamp(2.5rem, 6vw, 4rem);
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            line-height: 1.15;
+            background: linear-gradient(135deg, #e8eaed 0%, #9aa0a6 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.03em;
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+            font-weight: 400;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.7;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Agents Grid */
+        .agents-section {
+            padding: 8rem 2rem;
+            background: linear-gradient(180deg, #0a0b0d 0%, #12141a 50%, #0a0b0d 100%);
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e8eaed 0%, #9aa0a6 50%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            letter-spacing: -0.02em;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            margin-bottom: 4rem;
+            font-weight: 400;
+        }
+
+        .agents-grid {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .agent-card {
+            background: linear-gradient(135deg, rgba(26, 29, 38, 0.8) 0%, rgba(18, 20, 26, 0.9) 100%);
+            border-radius: 12px;
+            padding: 2.5rem;
+            border: 1px solid rgba(200, 201, 208, 0.15);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .agent-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 50%, #d4af37 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .agent-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .agent-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+            border-color: rgba(102, 126, 234, 0.5);
+        }
+
+        .agent-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 80px;
+            height: 80px;
+            border-radius: 12px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 4px 16px rgba(102, 126, 234, 0.4);
+        }
+
+        .agent-icon i {
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .agent-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #e8eaed 0%, #d4af37 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .agent-description {
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
+        }
+
+        .agent-features {
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .agent-features li {
+            padding: 0.5rem 0;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .agent-features li::before {
+            content: '✓';
+            color: var(--gold-accent);
+            font-weight: bold;
+        }
+
+        .tech-tag {
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.1) 0%, rgba(118, 75, 162, 0.1) 100%);
+            color: var(--text-secondary);
+            padding: 0.4rem 1rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            border: 1px solid rgba(102, 126, 234, 0.2);
+            display: inline-block;
+            margin: 0.25rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--bg-secondary);
+            padding: 2rem;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            color: var(--text-secondary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        @media (max-width: 768px) {
+            .agents-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 80px;
+                left: -100%;
+                width: 100%;
+                height: calc(100vh - 80px);
+                background: var(--bg-main);
+                flex-direction: column;
+                padding: 2rem;
+                transition: left 0.3s;
+            }
+
+            .nav-links.active {
+                left: 0;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+        }
+
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.6s ease;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div class="loader">
+        <div class="loader-spinner"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav id="navbar">
+        <div class="nav-container">
+            <a href="../index.html" class="logo">ÁVILA INC</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="../index.html">Início</a></li>
+                <li><a href="../index.html#produtos">Produtos</a></li>
+                <li><a href="index.html">Agentes IA</a></li>
+                <li><a href="../index.html#contato">Contato</a></li>
+            </ul>
+            <button class="mobile-menu-btn" id="mobileMenuBtn">☰</button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-particles" id="particles"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">Agentes de IA e Sistemas Inteligentes</h1>
+            <p class="hero-subtitle">
+                Conheça nossos agentes autônomos, sistemas RAG e soluções de inteligência artificial auto-evolutiva
+            </p>
+        </div>
+    </section>
+
+    <!-- Agents Section -->
+    <section class="agents-section">
+        <h2 class="section-title reveal">Nossos Agentes Inteligentes</h2>
+        <p class="section-subtitle reveal">IA auto-evolutiva que aprende, adapta e evolui continuamente</p>
+
+        <div class="agents-grid">
+            <!-- Archivus Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-book"></i></div>
+                <h3 class="agent-title">Archivus AI</h3>
+                <p class="agent-description">
+                    Agente bibliotecário que indexa, organiza e busca documentação automaticamente usando RAG e embeddings locais.
+                </p>
+                <ul class="agent-features">
+                    <li>Indexação automática de documentos</li>
+                    <li>Busca semântica com RAG</li>
+                    <li>FAISS para embeddings locais</li>
+                    <li>Integração com múltiplas fontes</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">Python</span>
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">FAISS</span>
+                    <span class="tech-tag">LangChain</span>
+                </div>
+            </div>
+
+            <!-- Coding Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-code"></i></div>
+                <h3 class="agent-title">Coding Agent</h3>
+                <p class="agent-description">
+                    Agente de desenvolvimento que escreve, refatora e otimiza código automaticamente com context awareness.
+                </p>
+                <ul class="agent-features">
+                    <li>Geração de código inteligente</li>
+                    <li>Refatoração automática</li>
+                    <li>Code review e otimizações</li>
+                    <li>Multi-linguagem support</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">AI</span>
+                    <span class="tech-tag">AST</span>
+                    <span class="tech-tag">LLM</span>
+                    <span class="tech-tag">Multi-lang</span>
+                </div>
+            </div>
+
+            <!-- Monitor Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-activity"></i></div>
+                <h3 class="agent-title">Monitor Agent</h3>
+                <p class="agent-description">
+                    Agente de monitoramento que detecta anomalias, prevê problemas e otimiza performance em tempo real.
+                </p>
+                <ul class="agent-features">
+                    <li>Detecção de anomalias</li>
+                    <li>Análise preditiva</li>
+                    <li>Alertas inteligentes</li>
+                    <li>Auto-healing systems</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">ML</span>
+                    <span class="tech-tag">Monitoring</span>
+                    <span class="tech-tag">Real-time</span>
+                    <span class="tech-tag">Predictive</span>
+                </div>
+            </div>
+
+            <!-- Security Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-shield-check"></i></div>
+                <h3 class="agent-title">Security Agent</h3>
+                <p class="agent-description">
+                    Agente de segurança que monitora vulnerabilidades, detecta ataques e responde automaticamente a ameaças.
+                </p>
+                <ul class="agent-features">
+                    <li>Detecção de vulnerabilidades</li>
+                    <li>Threat intelligence</li>
+                    <li>Auto-response a ataques</li>
+                    <li>Security compliance</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">Security</span>
+                    <span class="tech-tag">AI Detection</span>
+                    <span class="tech-tag">Auto-response</span>
+                    <span class="tech-tag">Compliance</span>
+                </div>
+            </div>
+
+            <!-- Data Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-database"></i></div>
+                <h3 class="agent-title">Data Agent</h3>
+                <p class="agent-description">
+                    Agente de dados que analisa, processa e gera insights automaticamente com ML e analytics avançados.
+                </p>
+                <ul class="agent-features">
+                    <li>ETL automático</li>
+                    <li>Analytics em tempo real</li>
+                    <li>Insights preditivos</li>
+                    <li>Data quality checks</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">ML</span>
+                    <span class="tech-tag">ETL</span>
+                    <span class="tech-tag">Analytics</span>
+                    <span class="tech-tag">BigData</span>
+                </div>
+            </div>
+
+            <!-- Support Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-chat-bubble"></i></div>
+                <h3 class="agent-title">Support Agent</h3>
+                <p class="agent-description">
+                    Agente de suporte que responde perguntas, resolve problemas e aprende com cada interação do usuário.
+                </p>
+                <ul class="agent-features">
+                    <li>Chatbot inteligente</li>
+                    <li>Resolução automática</li>
+                    <li>Aprendizado contínuo</li>
+                    <li>Multi-channel support</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">NLP</span>
+                    <span class="tech-tag">Chatbot</span>
+                    <span class="tech-tag">RAG</span>
+                    <span class="tech-tag">Multi-channel</span>
+                </div>
+            </div>
+
+            <!-- Deployment Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-cloud-upload"></i></div>
+                <h3 class="agent-title">Deployment Agent</h3>
+                <p class="agent-description">
+                    Agente de deployment que automatiza CI/CD, gerencia infraestrutura e otimiza releases.
+                </p>
+                <ul class="agent-features">
+                    <li>CI/CD automático</li>
+                    <li>Infrastructure as Code</li>
+                    <li>Blue-green deployments</li>
+                    <li>Rollback inteligente</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">CI/CD</span>
+                    <span class="tech-tag">IaC</span>
+                    <span class="tech-tag">Azure</span>
+                    <span class="tech-tag">DevOps</span>
+                </div>
+            </div>
+
+            <!-- Testing Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-test-tube"></i></div>
+                <h3 class="agent-title">Testing Agent</h3>
+                <p class="agent-description">
+                    Agente de testes que gera casos de teste, executa QA automatizado e valida qualidade do código.
+                </p>
+                <ul class="agent-features">
+                    <li>Geração de testes automática</li>
+                    <li>Cobertura inteligente</li>
+                    <li>Mutation testing</li>
+                    <li>Performance testing</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">Testing</span>
+                    <span class="tech-tag">QA</span>
+                    <span class="tech-tag">Automation</span>
+                    <span class="tech-tag">Coverage</span>
+                </div>
+            </div>
+
+            <!-- Orchestrator Agent -->
+            <div class="agent-card reveal">
+                <div class="agent-icon"><i class="iconoir-brain"></i></div>
+                <h3 class="agent-title">Orchestrator Agent</h3>
+                <p class="agent-description">
+                    Meta-agente que coordena todos os outros agentes, otimiza workflows e evolui o sistema inteiro.
+                </p>
+                <ul class="agent-features">
+                    <li>Coordenação multi-agente</li>
+                    <li>Workflow optimization</li>
+                    <li>Sistema auto-evolutivo</li>
+                    <li>Meta-learning</li>
+                </ul>
+                <div>
+                    <span class="tech-tag">Meta-AI</span>
+                    <span class="tech-tag">Orchestration</span>
+                    <span class="tech-tag">Evolution</span>
+                    <span class="tech-tag">Coordination</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 Ávila Inc. Todos os direitos reservados. | Desenvolvido com ❤️ e IA</p>
+    </footer>
+
+    <script>
+        // Loader
+        window.addEventListener('load', () => {
+            document.querySelector('.loader').classList.add('hidden');
+        });
+
+        // Particles
+        const particlesContainer = document.getElementById('particles');
+        for (let i = 0; i < 50; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            particle.style.left = Math.random() * 100 + '%';
+            particle.style.top = Math.random() * 100 + '%';
+            particle.style.animationDelay = Math.random() * 20 + 's';
+            particlesContainer.appendChild(particle);
+        }
+
+        // Mobile menu
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const navLinks = document.getElementById('navLinks');
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Scroll reveal
+        const reveals = document.querySelectorAll('.reveal');
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, { threshold: 0.1 });
+
+        reveals.forEach(reveal => {
+            revealObserver.observe(reveal);
+        });
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    navLinks.classList.remove('active');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
