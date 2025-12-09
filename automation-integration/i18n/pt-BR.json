@@ -1,0 +1,89 @@
+{
+  "github": {
+    "title": "Integração GitHub",
+    "subtitle": "Gerencie seu repositório pela plataforma de automação",
+    "tabs": {
+      "overview": "Visão Geral",
+      "issues": "Issues",
+      "pulls": "Pull Requests",
+      "branches": "Branches",
+      "files": "Arquivos"
+    },
+    "overview": {
+      "stats": {
+        "stars": "Stars",
+        "forks": "Forks",
+        "openIssues": "Issues Abertas",
+        "language": "Linguagem",
+        "description": "Descrição",
+        "createdAt": "Criado em",
+        "updatedAt": "Última atualização"
+      },
+      "noDescription": "Sem descrição"
+    },
+    "issues": {
+      "title": "Issues",
+      "empty": "Nenhuma issue encontrada",
+      "status": {
+        "open": "Aberta",
+        "closed": "Fechada"
+      },
+      "create": "Criar Issue",
+      "filter": {
+        "all": "Todas",
+        "open": "Abertas",
+        "closed": "Fechadas"
+      }
+    },
+    "pulls": {
+      "title": "Pull Requests",
+      "empty": "Nenhum pull request encontrado",
+      "status": {
+        "open": "Aberto",
+        "closed": "Fechado",
+        "merged": "Merged"
+      },
+      "create": "Criar Pull Request",
+      "filter": {
+        "all": "Todos",
+        "open": "Abertos",
+        "closed": "Fechados"
+      }
+    },
+    "branches": {
+      "title": "Branches",
+      "empty": "Nenhuma branch encontrada",
+      "protected": "Protegida",
+      "create": "Criar Branch",
+      "default": "Padrão"
+    },
+    "files": {
+      "title": "Arquivos",
+      "empty": "Nenhum arquivo encontrado",
+      "directory": "Diretório",
+      "file": "Arquivo",
+      "size": "Tamanho",
+      "lastCommit": "Último commit"
+    },
+    "common": {
+      "loading": "Carregando...",
+      "error": "Ocorreu um erro",
+      "retry": "Tentar novamente",
+      "author": "Autor",
+      "created": "Criado",
+      "updated": "Atualizado",
+      "viewOnGitHub": "Ver no GitHub"
+    },
+    "actions": {
+      "create": "Criar",
+      "edit": "Editar",
+      "delete": "Excluir",
+      "cancel": "Cancelar",
+      "save": "Salvar",
+      "close": "Fechar",
+      "merge": "Fazer merge",
+      "approve": "Aprovar",
+      "reject": "Rejeitar"
+    }
+  }
+}
