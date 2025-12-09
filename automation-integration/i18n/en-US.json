@@ -1,0 +1,89 @@
+{
+  "github": {
+    "title": "GitHub Integration",
+    "subtitle": "Manage your repository from the automation platform",
+    "tabs": {
+      "overview": "Overview",
+      "issues": "Issues",
+      "pulls": "Pull Requests",
+      "branches": "Branches",
+      "files": "Files"
+    },
+    "overview": {
+      "stats": {
+        "stars": "Stars",
+        "forks": "Forks",
+        "openIssues": "Open Issues",
+        "language": "Language",
+        "description": "Description",
+        "createdAt": "Created on",
+        "updatedAt": "Last updated"
+      },
+      "noDescription": "No description"
+    },
+    "issues": {
+      "title": "Issues",
+      "empty": "No issues found",
+      "status": {
+        "open": "Open",
+        "closed": "Closed"
+      },
+      "create": "Create Issue",
+      "filter": {
+        "all": "All",
+        "open": "Open",
+        "closed": "Closed"
+      }
+    },
+    "pulls": {
+      "title": "Pull Requests",
+      "empty": "No pull requests found",
+      "status": {
+        "open": "Open",
+        "closed": "Closed",
+        "merged": "Merged"
+      },
+      "create": "Create Pull Request",
+      "filter": {
+        "all": "All",
+        "open": "Open",
+        "closed": "Closed"
+      }
+    },
+    "branches": {
+      "title": "Branches",
+      "empty": "No branches found",
+      "protected": "Protected",
+      "create": "Create Branch",
+      "default": "Default"
+    },
+    "files": {
+      "title": "Files",
+      "empty": "No files found",
+      "directory": "Directory",
+      "file": "File",
+      "size": "Size",
+      "lastCommit": "Last commit"
+    },
+    "common": {
+      "loading": "Loading...",
+      "error": "An error occurred",
+      "retry": "Retry",
+      "author": "Author",
+      "created": "Created",
+      "updated": "Updated",
+      "viewOnGitHub": "View on GitHub"
+    },
+    "actions": {
+      "create": "Create",
+      "edit": "Edit",
+      "delete": "Delete",
+      "cancel": "Cancel",
+      "save": "Save",
+      "close": "Close",
+      "merge": "Merge",
+      "approve": "Approve",
+      "reject": "Reject"
+    }
+  }
+}
