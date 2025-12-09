@@ -1,0 +1,58 @@
+{
+    "name": "@avilaops/automation-tests",
+    "version": "1.0.0",
+    "description": "Testes automatizados para integração GitHub",
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch",
+        "test:coverage": "jest --coverage",
+        "test:unit": "jest --testPathPattern=unit",
+        "test:integration": "jest --testPathPattern=integration"
+    },
+    "devDependencies": {
+        "@testing-library/jest-dom": "^6.1.5",
+        "@testing-library/react": "^14.1.2",
+        "@testing-library/user-event": "^14.5.1",
+        "@types/jest": "^29.5.11",
+        "@types/node": "^20.10.6",
+        "@types/react": "^18.2.46",
+        "@types/supertest": "^6.0.2",
+        "jest": "^29.7.0",
+        "jest-environment-jsdom": "^29.7.0",
+        "supertest": "^6.3.3",
+        "ts-jest": "^29.1.1",
+        "typescript": "^5.3.3"
+    },
+    "jest": {
+        "preset": "ts-jest",
+        "testEnvironment": "jsdom",
+        "roots": [
+            "<rootDir>/tests"
+        ],
+        "testMatch": [
+            "**/__tests__/**/*.ts?(x)",
+            "**/?(*.)+(spec|test).ts?(x)"
+        ],
+        "collectCoverageFrom": [
+            "frontend/components/**/*.{ts,tsx}",
+            "backend/src/**/*.{ts,tsx}",
+            "automation-integration/**/*.{ts,tsx}",
+            "!**/*.d.ts",
+            "!**/node_modules/**"
+        ],
+        "coverageThresholds": {
+            "global": {
+                "branches": 80,
+                "functions": 80,
+                "lines": 85,
+                "statements": 85
+            }
+        },
+        "moduleNameMapper": {
+            "\\.(css|less|scss|sass)$": "identity-obj-proxy"
+        },
+        "setupFilesAfterEnv": [
+            "<rootDir>/tests/setup.ts"
+        ]
+    }
+}

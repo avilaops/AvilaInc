@@ -1,0 +1,66 @@
+{
+  "app": {
+    "title": "Client Strategy Analyzer",
+    "subtitle": "Sistema inteligente de análise de casos de clientes"
+  },
+  "nav": {
+    "cases": "📋 Casos",
+    "newCase": "➕ Novo Caso",
+    "github": "🐙 GitHub"
+  },
+  "dashboard": {
+    "title": "Casos em Análise",
+    "emptyState": "Nenhum caso encontrado"
+  },
+  "form": {
+    "title": "Registrar Novo Caso",
+    "clientName": "Nome do Cliente",
+    "clientEmail": "Email",
+    "clientPhone": "Telefone",
+    "clientCompany": "Empresa",
+    "caseDescription": "Descrição do Caso",
+    "category": "Categoria",
+    "objectives": "Objetivos",
+    "challenges": "Desafios",
+    "budget": "Orçamento (R$)",
+    "timeline": "Timeline",
+    "submit": "Criar Caso",
+    "success": "Caso criado com sucesso! 🎉",
+    "error": "Erro ao criar caso. Tente novamente."
+  },
+  "status": {
+    "draft": "Rascunho",
+    "analyzing": "Analisando",
+    "analyzed": "Analisado",
+    "proposal_sent": "Proposta Enviada",
+    "completed": "Completo"
+  },
+  "actions": {
+    "analyze": "Analisar",
+    "sendProposal": "Enviar Proposta",
+    "view": "Visualizar"
+  },
+  "messages": {
+    "analyzing": "Analisando caso...",
+    "sending": "Enviando proposta...",
+    "success": "Operação realizada com sucesso!",
+    "error": "Erro ao realizar operação"
+  },
+  "github": {
+    "title": "Integração GitHub - AvilaInc",
+    "subtitle": "Gerencie o repositório diretamente da plataforma",
+    "viewOnGitHub": "Ver no GitHub",
+    "overview": "Visão Geral",
+    "issues": "Issues",
+    "pullRequests": "Pull Requests",
+    "branches": "Branches",
+    "files": "Arquivos",
+    "createIssue": "Nova Issue",
+    "createPR": "Novo Pull Request",
+    "refresh": "Atualizar Dados",
+    "loading": "Carregando...",
+    "noIssues": "Nenhuma issue encontrada",
+    "noPRs": "Nenhum pull request encontrado",
+    "noBranches": "Nenhuma branch encontrada"
+  }
+}
