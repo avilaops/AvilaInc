@@ -4,8 +4,8 @@
 
 ### ✅ O que está pronto no GitHub
 
-**Repositório:** `avilaops/AvilaInc`  
-**Branch:** `main`  
+**Repositório:** `avilaops/AvilaInc`
+**Branch:** `main`
 **Último Commit:** `811dfea` (Dec 9, 2025)
 
 #### Código Implementado:
@@ -22,13 +22,13 @@
 
 ### Domínio Principal
 - **URL:** https://avila.inc
-- **Status:** ✅ Deploy no Azure Static Web Apps
-- **Endpoint:** https://salmon-island-0f049391e.3.azurestaticapps.net
+- **Status:** 🔄 Aguardando configuração
+- **Plataforma:** GitHub Pages
 
 ### Painel de Automação
 - **URL Desejada:** https://painel.avila.inc
 - **Status:** ❌ NÃO CONFIGURADO AINDA
-- **Ação Necessária:** Configurar subdomain e deploy
+- **Ação Necessária:** Configurar subdomain e deploy GitHub Pages
 
 ## 🔐 Sistema de Autenticação
 
@@ -64,27 +64,31 @@ Senha: admin123
 # DNS Configuration (no provedor de domínio)
 Type: CNAME
 Host: painel
-Value: <app-service-url>.azurewebsites.net
+Value: avilaops.github.io
 TTL: 3600
+
+# Configurar no GitHub:
+# Repositório > Settings > Pages
+# Custom domain: painel.avila.inc
+# Enforce HTTPS: ativado
 ```
 
 ### 2. Deploy do Frontend
 ```bash
-# Opção A: Azure Static Web Apps
+# GitHub Pages Deploy
 cd frontend
 npm install
 npm run build
-az staticwebapp create \
-  --name painel-avila \
-  --resource-group avila-rg \
-  --source ./out \
-  --location eastus2
+npm run export
 
-# Opção B: Vercel (mais fácil)
-cd frontend
-npm install -g vercel
-vercel --prod
-# Configurar custom domain: painel.avila.inc
+# Commit build para gh-pages branch
+git checkout -b gh-pages
+git add -f out/
+git commit -m "Deploy to GitHub Pages"
+git push origin gh-pages
+
+# Configurar custom domain no GitHub:
+# Settings > Pages > Custom domain: painel.avila.inc
 ```
 
 ### 3. Deploy do Backend Rust
@@ -92,60 +96,55 @@ vercel --prod
 cd automation-integration/backend-rs
 
 # Docker Build
-docker build -t avilaops/automation-backend-rs:latest .
+docker build -t ghcr.io/avilaops/automation-backend-rs:latest .
 
-# Docker Run
+# Push to GitHub Container Registry
+echo $GITHUB_TOKEN | docker login ghcr.io -u avilaops --password-stdin
+docker push ghcr.io/avilaops/automation-backend-rs:latest
+
+# Deploy usando GitHub Actions ou Docker
 docker run -d \
   -p 3005:3005 \
   -e GITHUB_OWNER=avilaops \
   -e GITHUB_REPO=AvilaInc \
   -e GITHUB_TOKEN=$GITHUB_TOKEN \
   --name automation-backend \
-  avilaops/automation-backend-rs:latest
-
-# Ou usar Azure Container Instances
-az container create \
-  --resource-group avila-rg \
-  --name automation-backend \
-  --image avilaops/automation-backend-rs:latest \
-  --ports 3005 \
-  --environment-variables \
-    GITHUB_OWNER=avilaops \
-    GITHUB_REPO=AvilaInc \
-    GITHUB_TOKEN=$GITHUB_TOKEN
+  ghcr.io/avilaops/automation-backend-rs:latest
 ```
 
 ### 4. Deploy do Backend Node.js
 ```bash
 cd backend
 
-# Azure App Service
-az webapp create \
-  --resource-group avila-rg \
-  --plan avila-plan \
-  --name avila-backend-api \
-  --runtime "NODE:18-lts"
-
-# Deploy
+# Build for production
 npm install
 npm run build
-az webapp deployment source config-zip \
-  --resource-group avila-rg \
-  --name avila-backend-api \
-  --src ./dist.zip
+
+# Deploy via GitHub Actions
+# Configure secrets in GitHub repo:
+# - DEPLOY_HOST
+# - DEPLOY_USER
+# - SSH_PRIVATE_KEY
+
+# Manual deploy to VPS/Cloud
+scp -r dist/ user@server:/var/www/avila-backend/
+ssh user@server "cd /var/www/avila-backend && pm2 restart backend"
 ```
 
 ### 5. Configurar Environment Variables
 ```bash
-# No Azure Portal ou via CLI
-az webapp config appsettings set \
-  --resource-group avila-rg \
-  --name avila-backend-api \
-  --settings \
-    NODE_ENV=production \
-    MONGODB_URI=$MONGODB_URI \
-    GITHUB_TOKEN=$GITHUB_TOKEN \
-    JWT_SECRET=$JWT_SECRET
+# Configure GitHub Secrets em: Settings > Secrets and variables > Actions
+# Secrets necessários:
+# - NODE_ENV=production
+# - MONGODB_URI (ou PostgreSQL URI)
+# - GITHUB_TOKEN
+# - JWT_SECRET
+
+# Para deploy local, usar .env file:
+echo "NODE_ENV=production" > .env
+echo "MONGODB_URI=$MONGODB_URI" >> .env
+echo "GITHUB_TOKEN=$GITHUB_TOKEN" >> .env
+echo "JWT_SECRET=$JWT_SECRET" >> .env
 ```
 
 ## 🔧 Implementações Necessárias
@@ -181,14 +180,14 @@ Configurar MongoDB/PostgreSQL para:
    - Password hashing
 
 2. **Configurar painel.avila.inc** (1 hora)
-   - DNS CNAME
-   - Deploy frontend no Vercel/Azure
-   - SSL certificate automático
+   - DNS CNAME para GitHub Pages
+   - Deploy frontend via GitHub Actions
+   - SSL certificate automático (GitHub)
 
 3. **Deploy Backends** (2 horas)
-   - Backend Rust em Docker
-   - Backend Node.js no Azure App Service
-   - Configurar environment variables
+   - Backend Rust via GitHub Container Registry
+   - Backend Node.js em VPS/Cloud
+   - Configurar environment variables via GitHub Secrets
 
 4. **Testar Fluxo Completo** (1 hora)
    - Login em painel.avila.inc
@@ -223,16 +222,16 @@ https://api.avila.inc          → Backend APIs (precisa configurar)
 ## 💡 Recomendações
 
 ### Deploy Rápido (1-2 horas):
-1. Use **Vercel** para frontend (deploy automático do GitHub)
-2. Use **Railway** ou **Render** para backends (deploy fácil)
+1. Use **GitHub Pages** para frontend (deploy automático)
+2. Use **Railway** ou **Render** para backends (deploy fácil via GitHub)
 3. Use **MongoDB Atlas** (cloud, free tier disponível)
 
 ### Deploy Profissional (1 dia):
-1. Azure Static Web Apps + Azure App Service
-2. Azure Container Instances para Rust backend
-3. Azure Database for PostgreSQL
-4. Azure Key Vault para secrets
-5. Azure Monitor para logs
+1. GitHub Pages + GitHub Actions para CI/CD
+2. GitHub Container Registry para Docker images
+3. Cloud VPS (DigitalOcean, Linode, Hetzner)
+4. GitHub Secrets para environment variables
+5. GitHub Actions para automação de deploy
 
 ## 📊 Estimativa de Tempo Total
 
@@ -243,22 +242,22 @@ https://api.avila.inc          → Backend APIs (precisa configurar)
 ## 🎉 Resumo
 
 ### O que temos:
-✅ Todo código no GitHub (193 arquivos, 20k+ linhas)  
-✅ Backend Rust funcionando (testado localmente)  
-✅ Frontend Next.js completo  
-✅ Página de login criada  
-✅ Docker configs prontos  
+✅ Todo código no GitHub (193 arquivos, 20k+ linhas)
+✅ Backend Rust funcionando (testado localmente)
+✅ Frontend Next.js completo
+✅ Página de login criada
+✅ Docker configs prontos
 
 ### O que falta:
-❌ Configurar painel.avila.inc (DNS + deploy)  
-❌ Implementar backend de auth real  
-❌ Deploy dos serviços em produção  
-❌ Configurar CI/CD  
+❌ Configurar painel.avila.inc (DNS + deploy)
+❌ Implementar backend de auth real
+❌ Deploy dos serviços em produção
+❌ Configurar CI/CD
 
 ### Próxima Ação Recomendada:
 **Implementar API de autenticação** e depois fazer **deploy no Vercel** (mais rápido para teste).
 
 ---
 
-**Última Atualização:** December 9, 2025  
+**Última Atualização:** December 9, 2025
 **Status:** 95% código completo, 0% deployed em painel.avila.inc
