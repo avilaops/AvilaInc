@@ -1,386 +1,59 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Avila Inc - Automation Platform</title>
+    <title>Ávila Inc - Automation Platform</title>
     <style>
-        * {
+        body {
+            font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
+            background-color: #f4f4f4;
         }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
-            line-height: 1.6;
-            color: #24292f;
-            background-color: #ffffff;
-        }
-
-        .navbar {
-            background-color: #24292f;
-            padding: 1rem 2rem;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-        }
-
-        .navbar-content {
-            max-width: 1200px;
-            margin: 0 auto;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .navbar-brand {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #ffffff;
-            text-decoration: none;
-        }
-
-        .navbar-links {
-            display: flex;
-            gap: 2rem;
-            align-items: center;
-        }
-
-        .navbar-links a {
-            color: #ffffff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: opacity 0.2s;
-        }
-
-        .navbar-links a:hover {
-            opacity: 0.8;
-        }
-
-        .hero {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        header {
+            background-color: #333;
             color: white;
-            padding: 5rem 2rem;
+            padding: 1rem;
             text-align: center;
         }
-
-        .hero-content {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .hero h1 {
-            font-size: 3rem;
-            font-weight: 800;
-            margin-bottom: 1rem;
-            background: linear-gradient(to right, #ffffff, #f0f0f0);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .hero p {
-            font-size: 1.25rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .btn {
-            display: inline-block;
-            padding: 0.75rem 2rem;
-            background-color: #ffffff;
-            color: #667eea;
-            text-decoration: none;
-            border-radius: 8px;
-            font-weight: 600;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
-        }
-
-        .features {
-            max-width: 1200px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-        }
-
-        .features h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 3rem;
-            color: #24292f;
-        }
-
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .feature-card {
-            background: #f6f8fa;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid #d0d7de;
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .feature-icon {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            color: #24292f;
-        }
-
-        .feature-card p {
-            color: #57606a;
-            line-height: 1.6;
-        }
-
-        .about {
-            background-color: #f6f8fa;
-            padding: 4rem 2rem;
-        }
-
-        .about-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .about h2 {
-            text-align: center;
-            font-size: 2.5rem;
-            margin-bottom: 2rem;
-            color: #24292f;
-        }
-
-        .about-text {
-            text-align: center;
-            font-size: 1.125rem;
-            color: #57606a;
-            max-width: 800px;
-            margin: 0 auto 3rem;
-            line-height: 1.8;
-        }
-
-        .stats {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .stat-card {
-            text-align: center;
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            border: 1px solid #d0d7de;
-        }
-
-        .stat-number {
-            font-size: 3rem;
-            font-weight: 700;
-            color: #667eea;
-            display: block;
-            margin-bottom: 0.5rem;
-        }
-
-        .stat-label {
-            color: #57606a;
-            font-size: 1rem;
-        }
-
-        .contact {
-            max-width: 800px;
-            margin: 4rem auto;
-            padding: 0 2rem;
-            text-align: center;
-        }
-
-        .contact h2 {
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-            color: #24292f;
-        }
-
-        .contact p {
-            font-size: 1.125rem;
-            color: #57606a;
-            margin-bottom: 2rem;
-        }
-
-        .footer {
-            background-color: #24292f;
-            color: #ffffff;
+        main {
             padding: 2rem;
             text-align: center;
         }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 2rem;
-            margin-bottom: 1rem;
-        }
-
-        .footer-links a {
-            color: #ffffff;
-            text-decoration: none;
-            opacity: 0.8;
-            transition: opacity 0.2s;
-        }
-
-        .footer-links a:hover {
-            opacity: 1;
-        }
-
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .hero p {
-                font-size: 1rem;
-            }
-
-            .features h2,
-            .about h2,
-            .contact h2 {
-                font-size: 2rem;
-            }
-
-            .navbar-content {
-                flex-direction: column;
-                gap: 1rem;
-            }
-
-            .navbar-links {
-                gap: 1rem;
-            }
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 1rem;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
+    <script src="../assets/js/analytics-tracker.js"></script>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-content">
-            <a href="/" class="navbar-brand">Avila Inc</a>
-            <div class="navbar-links">
-                <a href="/">Home</a>
-                <a href="/github.html">GitHub</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-        </div>
-    </nav>
-
-    <section class="hero">
-        <div class="hero-content">
-            <h1>Automation Platform</h1>
-            <p>Streamline your business processes with intelligent automation and GitHub integration</p>
-            <a href="/github.html" class="btn">Get Started</a>
-        </div>
-    </section>
-
-    <section id="features" class="features">
-        <h2>Features</h2>
-        <div class="features-grid">
-            <div class="feature-card">
-                <div class="feature-icon">🔗</div>
-                <h3>GitHub Integration</h3>
-                <p>Seamlessly connect with GitHub to manage repositories, issues, and pull requests directly from our platform.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">⚡</div>
-                <h3>Workflow Automation</h3>
-                <p>Automate repetitive tasks and workflows to increase productivity and reduce manual effort.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">📊</div>
-                <h3>Real-time Analytics</h3>
-                <p>Track performance metrics and gain insights with comprehensive dashboards and reports.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🔒</div>
-                <h3>Secure & Reliable</h3>
-                <p>Enterprise-grade security with encrypted data transmission and secure authentication.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🌍</div>
-                <h3>Multi-language Support</h3>
-                <p>Available in multiple languages including English and Portuguese for global teams.</p>
-            </div>
-            <div class="feature-card">
-                <div class="feature-icon">🚀</div>
-                <h3>Fast & Scalable</h3>
-                <p>Built with modern technologies to handle growing teams and complex workflows efficiently.</p>
-            </div>
-        </div>
-    </section>
-
-    <section id="about" class="about">
-        <div class="about-content">
-            <h2>About Avila Inc</h2>
-            <p class="about-text">
-                We are dedicated to helping businesses automate their processes and integrate with modern development tools.
-                Our platform combines powerful automation capabilities with seamless GitHub integration to streamline
-                your development workflow and boost team productivity.
-            </p>
-            <div class="stats">
-                <div class="stat-card">
-                    <span class="stat-number">1000+</span>
-                    <span class="stat-label">Active Users</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">10K+</span>
-                    <span class="stat-label">Automated Tasks</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">99.9%</span>
-                    <span class="stat-label">Uptime</span>
-                </div>
-                <div class="stat-card">
-                    <span class="stat-number">24/7</span>
-                    <span class="stat-label">Support</span>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="contact" class="contact">
-        <h2>Ready to Get Started?</h2>
-        <p>Join thousands of teams already automating their workflows with Avila Inc</p>
-        <a href="/github.html" class="btn">Start Automating</a>
-    </section>
-
-    <footer class="footer">
-        <div class="footer-content">
-            <div class="footer-links">
-                <a href="/">Home</a>
-                <a href="/github.html">GitHub</a>
-                <a href="#features">Features</a>
-                <a href="#about">About</a>
-                <a href="#contact">Contact</a>
-            </div>
-            <p>&copy; 2024 Avila Inc. All rights reserved.</p>
-        </div>
+    <header>
+        <h1>Ávila Inc Automation Platform</h1>
+    </header>
+    <main>
+        <h2>Welcome to Our Automation Solutions</h2>
+        <p>Discover how our AI-powered automation can transform your business operations.</p>
+        <button id="learn-more">Learn More</button>
+    </main>
+    <footer>
+        <p>&copy; 2025 Ávila Inc. All rights reserved.</p>
     </footer>
+    <script>
+        document.getElementById('learn-more').addEventListener('click', function() {
+            alert('Thank you for your interest!');
+        });
+    </script>
+    <script>
+        // Avx Analytics Integration
+        const analytics = new AvxAnalytics('avila_inc_ga4', 'http://localhost:8080');
+        analytics.init();
+    </script>
 </body>
 </html>
