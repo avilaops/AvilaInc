@@ -11,6 +11,10 @@ on:
       - ".github/workflows/staging_landing-web.yml"
   workflow_dispatch:
 
+concurrency:
+  group: landing-staging
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,6 +28,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.x'
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore
         run: dotnet restore src/Landing/Landing.csproj
@@ -68,6 +80,29 @@ jobs:
           slot-name: 'staging'
           package: .
 
+      - name: Health Check
+        run: |
+          echo "⏳ Aguardando aplicação iniciar..."
+          sleep 30
+          
+          echo "🔍 Verificando health check..."
+          for i in {1..10}; do
+            if curl -f -s "https://landing-web-staging.azurewebsites.net/" > /dev/null; then
+              echo "✅ Aplicação está saudável!"
+              break
+            fi
+            echo "⏳ Tentativa $i/10 falhou, aguardando..."
+            sleep 15
+          done
+          
+          # Verificação final
+          if curl -f -s "https://landing-web-staging.azurewebsites.net/" > /dev/null; then
+            echo "🎉 Deploy bem-sucedido e aplicação saudável!"
+          else
+            echo "❌ Health check falhou após deploy"
+            exit 1
+          fi
+
       - name: Comment on PR with staging URL
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         uses: actions/github-script@v7
@@ -77,5 +112,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚀 **Staging Deploy Complete!**\n\n🌐 **Staging URL**: https://landing-web-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n📅 Deployed at: ${{ github.event.head_commit.timestamp }}'
+              body: '🚀 **Staging Deploy Complete!**\n\n🌐 **Staging URL**: https://landing-web-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n⏰ Deployed at: ${{ github.event.head_commit.timestamp }}\n💚 Health check: PASSED\n\n🔗 [View Application](https://landing-web-staging.azurewebsites.net)'
             })

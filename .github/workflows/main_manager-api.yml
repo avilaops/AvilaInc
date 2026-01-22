@@ -8,6 +8,10 @@ on:
       - ".github/workflows/main_manager-api.yml"
   workflow_dispatch:
 
+concurrency:
+  group: manager-api-production
+  cancel-in-progress: false
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-24.04
@@ -20,6 +24,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore
         run: dotnet restore src/Manager.Api/Manager.Api.csproj

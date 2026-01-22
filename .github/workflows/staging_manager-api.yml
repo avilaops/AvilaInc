@@ -10,6 +10,10 @@ on:
       - ".github/workflows/staging_manager-api.yml"
   workflow_dispatch:
 
+concurrency:
+  group: manager-api-staging
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-24.04
@@ -22,6 +26,14 @@ jobs:
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
+
+      - name: Cache NuGet packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.nuget/packages
+          key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-nuget-
 
       - name: Restore
         run: dotnet restore src/Manager.Api/Manager.Api.csproj
@@ -39,6 +51,29 @@ jobs:
           slot-name: staging
           publish-profile: ${{ secrets.PUBLISH_PROFILE_API }}
 
+      - name: Health Check
+        run: |
+          echo "⏳ Aguardando API iniciar..."
+          sleep 45
+          
+          echo "🔍 Verificando health check da API..."
+          for i in {1..10}; do
+            if curl -f -s "https://manager-api-staging.azurewebsites.net/health" > /dev/null; then
+              echo "✅ API está saudável!"
+              break
+            fi
+            echo "⏳ Tentativa $i/10 falhou, aguardando..."
+            sleep 20
+          done
+          
+          # Verificação final
+          if curl -f -s "https://manager-api-staging.azurewebsites.net/health" > /dev/null; then
+            echo "🎉 Deploy da API bem-sucedido!"
+          else
+            echo "❌ Health check da API falhou após deploy"
+            exit 1
+          fi
+
       - name: Comment on PR with staging URL
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         uses: actions/github-script@v7
@@ -48,5 +83,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: '🚀 **API Staging Deploy Complete!**\n\n🌐 **Staging API URL**: https://manager-api-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n📅 Deployed at: ${{ github.event.head_commit.timestamp }}'
+              body: '🚀 **API Staging Deploy Complete!**\n\n🌐 **Staging API URL**: https://manager-api-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n⏰ Deployed at: ${{ github.event.head_commit.timestamp }}\n💚 Health check: PASSED\n\n🔗 [API Health](https://manager-api-staging.azurewebsites.net/health)'
             })
