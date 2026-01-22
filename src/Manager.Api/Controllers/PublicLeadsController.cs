@@ -35,12 +35,12 @@ public class PublicLeadsController : ControllerBase
         {
             var lead = new Lead
             {
-                Name = request.Name.Trim(),
+                Nome = request.Name.Trim(),
                 Email = request.Email.Trim().ToLowerInvariant(),
-                Phone = request.Phone.Trim(),
-                Message = request.Message?.Trim(),
-                Source = request.Source ?? "Landing",
-                Status = "Novo",
+                Telefone = request.Phone.Trim(),
+                Observacoes = request.Message?.Trim(),
+                Origem = request.Source ?? "Landing",
+                Status = "novo",
                 CreatedAt = DateTime.UtcNow,
                 UpdatedAt = DateTime.UtcNow
             };
@@ -50,8 +50,8 @@ public class PublicLeadsController : ControllerBase
             _logger.LogInformation(
                 "Lead criado: {Email} - {Name} via {Source}",
                 lead.Email,
-                lead.Name,
-                lead.Source
+                lead.Nome,
+                lead.Origem
             );
 
             return Ok(new { ok = true, id = lead.Id });

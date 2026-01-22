@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Manager.Integrations")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3ef09a9c8dee09577d28c352fa34d419ef29503e")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+8ba1ef34a4369c640cf77995eb363285856509a7")]
 [assembly: System.Reflection.AssemblyProductAttribute("Manager.Integrations")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Manager.Integrations")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

@@ -241,7 +241,7 @@ builder.Services.AddDbContext<ManagerDbContext>(options =>
 // builder.Services.AddScoped<DatabaseSeeder>();
 
 // Register repositories
-builder.Services.AddScoped<ICompanyRepository, CompanyRepository>();
+builder.Services.AddScoped<ICompanyMongoRepository, CompanyRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISessionRepository, SessionRepository>();
 
