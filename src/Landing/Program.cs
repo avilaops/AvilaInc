@@ -6,13 +6,14 @@ builder.Services.AddServerSideBlazor();
 
 // Register custom services
 builder.Services.AddScoped<Landing.Services.ScrollService>();
+builder.Services.AddScoped<Landing.Services.TrackingContext>();
 
 // Configure HttpClient for Manager.Api integration
 builder.Services.AddHttpClient<Landing.Services.ManagerApiClient>(client =>
 {
-    var baseUrl = builder.Configuration["ApiSettings:ManagerApiBaseUrl"]
-        ?? throw new InvalidOperationException("ApiSettings:ManagerApiBaseUrl não configurado");
-    
+    var baseUrl = builder.Configuration["ManagerApi:BaseUrl"]
+        ?? throw new InvalidOperationException("ManagerApi:BaseUrl não configurado");
+
     client.BaseAddress = new Uri(baseUrl);
     client.Timeout = TimeSpan.FromSeconds(15);
     client.DefaultRequestHeaders.Add("User-Agent", "Landing/1.0");

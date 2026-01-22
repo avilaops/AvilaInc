@@ -2,6 +2,7 @@
 @using Landing.Services
 @inject ManagerApiClient ApiClient
 @inject NavigationManager NavigationManager
+@inject TrackingContext TrackingContext
 
 <div class="lead-form-container">
     @if (_submitted)
@@ -96,12 +97,10 @@
 
         try
         {
-            // Capturar parâmetros UTM da URL
-            var utmSource = GetUrlParameter("utm_source");
-            var utmCampaign = GetUrlParameter("utm_campaign");
-            var utmMedium = GetUrlParameter("utm_medium");
-            var pagePath = GetCurrentPath();
-            var referrer = GetReferrer();
+            // Capturar contexto de rastreamento
+            var utmParams = TrackingContext.GetUtmParameters();
+            var pagePath = TrackingContext.GetCurrentPagePath();
+            var referrer = TrackingContext.GetReferrer();
 
             var dto = new CreateLeadDto(
                 Name: _model.Name,
@@ -109,9 +108,9 @@
                 Phone: _model.Phone,
                 Message: _model.Message,
                 Source: Source,
-                UtmSource: utmSource,
-                UtmCampaign: utmCampaign,
-                UtmMedium: utmMedium,
+                UtmSource: utmParams.Source,
+                UtmCampaign: utmParams.Campaign,
+                UtmMedium: utmParams.Medium,
                 PagePath: pagePath,
                 Referrer: referrer,
                 ServiceInterest: ServiceInterest
@@ -182,47 +181,6 @@
                 return new ValidationResult("Código de área inválido");
 
             return ValidationResult.Success;
-        }
-    }
-
-    private string? GetUrlParameter(string paramName)
-    {
-        try
-        {
-            var uri = new Uri(NavigationManager.Uri);
-            var query = Microsoft.AspNetCore.WebUtilities.QueryHelpers.ParseQuery(uri.Query);
-            return query.TryGetValue(paramName, out var values) ? values.FirstOrDefault() : null;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    private string? GetCurrentPath()
-    {
-        try
-        {
-            var uri = new Uri(NavigationManager.Uri);
-            return uri.AbsolutePath;
-        }
-        catch
-        {
-            return null;
-        }
-    }
-
-    private string? GetReferrer()
-    {
-        try
-        {
-            // Em Blazor Server, podemos tentar acessar via JavaScript
-            // Por enquanto, retornamos null - pode ser implementado com JS interop se necessário
-            return null;
-        }
-        catch
-        {
-            return null;
         }
     }
 }

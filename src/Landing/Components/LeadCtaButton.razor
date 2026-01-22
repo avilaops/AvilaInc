@@ -1,0 +1,71 @@
+@using Landing.Services
+@inject TrackingContext TrackingContext
+@inject ScrollService ScrollService
+
+<div class="cta-buttons">
+    <button class="btn btn--primary" type="button" @onclick="OpenLeadModal">
+        @Title
+    </button>
+    @if (!string.IsNullOrEmpty(WhatsappNumber))
+    {
+        <button class="btn btn--outline" type="button" @onclick="OpenWhatsApp">
+            <span>📱 WhatsApp</span>
+        </button>
+    }
+</div>
+
+<!-- Modal de Lead -->
+@if (_showLeadModal)
+{
+    <div class="modal-overlay" @onclick="CloseLeadModal">
+        <div class="modal-content" @onclick:stopPropagation>
+            <button class="modal-close" @onclick="CloseLeadModal">&times;</button>
+            <div class="modal-header">
+                <h2>@Title</h2>
+                <p>Preencha o formulário abaixo e entraremos em contato em breve!</p>
+            </div>
+            <div class="modal-body">
+                <LeadForm Source="@Source"
+                          ServiceInterest="@ServiceInterest"
+                          OnSubmitted="HandleLeadSubmitted" />
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter] public string Title { get; set; } = "Solicitar Contato";
+    [Parameter] public string Source { get; set; } = "CTA Button";
+    [Parameter] public string? ServiceInterest { get; set; }
+    [Parameter] public string? WhatsappNumber { get; set; }
+    [Parameter] public string? DefaultMessage { get; set; }
+    [Parameter] public EventCallback OnLeadSubmitted { get; set; }
+
+    private bool _showLeadModal;
+
+    private void OpenLeadModal()
+    {
+        _showLeadModal = true;
+    }
+
+    private void CloseLeadModal()
+    {
+        _showLeadModal = false;
+    }
+
+    private async Task OpenWhatsApp()
+    {
+        var message = DefaultMessage ?? $"Olá! Tenho interesse em {Title}. Podemos conversar?";
+        var url = ScrollService.BuildWhatsAppUrl(WhatsappNumber ?? "5511987654321", message);
+        await ScrollService.OpenNewTabAsync(url);
+    }
+
+    private async Task HandleLeadSubmitted()
+    {
+        _showLeadModal = false;
+        if (OnLeadSubmitted.HasDelegate)
+        {
+            await OnLeadSubmitted.InvokeAsync();
+        }
+    }
+}

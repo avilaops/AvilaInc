@@ -31,7 +31,6 @@ D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjimswa.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\zr03ffnbwp-{0}-pxmli389hy-pxmli389hy.gz
-D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\oxax39t1h4-{0}-5scqgerzcn-5scqgerzcn.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\1kgjxh436j-{0}-0kbplgm5n6-0kbplgm5n6.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\lukj1441tn-{0}-2i0r6wwb69-2i0r6wwb69.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\fxen6c827e-{0}-iz83ucvm53-iz83ucvm53.gz
@@ -46,3 +45,4 @@ D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\refint\Landing.dll
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.pdb
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.genruntimeconfig.cache
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\ref\Landing.dll
+D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\oxax39t1h4-{0}-h2vg2t968m-h2vg2t968m.gz
