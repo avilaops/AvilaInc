@@ -102,7 +102,7 @@ No GitHub → Settings → Secrets and variables → Actions:
 
 #### Publish Profiles (recomendado)
 - `PUBLISH_PROFILE_API` (Manager API - staging e produção)
-- `PUBLISH_PROFILE_LANDING` (Landing Page - staging e produção)
+- `PUBLISH_PROFILE` (Landing Page - staging e produção)
 
 ### 📥 Como obter Publish Profiles
 

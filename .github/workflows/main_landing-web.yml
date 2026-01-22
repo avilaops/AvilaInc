@@ -70,6 +70,6 @@ jobs:
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'landing-web'
-          publish-profile: ${{ secrets.PUBLISH_PROFILE_LANDING }}
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           slot-name: 'Production'
           package: .
