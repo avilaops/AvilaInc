@@ -1,4 +1,4 @@
-name: Deploy Landing
+name: Build and deploy Landing (Blazor Server)
 
 on:
   push:
@@ -6,8 +6,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-24.04
+
     steps:
       - uses: actions/checkout@v4
 
@@ -24,9 +25,9 @@ jobs:
       - name: Publish
         run: dotnet publish src/Landing/Landing.csproj -c Release -o publish --no-build
 
-      - name: Deploy to Azure Web App
+      - name: Deploy
         uses: azure/webapps-deploy@v3
         with:
           app-name: landing-web
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_LANDING }}
+          publish-profile: ${{ secrets.PUBLISH_PROFILE }}
           package: publish
