@@ -5,19 +5,16 @@ on:
     branches: [ "main" ]
     paths:
       - "src/Manager.Api/**"
-      - ".github/workflows/main_manage-api.yml"
+      - ".github/workflows/main_manager-api.yml"
   workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-24.04
-
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
+      - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
 
@@ -30,9 +27,9 @@ jobs:
       - name: Publish
         run: dotnet publish src/Manager.Api/Manager.Api.csproj -c Release -o publish --no-build
 
-      - name: Deploy to Azure Web App
+      - name: Deploy
         uses: azure/webapps-deploy@v3
         with:
-          app-name: manage-api
+          app-name: manager-api
           publish-profile: ${{ secrets.PUBLISH_PROFILE_API }}
           package: publish
