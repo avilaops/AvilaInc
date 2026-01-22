@@ -1,33 +1,32 @@
-name: Build Admin Dashboard for GitHub Pages
+name: Deploy Landing
 
 on:
   push:
-    branches: [ main, master ]
-    paths:
-      - 'src/views/**'
-      - 'src/public/**'
-      - '.github/workflows/deploy-admin.yml'
+    branches: [ "main" ]
   workflow_dispatch:
 
-permissions:
-  contents: read
-
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-deploy:
+    runs-on: ubuntu-24.04
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Create dist directory
-        run: mkdir -p dist
-
-      - name: Copy admin files
-        run: |
-          cp -r src/views/* dist/ 2>/dev/null || true
-          cp -r src/public/* dist/ 2>/dev/null || true
-
-      - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/setup-dotnet@v4
         with:
-          path: './dist'
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore src/Landing/Landing.csproj
+
+      - name: Build
+        run: dotnet build src/Landing/Landing.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish src/Landing/Landing.csproj -c Release -o publish --no-build
+
+      - name: Deploy to Azure Web App
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: landing-web
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_LANDING }}
+          package: publish
