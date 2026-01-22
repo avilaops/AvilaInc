@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "XF9Fs33jQEw=",
+  "dgSpecHash": "fKTa7cUkdrc=",
   "success": true,
-  "projectFilePath": "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
+  "projectFilePath": "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Administrador\\.nuget\\packages\\betalgo.openai\\8.7.2\\betalgo.openai.8.7.2.nupkg.sha512",
     "C:\\Users\\Administrador\\.nuget\\packages\\dnsclient\\1.6.1\\dnsclient.1.6.1.nupkg.sha512",

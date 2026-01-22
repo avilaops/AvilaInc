@@ -1,0 +1,52 @@
+name: Deploy Manager API to Staging
+
+# Deploy para Staging - Manager API
+
+on:
+  push:
+    branches: [ "develop" ]
+    paths:
+      - "src/Manager.Api/**"
+      - ".github/workflows/staging_manager-api.yml"
+  workflow_dispatch:
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "10.0.x"
+
+      - name: Restore
+        run: dotnet restore src/Manager.Api/Manager.Api.csproj
+
+      - name: Build
+        run: dotnet build src/Manager.Api/Manager.Api.csproj -c Release --no-restore
+
+      - name: Publish
+        run: dotnet publish src/Manager.Api/Manager.Api.csproj -c Release -o publish --no-build
+
+      - name: Deploy to Azure Web App (Staging)
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: manager-api
+          slot-name: staging
+          publish-profile: ${{ secrets.PUBLISH_PROFILE_API }}
+
+      - name: Comment on PR with staging URL
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀 **API Staging Deploy Complete!**\n\n🌐 **Staging API URL**: https://manager-api-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n📅 Deployed at: ${{ github.event.head_commit.timestamp }}'
+            })

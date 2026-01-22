@@ -94,3 +94,13 @@
         display: flex;
     }
 }
+
+.nav__admin {
+    opacity: 0.7;
+    font-size: 0.9em;
+    text-decoration: underline;
+}
+
+.nav__admin:hover {
+    opacity: 1;
+}

@@ -44,6 +44,7 @@
                     <MudTh>Empresa</MudTh>
                     <MudTh>Status</MudTh>
                     <MudTh>Score</MudTh>
+                    <MudTh>Origem</MudTh>
                     <MudTh>Ações</MudTh>
                 </HeaderContent>
                 <RowTemplate>
@@ -59,11 +60,17 @@
                     <MudTd DataLabel="Score">
                         <MudRating ReadOnly="true" SelectedValue="@((int)(context.Score / 20))" MaxValue="5" Size="Size.Small" />
                     </MudTd>
+                    <MudTd DataLabel="Origem">@context.Source</MudTd>
                     <MudTd DataLabel="Ações">
                         <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" 
                                        Color="Color.Primary" OnClick="@(() => OpenEditDialog(context))" />
                         <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" 
                                        Color="Color.Error" OnClick="@(() => DeleteLead(context.Id))" />
+                        @if (!string.IsNullOrEmpty(context.UtmSource) || !string.IsNullOrEmpty(context.UtmCampaign))
+                        {
+                            <MudIconButton Icon="@Icons.Material.Filled.Info" Size="Size.Small" 
+                                           Color="Color.Info" OnClick="@(() => ShowTrackingInfo(context))" />
+                        }
                     </MudTd>
                 </RowTemplate>
             </MudTable>
@@ -101,11 +108,35 @@
     </DialogActions>
 </MudDialog>
 
+<MudDialog @bind-Visible="trackingDialogVisible" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">Informações de Rastreamento</MudText>
+    </TitleContent>
+    <DialogContent>
+        @if (trackingLead != null)
+        {
+            <MudStack Spacing="2">
+                <MudTextField @bind-Value="trackingLead.UtmSource" Label="UTM Source" ReadOnly="true" />
+                <MudTextField @bind-Value="trackingLead.UtmCampaign" Label="UTM Campaign" ReadOnly="true" />
+                <MudTextField @bind-Value="trackingLead.UtmMedium" Label="UTM Medium" ReadOnly="true" />
+                <MudTextField @bind-Value="trackingLead.PagePath" Label="Página de Origem" ReadOnly="true" />
+                <MudTextField @bind-Value="trackingLead.Referrer" Label="Referenciador" ReadOnly="true" />
+                <MudTextField @bind-Value="trackingLead.ServiceInterest" Label="Serviço de Interesse" ReadOnly="true" />
+            </MudStack>
+        }
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseTrackingDialog">Fechar</MudButton>
+    </DialogActions>
+</MudDialog>
+
 @code {
     private List<Lead> leads = new();
     private Lead editingLead = new();
+    private Lead? trackingLead = null;
     private bool loading = true;
     private bool dialogVisible = false;
+    private bool trackingDialogVisible = false;
     private string searchString = "";
     private string statusFilter = "Todos";
     
@@ -217,6 +248,18 @@
         }
     }
 
+    private void ShowTrackingInfo(Lead lead)
+    {
+        trackingLead = lead;
+        trackingDialogVisible = true;
+    }
+
+    private void CloseTrackingDialog()
+    {
+        trackingDialogVisible = false;
+        trackingLead = null;
+    }
+
     private Color GetStatusColor(string status) => status switch
     {
         "Novo" => Color.Info,
@@ -238,6 +281,14 @@
         public int Score { get; set; } = 50;
         public string? Source { get; set; }
         public string? Notes { get; set; }
+        
+        // Campos de rastreamento
+        public string? UtmSource { get; set; }
+        public string? UtmCampaign { get; set; }
+        public string? UtmMedium { get; set; }
+        public string? PagePath { get; set; }
+        public string? Referrer { get; set; }
+        public string? ServiceInterest { get; set; }
     }
 
     public class LeadsResponse

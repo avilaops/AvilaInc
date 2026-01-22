@@ -12,24 +12,48 @@
                     <div class="card__icon">@service.Icon</div>
                     <h3 class="card__title">@service.Title</h3>
                     <p class="card__text">@service.Description</p>
-                    <button class="btn btn--primary" type="button" @onclick="() => ContactForService(service.Title)">
-                        @service.ButtonText
-                    </button>
+                    <div class="card__actions">
+                        <button class="btn btn--primary" type="button" @onclick="() => OpenLeadModal(service)">
+                            @service.ButtonText
+                        </button>
+                        <button class="btn btn--outline" type="button" @onclick="() => ContactForService(service.Title)">
+                            WhatsApp
+                        </button>
+                    </div>
                 </div>
             }
         </div>
     </div>
 </section>
 
+<!-- Modal de Lead -->
+@if (_selectedService != null)
+{
+    <div class="modal-overlay" @onclick="CloseLeadModal">
+        <div class="modal-content" @onclick:stopPropagation>
+            <button class="modal-close" @onclick="CloseLeadModal">&times;</button>
+            <div class="modal-header">
+                <h2>Interesse em @_selectedService.Title</h2>
+                <p>Preencha o formulário abaixo e entraremos em contato sobre este serviço!</p>
+            </div>
+            <div class="modal-body">
+                <LeadForm Source="@($"Serviço: {_selectedService.Title}")" ServiceInterest="@_selectedService.Title" OnSubmitted="HandleLeadSubmitted" />
+            </div>
+        </div>
+    </div>
+}
+
 @code {
+    private ServiceCard? _selectedService;
+
     private List<ServiceCard> Services = new()
     {
-        new() { Icon = "🌐", Title = "Desenvolvimento de Sites", Description = "Sites modernos, rápidos e responsivos. Do layout até o lançamento, cuidamos de tudo para você." },
-        new() { Icon = "📊", Title = "Sistema de Analytics Próprio", Description = "Tenha seus próprios dados, sem limites e com privacidade total." },
-        new() { Icon = "🚀", Title = "Automação de Marketing", Description = "Automatize emails, captação de leads e funis de venda. Mais resultados com menos esforço." },
-        new() { Icon = "💬", Title = "Chat ao Vivo", Description = "Converse com seus clientes em tempo real. Widget personalizável e integrado ao seu sistema." },
-        new() { Icon = "🔗", Title = "Integrações", Description = "Conecte pagamentos, e-mail e ferramentas de IA para tudo funcionar junto automaticamente." },
-        new() { Icon = "👥", Title = "CRM Completo", Description = "Gerencie leads, contatos e campanhas em um só lugar. Simples, poderoso e fácil de usar." }
+        new() { Icon = "🌐", Title = "Desenvolvimento de Sites", Description = "Sites modernos, rápidos e responsivos. Do layout até o lançamento, cuidamos de tudo para você.", ButtonText = "Quero um Site" },
+        new() { Icon = "📊", Title = "Sistema de Analytics Próprio", Description = "Tenha seus próprios dados, sem limites e com privacidade total.", ButtonText = "Quero Analytics" },
+        new() { Icon = "🚀", Title = "Automação de Marketing", Description = "Automatize emails, captação de leads e funis de venda. Mais resultados com menos esforço.", ButtonText = "Quero Automação" },
+        new() { Icon = "💬", Title = "Chat ao Vivo", Description = "Converse com seus clientes em tempo real. Widget personalizável e integrado ao seu sistema.", ButtonText = "Quero Chat" },
+        new() { Icon = "🔗", Title = "Integrações", Description = "Conecte pagamentos, e-mail e ferramentas de IA para tudo funcionar junto automaticamente.", ButtonText = "Quero Integrações" },
+        new() { Icon = "👥", Title = "CRM Completo", Description = "Gerencie leads, contatos e campanhas em um só lugar. Simples, poderoso e fácil de usar.", ButtonText = "Quero CRM" }
     };
 
     private async Task ContactForService(string serviceName)
@@ -37,5 +61,21 @@
         var message = $"Olá! Tenho interesse em {serviceName}. Podemos conversar?";
         var url = ScrollService.BuildWhatsAppUrl("5511987654321", message);
         await ScrollService.OpenNewTabAsync(url);
+    }
+
+    private void OpenLeadModal(ServiceCard service)
+    {
+        _selectedService = service;
+    }
+
+    private void CloseLeadModal()
+    {
+        _selectedService = null;
+    }
+
+    private void HandleLeadSubmitted()
+    {
+        _selectedService = null;
+        // Opcional: mostrar mensagem de sucesso
     }
 }

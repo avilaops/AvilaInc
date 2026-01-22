@@ -1,0 +1,81 @@
+name: Deploy Landing to Staging
+
+# Deploy para Staging - Landing Web
+
+on:
+  push:
+    branches:
+      - develop
+    paths:
+      - "src/Landing/**"
+      - ".github/workflows/staging_landing-web.yml"
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Set up .NET Core
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore
+        run: dotnet restore src/Landing/Landing.csproj
+
+      - name: Build with dotnet
+        run: dotnet build src/Landing/Landing.csproj --configuration Release --no-restore
+
+      - name: dotnet publish
+        run: dotnet publish src/Landing/Landing.csproj -c Release -o ./publish
+
+      - name: Upload artifact for deployment job
+        uses: actions/upload-artifact@v4
+        with:
+          name: .net-app
+          path: ./publish
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      id-token: write
+      contents: read
+
+    steps:
+      - name: Download artifact from build job
+        uses: actions/download-artifact@v4
+        with:
+          name: .net-app
+
+      - name: Login to Azure
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E9B8D096759844348F152750590C7ABA }}
+          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E95F5BC51B324E24AC92827E127A070F }}
+          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AA4B633697964A6E89479D0F1EBA5BCE }}
+
+      - name: Deploy to Azure Web App (Staging)
+        id: deploy-to-webapp
+        uses: azure/webapps-deploy@v3
+        with:
+          app-name: 'landing-web'
+          slot-name: 'staging'
+          package: .
+
+      - name: Comment on PR with staging URL
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '🚀 **Staging Deploy Complete!**\n\n🌐 **Staging URL**: https://landing-web-staging.azurewebsites.net\n\n✅ Build: ${{ github.sha }}\n📅 Deployed at: ${{ github.event.head_commit.timestamp }}'
+            })

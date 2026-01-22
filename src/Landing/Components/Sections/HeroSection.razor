@@ -10,6 +10,9 @@
                 <button class="btn btn--primary" type="button" @onclick="ScrollToServices">
                     Ver Nossos Serviços
                 </button>
+                <button class="btn btn--secondary" type="button" @onclick="OpenLeadModal">
+                    Solicitar Contato
+                </button>
                 <button class="btn btn--ghost" type="button" @onclick="OpenWhatsApp">
                     Falar com Especialista
                 </button>
@@ -22,7 +25,26 @@
     </div>
 </section>
 
+<!-- Modal de Lead -->
+@if (_showLeadModal)
+{
+    <div class="modal-overlay" @onclick="CloseLeadModal">
+        <div class="modal-content" @onclick:stopPropagation>
+            <button class="modal-close" @onclick="CloseLeadModal">&times;</button>
+            <div class="modal-header">
+                <h2>Solicitar Contato</h2>
+                <p>Preencha o formulário abaixo e entraremos em contato em breve!</p>
+            </div>
+            <div class="modal-body">
+                <LeadForm Source="Hero Section" OnSubmitted="HandleLeadSubmitted" />
+            </div>
+        </div>
+    </div>
+}
+
 @code {
+    private bool _showLeadModal;
+
     private async Task ScrollToServices()
     {
         await ScrollService.ScrollToIdAsync("servicos");
@@ -32,5 +54,21 @@
     {
         var url = ScrollService.BuildWhatsAppUrl("5511987654321", "Olá! Tenho interesse nos serviços. Podemos conversar?");
         await ScrollService.OpenNewTabAsync(url);
+    }
+
+    private void OpenLeadModal()
+    {
+        _showLeadModal = true;
+    }
+
+    private void CloseLeadModal()
+    {
+        _showLeadModal = false;
+    }
+
+    private void HandleLeadSubmitted()
+    {
+        _showLeadModal = false;
+        // Opcional: mostrar mensagem de sucesso ou redirecionar
     }
 } 

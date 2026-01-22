@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj": {}
+    "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj": {
+    "d:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj",
+        "projectUniqueName": "d:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj",
         "projectName": "Manager.Core",
-        "projectPath": "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj",
+        "projectPath": "d:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\Admin\\src\\Manager.Core\\obj\\",
+        "outputPath": "d:\\Projetos\\Admin\\src\\Manager.Core\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -354,14 +354,14 @@
         }
       }
     },
-    "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj": {
+    "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
+        "projectUniqueName": "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
         "projectName": "Manager.Infrastructure",
-        "projectPath": "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
+        "projectPath": "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\Manager.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\Administrador\\.nuget\\packages\\",
-        "outputPath": "D:\\Projetos\\Admin\\src\\Manager.Infrastructure\\obj\\",
+        "outputPath": "d:\\Projetos\\Admin\\src\\Manager.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -383,8 +383,8 @@
           "net10.0": {
             "targetAlias": "net10.0",
             "projectReferences": {
-              "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj": {
-                "projectPath": "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj"
+              "d:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj": {
+                "projectPath": "d:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj"
               }
             }
           }

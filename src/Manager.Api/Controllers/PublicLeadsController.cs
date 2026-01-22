@@ -42,16 +42,24 @@ public class PublicLeadsController : ControllerBase
                 Origem = request.Source ?? "Landing",
                 Status = "novo",
                 CreatedAt = DateTime.UtcNow,
-                UpdatedAt = DateTime.UtcNow
+                UpdatedAt = DateTime.UtcNow,
+                // Novos campos de rastreamento
+                UtmSource = request.UtmSource,
+                UtmCampaign = request.UtmCampaign,
+                UtmMedium = request.UtmMedium,
+                PagePath = request.PagePath,
+                Referrer = request.Referrer,
+                ServiceInterest = request.ServiceInterest
             };
 
             await _leadsCollection.InsertOneAsync(lead);
 
             _logger.LogInformation(
-                "Lead criado: {Email} - {Name} via {Source}",
+                "Lead criado: {Email} - {Name} via {Source} - Service: {Service}",
                 lead.Email,
                 lead.Nome,
-                lead.Origem
+                lead.Origem,
+                lead.ServiceInterest
             );
 
             return Ok(new { ok = true, id = lead.Id });
@@ -90,4 +98,24 @@ public sealed class CreateLeadRequest
 
     [MaxLength(50)]
     public string Source { get; set; } = "Landing";
+
+    // Campos de rastreamento UTM
+    [MaxLength(100)]
+    public string? UtmSource { get; set; }
+
+    [MaxLength(100)]
+    public string? UtmCampaign { get; set; }
+
+    [MaxLength(100)]
+    public string? UtmMedium { get; set; }
+
+    // Campos de contexto
+    [MaxLength(500)]
+    public string? PagePath { get; set; }
+
+    [MaxLength(500)]
+    public string? Referrer { get; set; }
+
+    [MaxLength(200)]
+    public string? ServiceInterest { get; set; }
 }

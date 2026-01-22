@@ -61,4 +61,23 @@ public class Lead : MongoEntity
 
     [BsonElement("hasPatent")]
     public bool? HasPatent { get; set; }
+
+    // Campos de rastreamento para leads da landing page
+    [BsonElement("utmSource")]
+    public string? UtmSource { get; set; }
+
+    [BsonElement("utmCampaign")]
+    public string? UtmCampaign { get; set; }
+
+    [BsonElement("utmMedium")]
+    public string? UtmMedium { get; set; }
+
+    [BsonElement("pagePath")]
+    public string? PagePath { get; set; }
+
+    [BsonElement("referrer")]
+    public string? Referrer { get; set; }
+
+    [BsonElement("serviceInterest")]
+    public string? ServiceInterest { get; set; }
 }

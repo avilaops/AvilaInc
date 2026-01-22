@@ -1,4 +1,4 @@
-name: Build and deploy Manager API
+name: Deploy Manager API to Production
 
 on:
   push:
@@ -30,9 +30,9 @@ jobs:
       - name: Publish
         run: dotnet publish src/Manager.Api/Manager.Api.csproj -c Release -o publish --no-build
 
-      - name: Deploy to Azure Web App
+      - name: Deploy to Azure Web App (Production)
         uses: azure/webapps-deploy@v3
         with:
           app-name: manager-api
+          slot-name: Production
           publish-profile: ${{ secrets.PUBLISH_PROFILE_API }}
-          package: publish

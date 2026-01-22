@@ -1,0 +1,55 @@
+name: Pull Request Checks
+
+# Verificações automáticas em Pull Requests
+
+on:
+  pull_request:
+    branches: [ main, develop ]
+    types: [opened, synchronize, reopened]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.x'
+
+      - name: Restore dependencies
+        run: |
+          dotnet restore src/Landing/Landing.csproj
+          dotnet restore src/Manager.Api/Manager.Api.csproj
+
+      - name: Build projects
+        run: |
+          dotnet build src/Landing/Landing.csproj --configuration Release --no-restore
+          dotnet build src/Manager.Api/Manager.Api.csproj --configuration Release --no-restore
+
+      - name: Run tests (if any)
+        run: |
+          # Adicionar testes aqui quando criados
+          echo "Tests would run here"
+
+      - name: Check for secrets in code
+        run: |
+          # Verificar se não há secrets hardcoded
+          if grep -r "password\|secret\|key.*=.*["']" --include="*.cs" --include="*.json" src/; then
+            echo "⚠️  Possible hardcoded secrets found!"
+            exit 1
+          fi
+
+      - name: Comment on PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: '✅ **PR Validation Complete**\n\n- ✅ Build successful\n- ✅ Dependencies restored\n- ✅ No hardcoded secrets detected\n\nReady for review! 🎯'
+            })

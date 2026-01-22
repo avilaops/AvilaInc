@@ -2,7 +2,26 @@
 
 Sistema unificado de gerenciamento pessoal com integração completa de dados, CRM, Gmail, LinkedIn e muito mais.
 
-## 📁 Estrutura do Projeto (v2.1.0 - Reorganizada)
+## � Deploy Profissional
+
+Este projeto usa **CI/CD moderno** com ambientes separados e deploy automatizado.
+
+### 🌿 Branches
+- `main` → **Produção** (clientes)
+- `develop` → **Staging** (testes)
+- `feature/*` → Desenvolvimento
+
+### 🔄 Fluxo
+1. **Desenvolver** em `feature/*`
+2. **Testar** em `develop` (staging automático)
+3. **Produzir** em `main` (produção automático)
+
+### 📖 Guia Completo
+Ver [DEPLOY_GUIDE.md](DEPLOY_GUIDE.md) para instruções detalhadas.
+
+---
+
+## �📁 Estrutura do Projeto (v2.1.0 - Reorganizada)
 
 ```
 manager/

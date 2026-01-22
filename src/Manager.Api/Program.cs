@@ -128,6 +128,14 @@ builder.Services.AddScoped(sp =>
         settings.DatabaseNames.Dashboard, "client_history");
 });
 
+builder.Services.AddScoped(sp =>
+{
+    var context = sp.GetRequiredService<IMongoDbContext>();
+    var settings = sp.GetRequiredService<MongoDbSettings>();
+    return context.GetCollection<Manager.Core.Entities.Company>(
+        settings.DatabaseNames.Crm, "companies");
+});
+
 // Register Analytics Collections
 builder.Services.AddScoped(sp =>
 {

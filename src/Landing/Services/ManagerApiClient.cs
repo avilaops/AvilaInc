@@ -168,7 +168,13 @@ public sealed record CreateLeadDto(
     string Email,
     string Phone,
     string? Message,
-    string Source
+    string Source,
+    string? UtmSource,
+    string? UtmCampaign,
+    string? UtmMedium,
+    string? PagePath,
+    string? Referrer,
+    string? ServiceInterest
 );
 
 /// <summary>
