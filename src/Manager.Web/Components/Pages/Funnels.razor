@@ -1,0 +1,201 @@
+@page "/funnels"
+@using Manager.Core.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Funis de Conversão</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudText Typo="Typo.h4" Class="mb-2">
+        <MudIcon Icon="@Icons.Material.Filled.FilterAlt" Class="mr-2" />
+        Funis de Conversão
+    </MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">
+        Acompanhe a jornada dos visitantes até completarem uma ação. 
+        <MudLink Href="/help" Color="Color.Primary">Aprenda a criar funis</MudLink>
+    </MudText>
+
+    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenCreateDialog" Class="mb-4">
+        <MudIcon Icon="@Icons.Material.Filled.Add" /> Novo Funil
+    </MudButton>
+
+    @if (loading)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+    }
+    else if (funnels == null || !funnels.Any())
+    {
+        <MudAlert Severity="Severity.Info">Nenhum funil cadastrado</MudAlert>
+    }
+    else
+    {
+        <MudGrid>
+            @foreach (var funnel in funnels)
+            {
+                <MudItem xs="12" md="6">
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h6">@funnel.Name</MudText>
+                                <MudText Typo="Typo.body2">@funnel.Description</MudText>
+                            </CardHeaderContent>
+                            <CardHeaderActions>
+                                <MudChip T="string" Color="@(funnel.Active ? Color.Success : Color.Default)" Size="Size.Small">
+                                    @(funnel.Active ? "Ativo" : "Inativo")
+                                </MudChip>
+                            </CardHeaderActions>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Typo="Typo.body2" Class="mb-2"><strong>Etapas:</strong></MudText>
+                            @foreach (var step in funnel.Steps.OrderBy(s => s.StepNumber))
+                            {
+                                <MudChip T="string" Size="Size.Small" Class="mr-1 mb-1">
+                                    @step.StepNumber. @step.Name
+                                </MudChip>
+                            }
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton Variant="Variant.Text" Color="Color.Primary" OnClick="@(() => ViewStats(funnel.Id))">
+                                Ver Estatísticas
+                            </MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            }
+        </MudGrid>
+    }
+
+    <!-- Stats Dialog -->
+    @if (selectedStats != null)
+    {
+        <MudDialog @bind-Visible="statsDialogVisible" Options="@(new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true })">
+            <DialogContent>
+                <MudText Typo="Typo.h5" Class="mb-3">@selectedStats.FunnelName</MudText>
+                
+                <MudGrid Class="mb-4">
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-3 text-center">
+                            <MudText Typo="Typo.h4" Color="Color.Primary">@selectedStats.TotalStarted</MudText>
+                            <MudText Typo="Typo.body2">Iniciaram</MudText>
+                        </MudPaper>
+                    </MudItem>
+                    <MudItem xs="6">
+                        <MudPaper Class="pa-3 text-center">
+                            <MudText Typo="Typo.h4" Color="Color.Success">@selectedStats.TotalCompleted</MudText>
+                            <MudText Typo="Typo.body2">Completaram</MudText>
+                        </MudPaper>
+                    </MudItem>
+                </MudGrid>
+
+                <MudText Typo="Typo.h6" Class="mb-2">
+                    Taxa de Conversão Geral: <strong>@($"{selectedStats.OverallConversionRate}%")</strong>
+                </MudText>
+
+                <MudTable Items="@selectedStats.Steps" Dense="true" Class="mt-3">
+                    <HeaderContent>
+                        <MudTh>Etapa</MudTh>
+                        <MudTh>Nome</MudTh>
+                        <MudTh>Alcançaram</MudTh>
+                        <MudTh>Conversão</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd>@context.StepNumber</MudTd>
+                        <MudTd>@context.Name</MudTd>
+                        <MudTd>@context.Reached</MudTd>
+                        <MudTd>
+                            <MudProgressLinear Value="@context.ConversionRate" Color="Color.Primary" Size="Size.Small" />
+                            <MudText Typo="Typo.caption">@($"{context.ConversionRate}%")</MudText>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </DialogContent>
+            <DialogActions>
+                <MudButton OnClick="@(() => statsDialogVisible = false)">Fechar</MudButton>
+            </DialogActions>
+        </MudDialog>
+    }
+</MudContainer>
+
+@code {
+    private List<ConversionFunnel>? funnels;
+    private bool loading = false;
+    private bool statsDialogVisible = false;
+    private FunnelStats? selectedStats;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadFunnels();
+    }
+
+    private async Task LoadFunnels()
+    {
+        loading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ApiResponse<List<ConversionFunnel>>>("http://localhost:5056/api/funnels");
+            if (response?.Success == true)
+            {
+                funnels = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar funis: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void OpenCreateDialog()
+    {
+        Snackbar.Add("Funcionalidade em desenvolvimento", Severity.Info);
+    }
+
+    private async Task ViewStats(string funnelId)
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<StatsResponse>($"http://localhost:5056/api/funnels/{funnelId}/stats");
+            if (response?.Success == true)
+            {
+                selectedStats = response.Data;
+                statsDialogVisible = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar estatísticas: {ex.Message}", Severity.Error);
+        }
+    }
+
+    class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public T? Data { get; set; }
+    }
+
+    class StatsResponse
+    {
+        public bool Success { get; set; }
+        public FunnelStats? Data { get; set; }
+    }
+
+    class FunnelStats
+    {
+        public string FunnelName { get; set; } = "";
+        public int TotalStarted { get; set; }
+        public int TotalCompleted { get; set; }
+        public double OverallConversionRate { get; set; }
+        public List<StepStat> Steps { get; set; } = new();
+    }
+
+    class StepStat
+    {
+        public int StepNumber { get; set; }
+        public string Name { get; set; } = "";
+        public int Reached { get; set; }
+        public double ConversionRate { get; set; }
+    }
+}

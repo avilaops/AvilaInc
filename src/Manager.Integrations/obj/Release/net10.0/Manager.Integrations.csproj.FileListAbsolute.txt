@@ -1,0 +1,6 @@
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.csproj.AssemblyReference.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.AssemblyInfoInputs.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.AssemblyInfo.cs
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Release\net10.0\Manager.Integrations.sourcelink.json

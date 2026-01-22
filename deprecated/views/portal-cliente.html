@@ -1,0 +1,1027 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Portal do Cliente - Avila Inc</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/iconoir-icons/iconoir@main/css/iconoir.css" />
+    <style>
+        :root {
+            --primary: #ff8c00;
+            --secondary: #ffd700;
+            --dark: #1d1d1f;
+            --light: #fbfbfd;
+            --text: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --success: #34c759;
+            --warning: #ff9500;
+            --error: #ff3b30;
+            --info: #007aff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, sans-serif;
+            background: var(--light);
+            color: var(--text);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Header */
+        .header {
+            background: white;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+            padding: 16px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .logout-btn {
+            padding: 8px 16px;
+            background: transparent;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(0,0,0,0.05);
+        }
+
+        /* Main Content */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 40px 24px;
+        }
+
+        .welcome-section {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 20px;
+            padding: 40px;
+            color: white;
+            margin-bottom: 40px;
+            box-shadow: 0 20px 40px rgba(255,140,0,0.2);
+        }
+
+        .welcome-section h1 {
+            font-size: 32px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .welcome-section p {
+            opacity: 0.9;
+            font-size: 18px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon.success { background: rgba(52,199,89,0.1); color: var(--success); }
+        .stat-icon.warning { background: rgba(255,149,0,0.1); color: var(--warning); }
+        .stat-icon.info { background: rgba(0,122,255,0.1); color: var(--info); }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid rgba(0,0,0,0.1);
+        }
+
+        .tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.3s;
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom-color: var(--primary);
+        }
+
+        .tab:hover {
+            color: var(--dark);
+        }
+
+        /* Tab Content */
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Project Card */
+        .project-card {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+            margin-bottom: 16px;
+        }
+
+        .project-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .project-meta {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .status-badge.in-progress {
+            background: rgba(255,149,0,0.1);
+            color: var(--warning);
+        }
+
+        .status-badge.completed {
+            background: rgba(52,199,89,0.1);
+            color: var(--success);
+        }
+
+        .status-badge.pending {
+            background: rgba(0,122,255,0.1);
+            color: var(--info);
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: rgba(0,0,0,0.05);
+            border-radius: 4px;
+            overflow: hidden;
+            margin: 16px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 4px;
+            transition: width 0.3s;
+        }
+
+        .project-footer {
+            display: flex;
+            gap: 12px;
+            margin-top: 16px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #e67e00;
+            transform: translateY(-2px);
+        }
+
+        .btn-secondary {
+            background: rgba(0,0,0,0.05);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(0,0,0,0.1);
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(0,0,0,0.1);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-bottom: 32px;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            left: -29px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary);
+            border: 3px solid white;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.1);
+        }
+
+        .timeline-content {
+            background: white;
+            border-radius: 12px;
+            padding: 16px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .timeline-date {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: 4px;
+        }
+
+        .timeline-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .timeline-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* Messages */
+        .message-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .message-card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .message-header {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .message-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .message-info {
+            flex: 1;
+        }
+
+        .message-author {
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .message-time {
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        .message-content {
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* GitHub Integration */
+        .github-section {
+            background: white;
+            border-radius: 16px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+
+        .issue-item {
+            padding: 16px;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            margin-bottom: 12px;
+            transition: all 0.3s;
+        }
+
+        .issue-item:hover {
+            border-color: var(--primary);
+            box-shadow: 0 4px 12px rgba(255,140,0,0.1);
+        }
+
+        .issue-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 8px;
+        }
+
+        .issue-number {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .issue-title-text {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .issue-meta {
+            display: flex;
+            gap: 16px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+
+        /* Loading State */
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-secondary);
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 16px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .welcome-section {
+                padding: 24px;
+            }
+
+            .welcome-section h1 {
+                font-size: 24px;
+            }
+
+            .tabs {
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+
+            .project-header {
+                flex-direction: column;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="header-content">
+            <a href="/" class="logo">Avila Inc</a>
+            <div class="user-menu">
+                <div class="user-avatar" id="userAvatar">A</div>
+                <button class="logout-btn" onclick="logout()">
+                    <i class="iconoir-log-out"></i> Sair
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Welcome Section -->
+        <div class="welcome-section">
+            <h1 id="welcomeTitle">Bem-vindo(a) ao seu Portal!</h1>
+            <p>Acompanhe o desenvolvimento do seu projeto em tempo real</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="iconoir-check-circle"></i>
+                </div>
+                <div class="stat-label">Progresso Geral</div>
+                <div class="stat-value" id="overallProgress">75%</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon warning">
+                    <i class="iconoir-clock"></i>
+                </div>
+                <div class="stat-label">Dias até Entrega</div>
+                <div class="stat-value" id="daysRemaining">15</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon info">
+                    <i class="iconoir-git-branch"></i>
+                </div>
+                <div class="stat-label">Commits Hoje</div>
+                <div class="stat-value" id="commitsToday">12</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon success">
+                    <i class="iconoir-task-list"></i>
+                </div>
+                <div class="stat-label">Issues Concluídas</div>
+                <div class="stat-value" id="issuesClosed">28/35</div>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('overview')">
+                <i class="iconoir-home"></i> Visão Geral
+            </button>
+            <button class="tab" onclick="switchTab('timeline')">
+                <i class="iconoir-timeline"></i> Timeline
+            </button>
+            <button class="tab" onclick="switchTab('github')">
+                <i class="iconoir-github"></i> GitHub
+            </button>
+            <button class="tab" onclick="switchTab('messages')">
+                <i class="iconoir-chat-bubble"></i> Mensagens
+            </button>
+            <button class="tab" onclick="switchTab('files')">
+                <i class="iconoir-folder"></i> Arquivos
+            </button>
+        </div>
+
+        <!-- Tab: Overview -->
+        <div id="overview" class="tab-content active">
+            <div class="project-card">
+                <div class="project-header">
+                    <div>
+                        <div class="project-title">Plataforma E-commerce</div>
+                        <div class="project-meta">Iniciado em 08 Jan 2026 • Entrega prevista: 05 Fev 2026</div>
+                    </div>
+                    <span class="status-badge in-progress">Em Desenvolvimento</span>
+                </div>
+
+                <div class="progress-bar">
+                    <div class="progress-fill" style="width: 75%"></div>
+                </div>
+
+                <p style="margin-bottom: 16px; color: var(--text-secondary);">
+                    Desenvolvimento de plataforma e-commerce completa com integração de pagamentos, 
+                    gestão de produtos, painel administrativo e aplicativo mobile.
+                </p>
+
+                <div class="project-footer">
+                    <a href="#" class="btn btn-primary" onclick="switchTab('github')">
+                        <i class="iconoir-github"></i> Ver no GitHub
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="switchTab('files')">
+                        <i class="iconoir-folder"></i> Documentos
+                    </a>
+                    <a href="#" class="btn btn-secondary" onclick="switchTab('messages')">
+                        <i class="iconoir-chat-bubble"></i> Mensagens
+                    </a>
+                </div>
+            </div>
+
+            <div class="github-section">
+                <div class="section-header">
+                    <h3 class="section-title">Últimas Atualizações</h3>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Hoje, 14:30</div>
+                            <div class="timeline-title">Sistema de pagamento integrado</div>
+                            <div class="timeline-description">Integração com Stripe concluída e testada</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">Ontem, 16:45</div>
+                            <div class="timeline-title">Painel administrativo finalizado</div>
+                            <div class="timeline-description">Dashboard com todas as métricas implementadas</div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">19 Jan, 10:20</div>
+                            <div class="timeline-title">Catálogo de produtos completo</div>
+                            <div class="timeline-description">Sistema de categorias e filtros implementado</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Timeline -->
+        <div id="timeline" class="tab-content">
+            <div class="github-section">
+                <div class="section-header">
+                    <h3 class="section-title">Histórico Completo do Projeto</h3>
+                </div>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">21 Jan 2026, 14:30</div>
+                            <div class="timeline-title">🎉 Sistema de pagamento integrado</div>
+                            <div class="timeline-description">
+                                Integração completa com Stripe. Suporte a cartão de crédito, PIX e boleto bancário.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">20 Jan 2026, 16:45</div>
+                            <div class="timeline-title">📊 Painel administrativo concluído</div>
+                            <div class="timeline-description">
+                                Dashboard com métricas em tempo real, gestão de pedidos e relatórios avançados.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">19 Jan 2026, 10:20</div>
+                            <div class="timeline-title">🛍️ Catálogo de produtos finalizado</div>
+                            <div class="timeline-description">
+                                Sistema completo com categorias, filtros, busca avançada e gestão de estoque.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">15 Jan 2026, 09:00</div>
+                            <div class="timeline-title">🎨 Design system aprovado</div>
+                            <div class="timeline-description">
+                                Interface moderna e responsiva com componentes reutilizáveis.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">10 Jan 2026, 15:30</div>
+                            <div class="timeline-title">🚀 Infraestrutura configurada</div>
+                            <div class="timeline-description">
+                                Ambiente de desenvolvimento, staging e produção configurados.
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-dot"></div>
+                        <div class="timeline-content">
+                            <div class="timeline-date">08 Jan 2026, 10:00</div>
+                            <div class="timeline-title">🎯 Projeto iniciado</div>
+                            <div class="timeline-description">
+                                Kick-off meeting realizado e escopo do projeto definido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: GitHub -->
+        <div id="github" class="tab-content">
+            <div class="github-section">
+                <div class="section-header">
+                    <h3 class="section-title">
+                        <i class="iconoir-github"></i> Repositório GitHub
+                    </h3>
+                    <a href="https://github.com/avilaops/AvilaInc" target="_blank" class="btn btn-primary">
+                        Abrir no GitHub
+                    </a>
+                </div>
+
+                <div id="githubContent" class="loading">
+                    <div class="spinner"></div>
+                    <p>Carregando dados do GitHub...</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Messages -->
+        <div id="messages" class="tab-content">
+            <div class="github-section">
+                <div class="section-header">
+                    <h3 class="section-title">Mensagens</h3>
+                    <button class="btn btn-primary" onclick="openNewMessage()">
+                        <i class="iconoir-plus"></i> Nova Mensagem
+                    </button>
+                </div>
+
+                <div class="message-list">
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="message-avatar">EA</div>
+                            <div class="message-info">
+                                <div class="message-author">Equipe Avila</div>
+                                <div class="message-time">Hoje às 14:30</div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            Olá! Finalizamos a integração do sistema de pagamentos. 
+                            Você pode testar em ambiente de homologação através do link que enviamos por email. 
+                            Qualquer dúvida, estamos à disposição! 🚀
+                        </div>
+                    </div>
+
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="message-avatar">VC</div>
+                            <div class="message-info">
+                                <div class="message-author">Você</div>
+                                <div class="message-time">Ontem às 16:20</div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            Perfeito! Adorei o progresso. Seria possível adicionar um filtro por faixa de preço 
+                            no catálogo de produtos?
+                        </div>
+                    </div>
+
+                    <div class="message-card">
+                        <div class="message-header">
+                            <div class="message-avatar">EA</div>
+                            <div class="message-info">
+                                <div class="message-author">Equipe Avila</div>
+                                <div class="message-time">Ontem às 17:05</div>
+                            </div>
+                        </div>
+                        <div class="message-content">
+                            Claro! Já adicionamos essa funcionalidade. Você pode testar agora no ambiente de staging. 
+                            Implementamos também ordenação por relevância, preço e novidades. ✨
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab: Files -->
+        <div id="files" class="tab-content">
+            <div class="github-section">
+                <div class="section-header">
+                    <h3 class="section-title">Documentos e Arquivos</h3>
+                    <button class="btn btn-primary" onclick="uploadFile()">
+                        <i class="iconoir-upload"></i> Upload
+                    </button>
+                </div>
+
+                <div class="project-card">
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 12px;">
+                        <div style="width: 48px; height: 48px; background: rgba(255,140,0,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--primary);">
+                            <i class="iconoir-page"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Especificação Técnica.pdf</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">2.4 MB • Atualizado em 10 Jan 2026</div>
+                        </div>
+                        <button class="btn btn-secondary">
+                            <i class="iconoir-download"></i> Baixar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 12px;">
+                        <div style="width: 48px; height: 48px; background: rgba(0,122,255,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--info);">
+                            <i class="iconoir-design-pencil"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Design System.fig</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">12.8 MB • Atualizado em 15 Jan 2026</div>
+                        </div>
+                        <button class="btn btn-secondary">
+                            <i class="iconoir-eye"></i> Visualizar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 12px;">
+                        <div style="width: 48px; height: 48px; background: rgba(52,199,89,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--success);">
+                            <i class="iconoir-folder"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Contratos</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">3 arquivos • Última modificação: 08 Jan 2026</div>
+                        </div>
+                        <button class="btn btn-secondary">
+                            <i class="iconoir-nav-arrow-right"></i> Abrir
+                        </button>
+                    </div>
+                </div>
+
+                <div class="project-card">
+                    <div style="display: flex; align-items: center; gap: 16px; padding: 12px;">
+                        <div style="width: 48px; height: 48px; background: rgba(255,149,0,0.1); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--warning);">
+                            <i class="iconoir-code"></i>
+                        </div>
+                        <div style="flex: 1;">
+                            <div style="font-weight: 600; margin-bottom: 4px;">Documentação API</div>
+                            <div style="font-size: 14px; color: var(--text-secondary);">Link externo • Swagger UI</div>
+                        </div>
+                        <a href="#" class="btn btn-secondary" target="_blank">
+                            <i class="iconoir-open-new-window"></i> Abrir
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Verificar autenticação
+        const token = localStorage.getItem('authToken');
+        const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+
+        if (!token) {
+            window.location.href = '/';
+        }
+
+        // Atualizar interface com dados do usuário
+        if (userData.name) {
+            document.getElementById('welcomeTitle').textContent = `Bem-vindo(a), ${userData.name}!`;
+            const initials = userData.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('userAvatar').textContent = initials;
+        }
+
+        // Função de logout
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('userData');
+            window.location.href = '/';
+        }
+
+        // Função para trocar abas
+        function switchTab(tabName) {
+            // Remover active de todas as abas e conteúdos
+            document.querySelectorAll('.tab').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+            // Adicionar active na aba clicada
+            event.target.closest('.tab').classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+
+            // Carregar dados do GitHub se necessário
+            if (tabName === 'github') {
+                loadGitHubData();
+            }
+        }
+
+        // Carregar dados do GitHub
+        async function loadGitHubData() {
+            const githubContent = document.getElementById('githubContent');
+            
+            try {
+                const response = await fetch('/api/github/repository');
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    displayGitHubData(data);
+                } else {
+                    githubContent.innerHTML = `
+                        <div style="text-align: center; padding: 40px; color: var(--text-secondary);">
+                            <i class="iconoir-github" style="font-size: 48px; margin-bottom: 16px;"></i>
+                            <p>Repositório GitHub será vinculado em breve</p>
+                            <p style="font-size: 14px; margin-top: 8px;">Entre em contato com a equipe para mais detalhes</p>
+                        </div>
+                    `;
+                }
+            } catch (error) {
+                githubContent.innerHTML = `
+                    <div style="text-align: center; padding: 40px;">
+                        <div style="padding: 24px; background: white; border-radius: 16px; display: inline-block;">
+                            <div style="font-size: 48px; margin-bottom: 16px;">🔗</div>
+                            <h3 style="margin-bottom: 12px;">Repositório Privado</h3>
+                            <p style="color: var(--text-secondary); margin-bottom: 20px;">
+                                Seu projeto está em um repositório privado.<br>
+                                Você receberá acesso em breve.
+                            </p>
+                            <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+                                <div style="text-align: left; padding: 16px; background: rgba(0,0,0,0.02); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">Commits</div>
+                                    <div style="font-size: 24px; font-weight: 600;">127</div>
+                                </div>
+                                <div style="text-align: left; padding: 16px; background: rgba(0,0,0,0.02); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">Issues</div>
+                                    <div style="font-size: 24px; font-weight: 600;">8</div>
+                                </div>
+                                <div style="text-align: left; padding: 16px; background: rgba(0,0,0,0.02); border-radius: 12px;">
+                                    <div style="font-size: 12px; color: var(--text-secondary); margin-bottom: 4px;">PRs</div>
+                                    <div style="font-size: 24px; font-weight: 600;">12</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        function displayGitHubData(data) {
+            const githubContent = document.getElementById('githubContent');
+            githubContent.innerHTML = `
+                <div class="issue-item">
+                    <div class="issue-header">
+                        <div class="issue-number">#${data.id || '1'}</div>
+                    </div>
+                    <div class="issue-title-text">${data.name || 'Seu Projeto'}</div>
+                    <div class="issue-meta">
+                        <span>⭐ ${data.stargazers_count || 0} stars</span>
+                        <span>🔀 ${data.forks_count || 0} forks</span>
+                        <span>📝 ${data.open_issues_count || 0} issues abertas</span>
+                    </div>
+                </div>
+            `;
+        }
+
+        function openNewMessage() {
+            alert('Funcionalidade de nova mensagem será implementada em breve!\n\nPor enquanto, você pode entrar em contato através do email:\ncontato@avila.inc');
+        }
+
+        function uploadFile() {
+            alert('Funcionalidade de upload será implementada em breve!\n\nPor enquanto, envie seus arquivos para:\ncontato@avila.inc');
+        }
+
+        // Simular atualização de stats em tempo real
+        setInterval(() => {
+            const commitsElement = document.getElementById('commitsToday');
+            if (commitsElement) {
+                const current = parseInt(commitsElement.textContent);
+                if (Math.random() > 0.8) {
+                    commitsElement.textContent = current + 1;
+                }
+            }
+        }, 30000); // A cada 30 segundos
+    </script>
+</body>
+</html>

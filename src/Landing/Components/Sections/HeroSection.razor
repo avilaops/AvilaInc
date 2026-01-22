@@ -1,0 +1,36 @@
+@inject Landing.Services.ScrollService ScrollService
+
+<section class="hero">
+    <div class="hero__inner">
+        <div class="hero__content">
+            <h1 class="reveal">Transforme Seu Negócio Digital</h1>
+            <p class="reveal">Desenvolvimento Web, Analytics Avançado e Automações que Realmente Funcionam</p>
+            
+            <div class="hero__actions reveal">
+                <button class="btn btn--primary" type="button" @onclick="ScrollToServices">
+                    Ver Nossos Serviços
+                </button>
+                <button class="btn btn--ghost" type="button" @onclick="OpenWhatsApp">
+                    Falar com Especialista
+                </button>
+            </div>
+        </div>
+        
+        <div class="hero__art reveal">
+            <span style="font-size: 180px;">💼</span>
+        </div>
+    </div>
+</section>
+
+@code {
+    private async Task ScrollToServices()
+    {
+        await ScrollService.ScrollToIdAsync("servicos");
+    }
+
+    private async Task OpenWhatsApp()
+    {
+        var url = ScrollService.BuildWhatsAppUrl("5511987654321", "Olá! Tenho interesse nos serviços. Podemos conversar?");
+        await ScrollService.OpenNewTabAsync(url);
+    }
+} 

@@ -1,0 +1,114 @@
+@page "/playbook-runs"
+@using Manager.Contracts.DTOs
+@inject HttpClient Http
+@inject NavigationManager Navigation
+
+<PageTitle>Playbook Runs - Manager</PageTitle>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Playbook Runs</h1>
+        </div>
+    </div>
+
+    @if (runs == null)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (!runs.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No playbook runs yet.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Playbook</th>
+                        <th>Project</th>
+                        <th>Status</th>
+                        <th>Started</th>
+                        <th>Duration</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var run in runs)
+                    {
+                        <tr>
+                            <td>@run.PlaybookName</td>
+                            <td>
+                                <a href="/projects/@run.ProjectId">Project</a>
+                            </td>
+                            <td>
+                                <JobStatusBadge Status="@run.Status" />
+                            </td>
+                            <td>
+                                @if (run.StartedAt.HasValue)
+                                {
+                                    @run.StartedAt.Value.ToString("dd/MM/yyyy HH:mm")
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not started</span>
+                                }
+                            </td>
+                            <td>
+                                @if (run.StartedAt.HasValue && run.CompletedAt.HasValue)
+                                {
+                                    var duration = run.CompletedAt.Value - run.StartedAt.Value;
+                                    @($"{duration.TotalSeconds:F1}s")
+                                }
+                                else if (run.StartedAt.HasValue)
+                                {
+                                    <span class="text-muted">Running...</span>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>
+                                <a href="/playbook-runs/@run.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    [SupplyParameterFromQuery]
+    public Guid? ProjectId { get; set; }
+
+    private List<PlaybookRunResponse>? runs;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var url = ProjectId.HasValue 
+                ? $"api/playbook-runs?projectId={ProjectId}" 
+                : "api/playbook-runs";
+            
+            runs = await Http.GetFromJsonAsync<List<PlaybookRunResponse>>(url);
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading playbook runs: {ex.Message}");
+            runs = new List<PlaybookRunResponse>();
+        }
+    }
+}

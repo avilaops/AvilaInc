@@ -1,0 +1,45 @@
+@inject Landing.Services.ScrollService ScrollService
+
+<nav class="navbar">
+    <div class="container">
+        <div class="nav-content">
+            <div class="logo" @onclick="@(() => ScrollTo("topo"))">
+                <span>🚀 Tech Solutions</span>
+            </div>
+            
+            <button class="hamburger" 
+                    type="button" 
+                    aria-label="Menu" 
+                    aria-expanded="@isMenuOpen"
+                    aria-controls="nav-menu"
+                    @onclick="ToggleMenu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+
+            <ul class="nav-menu @(isMenuOpen ? "active" : "")" id="nav-menu">
+                <li><a @onclick="@(() => ScrollTo("servicos"))" @onclick:preventDefault>Serviços</a></li>
+                <li><a @onclick="@(() => ScrollTo("beneficios"))" @onclick:preventDefault>Sobre</a></li>
+                <li><a @onclick="@(() => ScrollTo("como-funciona"))" @onclick:preventDefault>Como Funciona</a></li>
+                <li><a @onclick="@(() => ScrollTo("faq"))" @onclick:preventDefault>FAQ</a></li>
+                <li><a @onclick="@(() => ScrollTo("contato"))" @onclick:preventDefault class="btn-contact">Contato</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+@code {
+    private bool isMenuOpen = false;
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+
+    private async Task ScrollTo(string id)
+    {
+        isMenuOpen = false;
+        await ScrollService.ScrollToIdAsync(id);
+    }
+}

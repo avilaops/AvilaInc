@@ -1,0 +1,67 @@
+@page "/"
+@using Microsoft.AspNetCore.Components.Web
+@namespace Landing.Pages
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+    <title>Transforme Seu Negócio Digital | Seus Serviços Tech</title>
+    <meta name="description" content="Desenvolvimento web, analytics próprio e automações. Transforme seu negócio digital com soluções que realmente funcionam." />
+    
+    <!-- Open Graph -->
+    <meta property="og:title" content="Transforme Seu Negócio Digital" />
+    <meta property="og:description" content="Desenvolvimento web, analytics próprio e automações personalizadas." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://seusite.com.br" />
+    <meta property="og:image" content="~/images/og-image.png" />
+    
+    <base href="~/" />
+    <link rel="icon" type="image/x-icon" href="~/favicon.ico" />
+    <link href="css/app.css?v=4" rel="stylesheet" />
+    <style>
+        /* INLINE CRITICAL CSS */
+        .header{position:sticky;top:0;z-index:50;background:#fff;border-bottom:1px solid rgba(0,0,0,.06)}
+        .header__inner{display:flex;align-items:center;justify-content:space-between;height:72px;max-width:1100px;margin:0 auto;padding:0 20px}
+        .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:#111;font-weight:700;cursor:pointer}
+        .nav{display:flex;align-items:center;gap:14px}
+        .nav__link{text-decoration:none;color:#333;font-weight:600;padding:10px 12px;border-radius:12px;cursor:pointer}
+        .hero{background:linear-gradient(135deg,#1976d2 0%,#7c4dff 100%);color:#fff}
+        .hero__inner{max-width:1100px;margin:0 auto;padding:80px 20px;display:grid;grid-template-columns:1.2fr 0.8fr;gap:40px;align-items:center}
+        .hero h1{font-size:clamp(32px,4vw,52px);line-height:1.05;margin:0 0 14px}
+        .hero p{font-size:18px;line-height:1.6;opacity:.92;margin:0 0 24px}
+        .hero__actions{display:flex;gap:14px;flex-wrap:wrap}
+        .btn{display:inline-flex;align-items:center;justify-content:center;padding:15px 30px;border-radius:14px;font-weight:700;border:none;cursor:pointer}
+        .btn--primary{background:#fff;color:#1976d2;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+        .btn--ghost{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.55)}
+        .section{padding:80px 0;background:#fff}
+        .container{max-width:1100px;margin:0 auto;padding:0 20px}
+        .section__title{text-align:center;font-size:clamp(28px,3vw,42px);margin:0 0 50px;color:#111}
+        .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+        .card{background:#fff;border:1px solid rgba(0,0,0,.08);border-radius:16px;padding:24px;box-shadow:0 10px 30px rgba(0,0,0,.04)}
+        @@media(max-width:1024px){.grid{grid-template-columns:repeat(2,1fr)}}
+        @@media(max-width:768px){.grid{grid-template-columns:1fr}.hero__inner{grid-template-columns:1fr}}
+    </style>
+    <component type="typeof(HeadOutlet)" render-mode="ServerPrerendered" />
+</head>
+<body>
+    <component type="typeof(Landing.Components.App)" render-mode="ServerPrerendered" />
+
+    <div id="blazor-error-ui">
+        <environment include="Staging,Production">
+            Um erro ocorreu. Recarregue a página.
+        </environment>
+        <environment include="Development">
+            Um erro não tratado ocorreu. Veja os logs do navegador para detalhes.
+        </environment>
+        <a href="" class="reload">Recarregar</a>
+        <a class="dismiss">🗙</a>
+    </div>
+
+    <script src="_framework/blazor.server.js"></script>
+    <script src="~/js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+@page "/projects"
+@using Manager.Contracts.DTOs
+@inject HttpClient Http
+
+<PageTitle>Projects - Manager</PageTitle>
+
+<div class="container-fluid">
+    <div class="row mb-4">
+        <div class="col">
+            <h1>Projects</h1>
+        </div>
+        <div class="col-auto">
+            <button class="btn btn-primary" @onclick="ShowCreateModal">
+                <i class="bi bi-plus-circle"></i> New Project
+            </button>
+        </div>
+    </div>
+
+    @if (projects == null)
+    {
+        <div class="text-center">
+            <div class="spinner-border" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+        </div>
+    }
+    else if (!projects.Any())
+    {
+        <div class="alert alert-info">
+            <i class="bi bi-info-circle"></i> No projects yet. Create your first project!
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Type</th>
+                        <th>Status</th>
+                        <th>Domain</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var project in projects)
+                    {
+                        <tr>
+                            <td>
+                                <a href="/projects/@project.Id">@project.Name</a>
+                            </td>
+                            <td>
+                                <span class="badge bg-secondary">@project.Type</span>
+                            </td>
+                            <td>
+                                <StatusBadge Status="@project.Status" />
+                            </td>
+                            <td>
+                                @if (!string.IsNullOrEmpty(project.Domain))
+                                {
+                                    <a href="https://@project.Domain" target="_blank">@project.Domain</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">-</span>
+                                }
+                            </td>
+                            <td>@project.CreatedAt.ToString("dd/MM/yyyy")</td>
+                            <td>
+                                <a href="/projects/@project.Id" class="btn btn-sm btn-outline-primary">
+                                    <i class="bi bi-eye"></i> View
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+@code {
+    private List<ProjectResponse>? projects;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            projects = await Http.GetFromJsonAsync<List<ProjectResponse>>("api/projects");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading projects: {ex.Message}");
+            projects = new List<ProjectResponse>();
+        }
+    }
+
+    private void ShowCreateModal()
+    {
+        // TODO: Implement modal for creating projects
+    }
+}

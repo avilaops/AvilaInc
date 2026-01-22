@@ -1,0 +1,21 @@
+@inherits LayoutComponentBase
+@inject Landing.Services.ScrollService ScrollService
+
+<Landing.Components.Layout.NavMenu />
+
+<main>
+    @Body
+</main>
+
+<Landing.Components.Layout.FooterSection />
+<Landing.Components.Shared.BackToTop />
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await ScrollService.InitScrollRevealAsync();
+        }
+    }
+}

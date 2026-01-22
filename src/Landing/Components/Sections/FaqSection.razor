@@ -1,0 +1,68 @@
+@using Landing.Models
+
+<section class="faq section section-white">
+    <div class="container">
+        <h2 class="section-title reveal">Perguntas Frequentes</h2>
+        
+        <div class="faq-list">
+            @foreach (var (item, index) in FaqItems.Select((item, index) => (item, index)))
+            {
+                <div class="faq-item reveal">
+                    <button class="faq-question" 
+                            type="button"
+                            aria-expanded="@item.IsOpen"
+                            aria-controls="@($"faq-answer-{index}")"
+                            @onclick="() => ToggleFaq(index)">
+                        <span>@item.Question</span>
+                        <span class="faq-icon" aria-hidden="true">@(item.IsOpen ? "−" : "+")</span>
+                    </button>
+                    
+                    @if (item.IsOpen)
+                    {
+                        <div class="faq-answer" 
+                             id="@($"faq-answer-{index}")"
+                             role="region"
+                             aria-labelledby="@($"faq-question-{index}")">
+                            <p>@item.Answer</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<FaqItem> FaqItems = new()
+    {
+        new() { 
+            Question = "Quanto tempo demora para fazer um site?", 
+            Answer = "Depende da complexidade, mas geralmente entre 2 a 6 semanas. Sites simples podem ficar prontos em 1-2 semanas." 
+        },
+        new() { 
+            Question = "Vocês fazem manutenção depois?", 
+            Answer = "Sim! Oferecemos pacotes de manutenção mensal ou suporte sob demanda conforme sua necessidade." 
+        },
+        new() { 
+            Question = "Como funciona o pagamento?", 
+            Answer = "Geralmente dividimos em etapas: 30% início, 40% desenvolvimento, 30% entrega. Aceitos cartão, PIX e boleto." 
+        },
+        new() { 
+            Question = "Posso adicionar funcionalidades depois?", 
+            Answer = "Com certeza! Nosso código é limpo e documentado, facilitando expansões futuras." 
+        },
+        new() { 
+            Question = "O analytics realmente substitui o Google Analytics?", 
+            Answer = "Sim! Você tem todas as métricas principais (pageviews, visitantes, eventos, conversões) sem depender de terceiros." 
+        },
+        new() { 
+            Question = "Preciso entender de tecnologia para usar?", 
+            Answer = "Não! Fazemos treinamento completo e deixamos tudo o mais simples possível. Se souber usar e-mail, consegue usar nossos sistemas." 
+        }
+    };
+
+    private void ToggleFaq(int index)
+    {
+        FaqItems[index].IsOpen = !FaqItems[index].IsOpen;
+    }
+}

@@ -1,0 +1,26 @@
+@inject Landing.Services.ScrollService ScrollService
+
+<section class="final-cta section">
+    <div class="container">
+        <div class="cta-content reveal">
+            <h2>Pronto para Transformar Seu Negócio?</h2>
+            <p>Fale com a gente hoje mesmo. Sem compromisso, sem enrolação.</p>
+            
+            <button class="btn btn-primary btn-large" type="button" @onclick="OpenWhatsApp">
+                Iniciar Meu Projeto
+            </button>
+
+            <div class="contact-info">
+                <span>📱 WhatsApp: (11) 98765-4321</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+@code {
+    private async Task OpenWhatsApp()
+    {
+        var url = ScrollService.BuildWhatsAppUrl("5511987654321", "Olá! Quero iniciar meu projeto. Podemos conversar?");
+        await ScrollService.OpenNewTabAsync(url);
+    }
+}

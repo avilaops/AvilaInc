@@ -1,0 +1,39 @@
+@Manager.Api_HostAddress = http://localhost:5056
+
+GET {{Manager.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
+
+# Register User
+POST {{Manager.Api_HostAddress}}/api/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!",
+  "name": "Test User"
+}
+
+###
+
+# Login User
+POST {{Manager.Api_HostAddress}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "Test123!"
+}
+
+###
+
+# Forgot Password
+POST {{Manager.Api_HostAddress}}/api/auth/forgot-password
+Content-Type: application/json
+
+{
+  "email": "test@example.com"
+}
+
+###

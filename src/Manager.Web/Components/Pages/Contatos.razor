@@ -1,0 +1,269 @@
+@page "/contatos"
+@using System.Net.Http.Json
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Contatos - Avila Manager</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">👥 Contatos</MudText>
+<MudText Typo="Typo.body1" Class="mb-6">Gerencie sua base de contatos e relacionamento com clientes</MudText>
+
+<MudCard Elevation="2">
+    <MudCardContent>
+        <MudStack Row="true" Spacing="3" Class="mb-4">
+            <MudTextField @bind-Value="searchString" Placeholder="Buscar contatos..." 
+                          Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" 
+                          IconSize="Size.Medium" Class="flex-grow-1" Immediate="true" />
+            <MudSelect @bind-Value="typeFilter" Label="Tipo" Style="min-width: 150px;">
+                <MudSelectItem Value="@("Todos")">Todos</MudSelectItem>
+                <MudSelectItem Value="@("Cliente")">Cliente</MudSelectItem>
+                <MudSelectItem Value="@("Prospect")">Prospect</MudSelectItem>
+                <MudSelectItem Value="@("Parceiro")">Parceiro</MudSelectItem>
+            </MudSelect>
+            <MudButton Variant="Variant.Filled" Color="Color.Success" 
+                       StartIcon="@Icons.Material.Filled.PersonAdd" OnClick="OpenCreateDialog">
+                Novo Contato
+            </MudButton>
+        </MudStack>
+
+        @if (loading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudTable Items="@FilteredContacts" Hover="true" Breakpoint="Breakpoint.Sm" Dense="true">
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>Email</MudTh>
+                    <MudTh>Telefone</MudTh>
+                    <MudTh>Empresa</MudTh>
+                    <MudTh>Tipo</MudTh>
+                    <MudTh>Tags</MudTh>
+                    <MudTh>Ações</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">
+                        <MudStack Row="true" AlignItems="AlignItems.Center" Spacing="2">
+                            <MudAvatar Color="Color.Primary" Size="Size.Small">
+                                @context.Name[0]
+                            </MudAvatar>
+                            <MudText>@context.Name</MudText>
+                        </MudStack>
+                    </MudTd>
+                    <MudTd DataLabel="Email">@context.Email</MudTd>
+                    <MudTd DataLabel="Telefone">@context.Phone</MudTd>
+                    <MudTd DataLabel="Empresa">@context.Company</MudTd>
+                    <MudTd DataLabel="Tipo">
+                        <MudChip T="string" Color="@GetTypeColor(context.Type)" Size="Size.Small">
+                            @context.Type
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Tags">
+                        @if (context.Tags != null && context.Tags.Any())
+                        {
+                            @foreach (var tag in context.Tags.Take(2))
+                            {
+                                <MudChip T="string" Size="Size.Small" Variant="Variant.Outlined">@tag</MudChip>
+                            }
+                        }
+                    </MudTd>
+                    <MudTd DataLabel="Ações">
+                        <MudIconButton Icon="@Icons.Material.Filled.Visibility" Size="Size.Small" 
+                                       Color="Color.Info" OnClick="@(() => ViewContact(context))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" 
+                                       Color="Color.Primary" OnClick="@(() => OpenEditDialog(context))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" 
+                                       Color="Color.Error" OnClick="@(() => DeleteContact(context.Id))" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        }
+    </MudCardContent>
+</MudCard>
+
+<MudDialog @bind-Visible="dialogVisible" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            @(editingContact?.Id == null ? "Novo Contato" : "Editar Contato")
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudTextField @bind-Value="editingContact.Name" Label="Nome Completo" Required="true" />
+            <MudTextField @bind-Value="editingContact.Email" Label="Email" InputType="InputType.Email" Required="true" />
+            <MudTextField @bind-Value="editingContact.Phone" Label="Telefone" />
+            <MudTextField @bind-Value="editingContact.Company" Label="Empresa" />
+            <MudTextField @bind-Value="editingContact.Position" Label="Cargo" />
+            <MudSelect @bind-Value="editingContact.Type" Label="Tipo" Required="true">
+                <MudSelectItem Value="@("Cliente")">Cliente</MudSelectItem>
+                <MudSelectItem Value="@("Prospect")">Prospect</MudSelectItem>
+                <MudSelectItem Value="@("Parceiro")">Parceiro</MudSelectItem>
+                <MudSelectItem Value="@("Fornecedor")">Fornecedor</MudSelectItem>
+            </MudSelect>
+            <MudTextField @bind-Value="editingContact.Address" Label="Endereço" />
+            <MudTextField @bind-Value="editingContact.City" Label="Cidade" />
+            <MudTextField @bind-Value="editingContact.Notes" Label="Observações" Lines="3" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseDialog">Cancelar</MudButton>
+        <MudButton Color="Color.Success" Variant="Variant.Filled" OnClick="SaveContact">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private List<Contact> contacts = new();
+    private Contact editingContact = new();
+    private bool loading = true;
+    private bool dialogVisible = false;
+    private string searchString = "";
+    private string typeFilter = "Todos";
+    
+    private DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+
+    private IEnumerable<Contact> FilteredContacts => contacts
+        .Where(c => (string.IsNullOrEmpty(searchString) || 
+                     c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                     c.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                     (c.Company?.Contains(searchString, StringComparison.OrdinalIgnoreCase) ?? false)) &&
+                    (typeFilter == "Todos" || c.Type == typeFilter));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadContacts();
+    }
+
+    private async Task LoadContacts()
+    {
+        loading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ContactsResponse>("http://localhost:5056/api/contacts");
+            contacts = response?.Data ?? new List<Contact>();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar contatos: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void OpenCreateDialog()
+    {
+        editingContact = new Contact { Type = "Cliente" };
+        dialogVisible = true;
+    }
+
+    private void OpenEditDialog(Contact contact)
+    {
+        editingContact = new Contact
+        {
+            Id = contact.Id,
+            Name = contact.Name,
+            Email = contact.Email,
+            Phone = contact.Phone,
+            Company = contact.Company,
+            Position = contact.Position,
+            Type = contact.Type,
+            Address = contact.Address,
+            City = contact.City,
+            Notes = contact.Notes,
+            Tags = contact.Tags
+        };
+        dialogVisible = true;
+    }
+
+    private void CloseDialog()
+    {
+        dialogVisible = false;
+        editingContact = new();
+    }
+
+    private void ViewContact(Contact contact)
+    {
+        Snackbar.Add($"Visualizar detalhes de {contact.Name}", Severity.Info);
+        // TODO: Implementar modal de visualização detalhada
+    }
+
+    private async Task SaveContact()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(editingContact.Id))
+            {
+                var response = await Http.PostAsJsonAsync("http://localhost:5056/api/contacts", editingContact);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Contato criado com sucesso!", Severity.Success);
+                }
+            }
+            else
+            {
+                var response = await Http.PutAsJsonAsync($"http://localhost:5056/api/contacts/{editingContact.Id}", editingContact);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Contato atualizado com sucesso!", Severity.Success);
+                }
+            }
+            
+            CloseDialog();
+            await LoadContacts();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao salvar contato: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DeleteContact(string id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"http://localhost:5056/api/contacts/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Contato excluído com sucesso!", Severity.Success);
+                await LoadContacts();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao excluir contato: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Color GetTypeColor(string type) => type switch
+    {
+        "Cliente" => Color.Success,
+        "Prospect" => Color.Info,
+        "Parceiro" => Color.Primary,
+        "Fornecedor" => Color.Warning,
+        _ => Color.Default
+    };
+
+    public class Contact
+    {
+        public string? Id { get; set; }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string? Phone { get; set; }
+        public string? Company { get; set; }
+        public string? Position { get; set; }
+        public string Type { get; set; } = "Cliente";
+        public string? Address { get; set; }
+        public string? City { get; set; }
+        public string? Notes { get; set; }
+        public List<string>? Tags { get; set; }
+    }
+
+    public class ContactsResponse
+    {
+        public bool Success { get; set; }
+        public List<Contact> Data { get; set; } = new();
+    }
+}

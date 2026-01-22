@@ -1,0 +1,41 @@
+@inject Landing.Services.ScrollService ScrollService
+@using Landing.Models
+
+<section class="section">
+    <div class="container">
+        <h2 class="section__title reveal">Nossos Serviços</h2>
+        
+        <div class="grid reveal">
+            @foreach (var service in Services)
+            {
+                <div class="card">
+                    <div class="card__icon">@service.Icon</div>
+                    <h3 class="card__title">@service.Title</h3>
+                    <p class="card__text">@service.Description</p>
+                    <button class="btn btn--primary" type="button" @onclick="() => ContactForService(service.Title)">
+                        @service.ButtonText
+                    </button>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<ServiceCard> Services = new()
+    {
+        new() { Icon = "🌐", Title = "Desenvolvimento de Sites", Description = "Sites modernos, rápidos e responsivos. Do layout até o lançamento, cuidamos de tudo para você." },
+        new() { Icon = "📊", Title = "Sistema de Analytics Próprio", Description = "Tenha seus próprios dados, sem limites e com privacidade total." },
+        new() { Icon = "🚀", Title = "Automação de Marketing", Description = "Automatize emails, captação de leads e funis de venda. Mais resultados com menos esforço." },
+        new() { Icon = "💬", Title = "Chat ao Vivo", Description = "Converse com seus clientes em tempo real. Widget personalizável e integrado ao seu sistema." },
+        new() { Icon = "🔗", Title = "Integrações", Description = "Conecte pagamentos, e-mail e ferramentas de IA para tudo funcionar junto automaticamente." },
+        new() { Icon = "👥", Title = "CRM Completo", Description = "Gerencie leads, contatos e campanhas em um só lugar. Simples, poderoso e fácil de usar." }
+    };
+
+    private async Task ContactForService(string serviceName)
+    {
+        var message = $"Olá! Tenho interesse em {serviceName}. Podemos conversar?";
+        var url = ScrollService.BuildWhatsAppUrl("5511987654321", message);
+        await ScrollService.OpenNewTabAsync(url);
+    }
+}

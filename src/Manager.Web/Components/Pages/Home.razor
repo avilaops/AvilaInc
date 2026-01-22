@@ -1,0 +1,161 @@
+﻿@page "/"
+@using System.Net.Http
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@rendermode InteractiveServer
+
+<PageTitle>Dashboard - Avila Manager</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">📊 Dashboard</MudText>
+<MudText Typo="Typo.body1" Class="mb-4">Bem-vindo ao Avila Manager - Plataforma completa de gerenciamento</MudText>
+
+<MudAlert Severity="Severity.Info" Class="mb-6">
+    <strong>🚀 Novo no sistema?</strong> Acesse <MudLink Href="/help" Color="Color.Primary"><strong>Ajuda / Como Usar</strong></MudLink> para aprender a configurar o Analytics completo!
+</MudAlert>
+
+<MudGrid Spacing="4">
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.PersonAdd" Color="Color.Primary" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h4">@leadsCount</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Leads Ativos</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Href="/leads" Size="Size.Small" Color="Color.Primary">Ver Leads</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Contacts" Color="Color.Success" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h4">@contactsCount</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Contatos</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Href="/contacts" Size="Size.Small" Color="Color.Success">Ver Contatos</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.Campaign" Color="Color.Info" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h4">@campaignsCount</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Campanhas</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Href="/campaigns" Size="Size.Small" Color="Color.Info">Ver Campanhas</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" sm="6" md="3">
+        <MudCard Elevation="2">
+            <MudCardContent>
+                <MudIcon Icon="@Icons.Material.Filled.AttachMoney" Color="Color.Warning" Size="Size.Large" Class="mb-2" />
+                <MudText Typo="Typo.h4">R$ @balance.ToString("N2")</MudText>
+                <MudText Typo="Typo.body2" Color="Color.Secondary">Saldo Total</MudText>
+            </MudCardContent>
+            <MudCardActions>
+                <MudButton Href="/finance" Size="Size.Small" Color="Color.Warning">Ver Finanças</MudButton>
+            </MudCardActions>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+<MudGrid Spacing="4" Class="mt-8">
+    <MudItem xs="12" md="6">
+        <MudCard Elevation="2">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">🎯 Atividades Recentes</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudTimeline TimelineOrientation="TimelineOrientation.Vertical" TimelinePosition="TimelinePosition.Start">
+                    @foreach (var activity in activities)
+                    {
+                        <MudTimelineItem Color="activity.Color" Size="Size.Small">
+                            <ItemDot>
+                                <MudIcon Icon="@activity.Icon" Size="Size.Small" />
+                            </ItemDot>
+                            <ItemContent>
+                                <MudText Typo="Typo.body2">@activity.Description</MudText>
+                                <MudText Typo="Typo.caption" Color="Color.Secondary">@activity.Time</MudText>
+                            </ItemContent>
+                        </MudTimelineItem>
+                    }
+                </MudTimeline>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xs="12" md="6">
+        <MudCard Elevation="2">
+            <MudCardHeader>
+                <CardHeaderContent>
+                    <MudText Typo="Typo.h6">🚀 Ações Rápidas</MudText>
+                </CardHeaderContent>
+            </MudCardHeader>
+            <MudCardContent>
+                <MudStack Spacing="3">
+                    <MudButton StartIcon="@Icons.Material.Filled.PersonAdd" Variant="Variant.Outlined" 
+                               Color="Color.Primary" FullWidth="true" Href="/leads">
+                        Novo Lead
+                    </MudButton>
+                    <MudButton StartIcon="@Icons.Material.Filled.Campaign" Variant="Variant.Outlined" 
+                               Color="Color.Info" FullWidth="true" Href="/campaigns">
+                        Nova Campanha
+                    </MudButton>
+                    <MudButton StartIcon="@Icons.Material.Filled.Email" Variant="Variant.Outlined" 
+                               Color="Color.Secondary" FullWidth="true" Href="/gmail">
+                        Enviar Email
+                    </MudButton>
+                    <MudButton StartIcon="@Icons.Material.Filled.Payment" Variant="Variant.Outlined" 
+                               Color="Color.Warning" FullWidth="true" Href="/payments">
+                        Registrar Pagamento
+                    </MudButton>
+                </MudStack>
+            </MudCardContent>
+        </MudCard>
+    </MudItem>
+</MudGrid>
+
+@code {
+    private int leadsCount = 0;
+    private int contactsCount = 0;
+    private int campaignsCount = 0;
+    private decimal balance = 0;
+
+    private List<Activity> activities = new()
+    {
+        new Activity { Icon = Icons.Material.Filled.PersonAdd, Color = Color.Primary, Description = "Novo lead cadastrado: João Silva", Time = "Há 5 minutos" },
+        new Activity { Icon = Icons.Material.Filled.Email, Color = Color.Info, Description = "Campanha 'Black Friday' enviada", Time = "Há 1 hora" },
+        new Activity { Icon = Icons.Material.Filled.Payment, Color = Color.Success, Description = "Pagamento recebido: R$ 1.500,00", Time = "Há 2 horas" },
+        new Activity { Icon = Icons.Material.Filled.Contacts, Color = Color.Secondary, Description = "Contato atualizado: Maria Santos", Time = "Há 3 horas" }
+    };
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Buscar dados reais da API
+        await Task.Delay(500); // Simula carregamento
+        
+        leadsCount = 42;
+        contactsCount = 158;
+        campaignsCount = 12;
+        balance = 45230.50m;
+    }
+
+    private class Activity
+    {
+        public string Icon { get; set; } = string.Empty;
+        public Color Color { get; set; }
+        public string Description { get; set; } = string.Empty;
+        public string Time { get; set; } = string.Empty;
+    }
+}
+

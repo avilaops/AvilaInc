@@ -1,0 +1,43 @@
+@inject Landing.Services.ScrollService ScrollService
+@implements IDisposable
+
+<button class="back-to-top-btn @(isVisible ? "visible" : "")" 
+        type="button"
+        aria-label="Voltar ao topo"
+        @onclick="ScrollToTop">
+    ↑
+</button>
+
+@code {
+    private bool isVisible = false;
+    private System.Threading.Timer? _timer;
+
+    protected override void OnInitialized()
+    {
+        _timer = new System.Threading.Timer(async _ =>
+        {
+            try
+            {
+                var scrollY = await ScrollService.GetScrollYAsync();
+                var shouldBeVisible = scrollY > 400;
+                
+                if (shouldBeVisible != isVisible)
+                {
+                    isVisible = shouldBeVisible;
+                    await InvokeAsync(StateHasChanged);
+                }
+            }
+            catch { }
+        }, null, TimeSpan.Zero, TimeSpan.FromMilliseconds(500));
+    }
+
+    private async Task ScrollToTop()
+    {
+        await ScrollService.ScrollToIdAsync("topo");
+    }
+
+    public void Dispose()
+    {
+        _timer?.Dispose();
+    }
+}

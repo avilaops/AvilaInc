@@ -1,0 +1,16 @@
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.csproj.AssemblyReference.cache
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.AssemblyInfoInputs.cache
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.AssemblyInfo.cs
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.sourcelink.json
+D:\Projetos\Admin\src\Manager.Contracts\bin\Release\net10.0\Manager.Contracts.deps.json
+D:\Projetos\Admin\src\Manager.Contracts\bin\Release\net10.0\Manager.Contracts.dll
+D:\Projetos\Admin\src\Manager.Contracts\bin\Release\net10.0\Manager.Contracts.pdb
+D:\Projetos\Admin\src\Manager.Contracts\bin\Release\net10.0\Manager.Core.dll
+D:\Projetos\Admin\src\Manager.Contracts\bin\Release\net10.0\Manager.Core.pdb
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager..9D70AB4C.Up2Date
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.dll
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\refint\Manager.Contracts.dll
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\Manager.Contracts.pdb
+D:\Projetos\Admin\src\Manager.Contracts\obj\Release\net10.0\ref\Manager.Contracts.dll

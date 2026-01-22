@@ -1,0 +1,425 @@
+@page "/contacts"
+
+<PageTitle>Contatos - Avila Dashboard</PageTitle>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>🤝 Gerenciamento de Contatos</h1>
+        <p>Gerencie seus leads, contatos unificados e pipeline de vendas</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button @GetTabClass("leads")" @onclick="@(() => SetActiveTab("leads"))">
+                📋 Leads
+            </button>
+            <button class="tab-button @GetTabClass("contacts")" @onclick="@(() => SetActiveTab("contacts"))">
+                📞 Contatos
+            </button>
+            <button class="tab-button @GetTabClass("pipeline")" @onclick="@(() => SetActiveTab("pipeline"))">
+                📊 Pipeline
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            @if (activeTab == "leads")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadLeads">
+                            <i class="bi bi-arrow-clockwise"></i> Atualizar Leads
+                        </button>
+                        <button class="btn btn-secondary" @onclick="SendMarketingEmails">
+                            <i class="bi bi-envelope"></i> Enviar Emails
+                        </button>
+                        <button class="btn btn-success" @onclick="CreateBackup">
+                            <i class="bi bi-cloud-upload"></i> Backup Completo
+                        </button>
+                        <button class="btn btn-info" @onclick="ExportContacts">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exportar CSV
+                        </button>
+                        <button class="btn btn-warning" @onclick="VerifyData">
+                            <i class="bi bi-check-circle"></i> Verificar Dados
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando leads...</p>
+                        </div>
+                    }
+                    else if (leads.Any())
+                    {
+                        <div class="data-table-container">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Empresa</th>
+                                        <th>Status</th>
+                                        <th>Criado em</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var lead in leads)
+                                    {
+                                        <tr>
+                                            <td>@lead.Name</td>
+                                            <td>@lead.Email</td>
+                                            <td>@lead.Phone</td>
+                                            <td>@lead.Company</td>
+                                            <td><span class="badge bg-@GetStatusColor(lead.Status)">@lead.Status</span></td>
+                                            <td>@lead.CreatedAt.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" @onclick="() => EditLead(lead)">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteLead(lead)">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-people display-4 text-muted"></i>
+                            <h4>Nenhum lead encontrado</h4>
+                            <p>Seus leads aparecerão aqui quando forem adicionados.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "contacts")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadContacts">
+                            <i class="bi bi-arrow-clockwise"></i> Carregar Contatos
+                        </button>
+                        <button class="btn btn-success" @onclick="CreateBackup">
+                            <i class="bi bi-cloud-upload"></i> Backup Completo
+                        </button>
+                        <button class="btn btn-info" @onclick="ExportContacts">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exportar CSV
+                        </button>
+                        <button class="btn btn-warning" @onclick="VerifyData">
+                            <i class="bi bi-check-circle"></i> Verificar Dados
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando contatos...</p>
+                        </div>
+                    }
+                    else if (contacts.Any())
+                    {
+                        <div class="data-table-container">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>Nome</th>
+                                        <th>Email</th>
+                                        <th>Telefone</th>
+                                        <th>Empresa</th>
+                                        <th>Status</th>
+                                        <th>Último Contato</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var contact in contacts)
+                                    {
+                                        <tr>
+                                            <td>@contact.Name</td>
+                                            <td>@contact.Email</td>
+                                            <td>@contact.Phone</td>
+                                            <td>@contact.Company</td>
+                                            <td><span class="badge bg-@GetStatusColor(contact.Status)">@contact.Status</span></td>
+                                            <td>@contact.LastContact?.ToString("dd/MM/yyyy")</td>
+                                            <td>
+                                                <button class="btn btn-sm btn-outline-primary" @onclick="() => EditContact(contact)">
+                                                    <i class="bi bi-pencil"></i>
+                                                </button>
+                                                <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteContact(contact)">
+                                                    <i class="bi bi-trash"></i>
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-person-lines-fill display-4 text-muted"></i>
+                            <h4>Nenhum contato encontrado</h4>
+                            <p>Seus contatos aparecerão aqui quando forem adicionados.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "pipeline")
+            {
+                <div class="tab-content">
+                    <div class="pipeline-stats">
+                        <div class="stat-card">
+                            <div class="stat-icon">📥</div>
+                            <div class="stat-content">
+                                <h3>@pipelineStats.NewLeads</h3>
+                                <p>Novos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">💬</div>
+                            <div class="stat-content">
+                                <h3>@pipelineStats.InNegotiation</h3>
+                                <p>Negociação</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">✅</div>
+                            <div class="stat-content">
+                                <h3>@pipelineStats.Closed</h3>
+                                <p>Fechados</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">❌</div>
+                            <div class="stat-content">
+                                <h3>@pipelineStats.Lost</h3>
+                                <p>Perdidos</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pipeline-visualization">
+                        <h4>📊 Pipeline de Vendas</h4>
+                        <div class="pipeline-stages">
+                            <div class="pipeline-stage">
+                                <h5>📥 Novos (@pipelineStats.NewLeads)</h5>
+                                <div class="stage-items">
+                                    @foreach (var item in pipelineItems.Where(i => i.Status == "Novo"))
+                                    {
+                                        <div class="pipeline-item">
+                                            <strong>@item.Name</strong><br>
+                                            <small>@item.Company</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <h5>💬 Negociação (@pipelineStats.InNegotiation)</h5>
+                                <div class="stage-items">
+                                    @foreach (var item in pipelineItems.Where(i => i.Status == "Negociação"))
+                                    {
+                                        <div class="pipeline-item">
+                                            <strong>@item.Name</strong><br>
+                                            <small>@item.Company</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                            <div class="pipeline-stage">
+                                <h5>✅ Fechados (@pipelineStats.Closed)</h5>
+                                <div class="stage-items">
+                                    @foreach (var item in pipelineItems.Where(i => i.Status == "Fechado"))
+                                    {
+                                        <div class="pipeline-item">
+                                            <strong>@item.Name</strong><br>
+                                            <small>@item.Company</small>
+                                        </div>
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "leads";
+    private bool isLoading = false;
+    private List<Contact> leads = new();
+    private List<Contact> contacts = new();
+    private PipelineStats pipelineStats = new();
+    private List<PipelineItem> pipelineItems = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLeads();
+        await LoadPipelineData();
+    }
+
+    private string GetTabClass(string tabName) => activeTab == tabName ? "active" : "";
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        StateHasChanged();
+    }
+
+    private async Task LoadLeads()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+            leads = new List<Contact>
+            {
+                new Contact { Name = "João Silva", Email = "joao@email.com", Phone = "(11) 99999-9999", Company = "Empresa X", Status = "Novo", CreatedAt = DateTime.Now.AddDays(-5) },
+                new Contact { Name = "Maria Santos", Email = "maria@email.com", Phone = "(11) 88888-8888", Company = "Empresa Y", Status = "Negociação", CreatedAt = DateTime.Now.AddDays(-10) },
+                new Contact { Name = "Pedro Oliveira", Email = "pedro@email.com", Phone = "(11) 77777-7777", Company = "Empresa Z", Status = "Fechado", CreatedAt = DateTime.Now.AddDays(-15) }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadContacts()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+            contacts = new List<Contact>
+            {
+                new Contact { Name = "Ana Costa", Email = "ana@email.com", Phone = "(11) 66666-6666", Company = "Empresa W", Status = "Ativo", LastContact = DateTime.Now.AddDays(-2) },
+                new Contact { Name = "Carlos Lima", Email = "carlos@email.com", Phone = "(11) 55555-5555", Company = "Empresa V", Status = "Inativo", LastContact = DateTime.Now.AddDays(-30) }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadPipelineData()
+    {
+        pipelineStats = new PipelineStats
+        {
+            NewLeads = 5,
+            InNegotiation = 3,
+            Closed = 8,
+            Lost = 2
+        };
+
+        pipelineItems = new List<PipelineItem>
+        {
+            new PipelineItem { Name = "João Silva", Company = "Empresa X", Status = "Novo" },
+            new PipelineItem { Name = "Maria Santos", Company = "Empresa Y", Status = "Negociação" },
+            new PipelineItem { Name = "Pedro Oliveira", Company = "Empresa Z", Status = "Fechado" }
+        };
+    }
+
+    private string GetStatusColor(string status)
+    {
+        return status switch
+        {
+            "Novo" => "primary",
+            "Negociação" => "warning",
+            "Fechado" => "success",
+            "Perdido" => "danger",
+            "Ativo" => "success",
+            "Inativo" => "secondary",
+            _ => "secondary"
+        };
+    }
+
+    private void EditLead(Contact lead)
+    {
+        // TODO: Implement edit functionality
+    }
+
+    private void DeleteLead(Contact lead)
+    {
+        // TODO: Implement delete functionality
+    }
+
+    private void EditContact(Contact contact)
+    {
+        // TODO: Implement edit functionality
+    }
+
+    private void DeleteContact(Contact contact)
+    {
+        // TODO: Implement delete functionality
+    }
+
+    private void SendMarketingEmails()
+    {
+        // TODO: Implement email sending
+    }
+
+    private void CreateBackup()
+    {
+        // TODO: Implement backup
+    }
+
+    private void ExportContacts()
+    {
+        // TODO: Implement CSV export
+    }
+
+    private void VerifyData()
+    {
+        // TODO: Implement data verification
+    }
+
+    public class Contact
+    {
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string Phone { get; set; } = "";
+        public string Company { get; set; } = "";
+        public string Status { get; set; } = "";
+        public DateTime CreatedAt { get; set; }
+        public DateTime? LastContact { get; set; }
+    }
+
+    public class PipelineStats
+    {
+        public int NewLeads { get; set; }
+        public int InNegotiation { get; set; }
+        public int Closed { get; set; }
+        public int Lost { get; set; }
+    }
+
+    public class PipelineItem
+    {
+        public string Name { get; set; } = "";
+        public string Company { get; set; } = "";
+        public string Status { get; set; } = "";
+    }
+}

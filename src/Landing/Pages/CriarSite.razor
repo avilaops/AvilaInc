@@ -1,0 +1,381 @@
+@page "/criar-site"
+@using Manager.Contracts.DTOs
+@using Manager.Core.Enums
+@using Landing.Services
+@inject ManagerApiClient Api
+@inject NavigationManager Navigation
+
+<PageTitle>Criar Meu Site - Avila.Inc</PageTitle>
+
+<div class="wizard-container">
+    <div class="wizard-header">
+        <h1>🚀 Crie seu site em 3 minutos</h1>
+        <div class="wizard-steps">
+            <div class="step @(GetStepClass(1))">
+                <span class="step-number">1</span>
+                <span class="step-label">Informações</span>
+            </div>
+            <div class="step @(GetStepClass(2))">
+                <span class="step-number">2</span>
+                <span class="step-label">Serviços</span>
+            </div>
+            <div class="step @(GetStepClass(3))">
+                <span class="step-number">3</span>
+                <span class="step-label">Contato</span>
+            </div>
+        </div>
+    </div>
+
+    @if (_currentStep == 1)
+    {
+        <div class="wizard-step">
+            <h2>Informações Básicas</h2>
+            
+            <div class="form-group">
+                <label>Nome do Negócio *</label>
+                <input @bind="_request.BusinessName" type="text" class="form-input" placeholder="Ex: Clínica Dr. Silva" />
+            </div>
+
+            <div class="form-group">
+                <label>Nicho/Especialidade *</label>
+                <input @bind="_request.Niche" type="text" class="form-input" placeholder="Ex: Clínica Médica, Dentista, Advocacia" />
+            </div>
+
+            <div class="form-group">
+                <label>Cidade *</label>
+                <input @bind="_request.City" type="text" class="form-input" placeholder="Ex: São Paulo - SP" />
+            </div>
+
+            <div class="form-group">
+                <label>Template *</label>
+                <div class="template-grid">
+                    @foreach (var template in _availableTemplates)
+                    {
+                        <div class="template-card @(IsTemplateSelected(template.Type) ? "selected" : "")"
+                             @onclick="() => SelectTemplate(template.Type)">
+                            <div class="template-icon">@template.Icon</div>
+                            <h3>@template.Name</h3>
+                            <p>@template.Description</p>
+                        </div>
+                    }
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Estilo de Cores</label>
+                <div class="color-preset-buttons">
+                    <button type="button" class="preset-btn @(IsColorSelected("modern"))" @onclick='() => _request.ColorPreference = "modern"'>
+                        <span style="background: linear-gradient(135deg, #1976d2, #7c4dff)" class="preset-circle"></span>
+                        Moderno
+                    </button>
+                    <button type="button" class="preset-btn @(IsColorSelected("clean"))" @onclick='() => _request.ColorPreference = "clean"'>
+                        <span style="background: linear-gradient(135deg, #0066cc, #00994d)" class="preset-circle"></span>
+                        Clean
+                    </button>
+                    <button type="button" class="preset-btn @(IsColorSelected("sophisticated"))" @onclick='() => _request.ColorPreference = "sophisticated"'>
+                        <span style="background: linear-gradient(135deg, #2c3e50, #e74c3c)" class="preset-circle"></span>
+                        Sofisticado
+                    </button>
+                </div>
+            </div>
+        </div>
+    }
+    else if (_currentStep == 2)
+    {
+        <div class="wizard-step">
+            <h2>Serviços que você oferece</h2>
+            <p class="step-subtitle">Liste os principais serviços (mínimo 3, máximo 10)</p>
+
+            @for (int i = 0; i < _services.Count; i++)
+            {
+                var index = i;
+                <div class="service-input-group">
+                    <input @bind="_services[index]" type="text" class="form-input" placeholder="@($"Serviço {index + 1}")" />
+                    @if (i >= 3)
+                    {
+                        <button type="button" class="btn-icon-danger" @onclick="() => RemoveService(index)">🗑️</button>
+                    }
+                </div>
+            }
+
+            @if (_services.Count < 10)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="AddService">+ Adicionar Serviço</button>
+            }
+
+            <div class="form-group" style="margin-top: 2rem;">
+                <label>Qual seu diferencial? *</label>
+                <textarea @bind="_request.Differentials" class="form-textarea" rows="4" 
+                          placeholder="Ex: Atendimento humanizado, 20 anos de experiência, tecnologia de ponta..."></textarea>
+                <small>Máximo 500 caracteres</small>
+            </div>
+        </div>
+    }
+    else if (_currentStep == 3)
+    {
+        <div class="wizard-step">
+            <h2>Informações de Contato</h2>
+
+            <div class="form-group">
+                <label>WhatsApp (somente números) *</label>
+                <input @bind="_request.WhatsApp" type="tel" class="form-input" placeholder="5511987654321" />
+                <small>Formato: DDI + DDD + Número (ex: 5511987654321)</small>
+            </div>
+
+            <div class="form-group">
+                <label>E-mail *</label>
+                <input @bind="_request.Email" type="email" class="form-input" placeholder="contato@empresa.com" />
+            </div>
+
+            <div class="form-group">
+                <label>Logo (opcional)</label>
+                <input @bind="_request.LogoUrl" type="url" class="form-input" placeholder="https://exemplo.com/logo.png" />
+                <small>URL da sua logo (se tiver hospedada)</small>
+            </div>
+        </div>
+    }
+    else if (_currentStep == 4)
+    {
+        <div class="wizard-step wizard-success">
+            @if (_isSubmitting)
+            {
+                <div class="loading-state">
+                    <div class="spinner"></div>
+                    <h2>Criando seu site...</h2>
+                    <p>Estamos gerando seu site personalizado. Isso pode levar alguns instantes.</p>
+                </div>
+            }
+            else if (_requestId != null)
+            {
+                <div class="success-state">
+                    <div class="success-icon">✅</div>
+                    <h2>Site criado com sucesso!</h2>
+                    <p>Seu pedido foi recebido e está sendo processado.</p>
+                    <div class="success-actions">
+                        <a href="/meu-site/@_requestId" class="btn btn-primary btn-large">Ver Meu Site</a>
+                        <button type="button" class="btn btn-secondary" @onclick="ResetWizard">Criar Outro Site</button>
+                    </div>
+                </div>
+            }
+            else if (_errorMessage != null)
+            {
+                <div class="error-state">
+                    <div class="error-icon">❌</div>
+                    <h2>Erro ao criar site</h2>
+                    <p>@_errorMessage</p>
+                    <button type="button" class="btn btn-primary" @onclick="() => _currentStep = 3">Tentar Novamente</button>
+                </div>
+            }
+        </div>
+    }
+
+    @if (_currentStep < 4)
+    {
+        <div class="wizard-actions">
+            @if (_currentStep > 1)
+            {
+                <button type="button" class="btn btn-secondary" @onclick="PreviousStep">← Voltar</button>
+            }
+            
+            @if (_currentStep < 3)
+            {
+                <button type="button" class="btn btn-primary" @onclick="NextStep" disabled="@(!CanProceed())">
+                    Próximo →
+                </button>
+            }
+            else
+            {
+                <button type="button" class="btn btn-primary btn-large" @onclick="SubmitRequest" disabled="@(!CanSubmit() || _isSubmitting)">
+                    🚀 Criar Meu Site
+                </button>
+            }
+        </div>
+    }
+
+    @if (_validationErrors.Any())
+    {
+        <div class="validation-errors">
+            @foreach (var error in _validationErrors)
+            {
+                <div class="error-message">⚠️ @error</div>
+            }
+        </div>
+    }
+</div>
+
+@code {
+    private int _currentStep = 1;
+    private CreateWebsiteRequestDto _request = new();
+    private List<string> _services = new() { "", "", "", "" };
+    private List<string> _validationErrors = new();
+    private bool _isSubmitting = false;
+    private string? _requestId = null;
+    private string? _errorMessage = null;
+
+    private readonly List<TemplateOption> _availableTemplates = new()
+    {
+        new("ClinicaMedica", "🏥", "Clínica Médica", "Para clínicas, consultórios e profissionais de saúde"),
+        new("EscritorioAdvocacia", "⚖️", "Escritório Advocacia", "Para advogados e escritórios jurídicos"),
+        new("Restaurante", "🍽️", "Restaurante", "Para restaurantes, bares e delivery"),
+        new("SalaoEstetica", "💇", "Salão de Beleza", "Para salões, barbearias e estética"),
+        new("AcademiaFitness", "💪", "Academia", "Para academias e personal trainers"),
+        new("ConsultoriaEmpresarial", "📊", "Consultoria", "Para consultorias e serviços B2B"),
+        new("AgenciaMarketing", "📱", "Agência Digital", "Para agências e serviços de marketing"),
+        new("EcommerceLeve", "🛒", "E-commerce Simples", "Para vendas online e catálogos")
+    };
+
+    private string GetStepClass(int step)
+    {
+        if (step == _currentStep) return "active";
+        if (step < _currentStep) return "completed";
+        return "";
+    }
+
+    private bool IsTemplateSelected(string type)
+    {
+        return _request.TemplateType.ToString() == type;
+    }
+
+    private void SelectTemplate(string type)
+    {
+        _request = _request with { TemplateType = Enum.Parse<WebsiteTemplateType>(type) };
+    }
+
+    private bool IsColorSelected(string preset)
+    {
+        return _request.ColorPreference == preset ? "selected" : "";
+    }
+
+    private void AddService()
+    {
+        if (_services.Count < 10)
+        {
+            _services.Add("");
+        }
+    }
+
+    private void RemoveService(int index)
+    {
+        if (_services.Count > 3)
+        {
+            _services.RemoveAt(index);
+        }
+    }
+
+    private bool CanProceed()
+    {
+        if (_currentStep == 1)
+        {
+            return !string.IsNullOrWhiteSpace(_request.BusinessName) &&
+                   !string.IsNullOrWhiteSpace(_request.Niche) &&
+                   !string.IsNullOrWhiteSpace(_request.City) &&
+                   _request.TemplateType != default;
+        }
+        return true;
+    }
+
+    private bool CanSubmit()
+    {
+        return !string.IsNullOrWhiteSpace(_request.WhatsApp) &&
+               !string.IsNullOrWhiteSpace(_request.Email) &&
+               _request.WhatsApp.Length >= 10;
+    }
+
+    private void NextStep()
+    {
+        _validationErrors.Clear();
+
+        if (_currentStep == 1 && !CanProceed())
+        {
+            _validationErrors.Add("Preencha todos os campos obrigatórios");
+            return;
+        }
+
+        if (_currentStep == 2)
+        {
+            var validServices = _services.Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+            if (validServices.Count < 3)
+            {
+                _validationErrors.Add("Informe pelo menos 3 serviços");
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(_request.Differentials) || _request.Differentials.Length < 10)
+            {
+                _validationErrors.Add("Descreva seu diferencial (mínimo 10 caracteres)");
+                return;
+            }
+        }
+
+        _currentStep++;
+    }
+
+    private void PreviousStep()
+    {
+        _validationErrors.Clear();
+        if (_currentStep > 1)
+        {
+            _currentStep--;
+        }
+    }
+
+    private async Task SubmitRequest()
+    {
+        _validationErrors.Clear();
+        _isSubmitting = true;
+        _errorMessage = null;
+
+        try
+        {
+            // Preparar lista de serviços
+            var validServices = _services.Where(s => !string.IsNullOrWhiteSpace(s)).Select(s => s.Trim()).ToList();
+
+            var dto = new CreateWebsiteRequestDto
+            {
+                BusinessName = _request.BusinessName.Trim(),
+                Niche = _request.Niche.Trim(),
+                City = _request.City.Trim(),
+                Services = validServices,
+                Differentials = _request.Differentials.Trim(),
+                WhatsApp = new string(_request.WhatsApp.Where(char.IsDigit).ToArray()),
+                Email = _request.Email.Trim(),
+                TemplateType = _request.TemplateType,
+                ColorPreference = _request.ColorPreference,
+                LogoUrl = string.IsNullOrWhiteSpace(_request.LogoUrl) ? null : _request.LogoUrl.Trim()
+            };
+
+            var response = await Api.CreateWebsiteRequestAsync(dto);
+
+            if (response != null)
+            {
+                _requestId = response.Id;
+                _currentStep = 4;
+            }
+            else
+            {
+                _errorMessage = "Não foi possível criar o site. Tente novamente.";
+                _currentStep = 4;
+            }
+        }
+        catch (Exception ex)
+        {
+            _errorMessage = $"Erro: {ex.Message}";
+            _currentStep = 4;
+        }
+        finally
+        {
+            _isSubmitting = false;
+        }
+    }
+
+    private void ResetWizard()
+    {
+        _currentStep = 1;
+        _request = new();
+        _services = new() { "", "", "", "" };
+        _validationErrors.Clear();
+        _requestId = null;
+        _errorMessage = null;
+    }
+
+    private record TemplateOption(string Type, string Icon, string Name, string Description);
+}

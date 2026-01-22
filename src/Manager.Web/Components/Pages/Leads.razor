@@ -1,0 +1,248 @@
+@page "/leads"
+@using System.Net.Http.Json
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Leads - Avila Manager</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">📋 Leads</MudText>
+<MudText Typo="Typo.body1" Class="mb-6">Gerencie seus leads e oportunidades de vendas</MudText>
+
+<MudCard Elevation="2">
+    <MudCardContent>
+        <MudStack Row="true" Spacing="3" Class="mb-4">
+            <MudTextField @bind-Value="searchString" Placeholder="Buscar leads..." 
+                          Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" 
+                          IconSize="Size.Medium" Class="flex-grow-1" Immediate="true" />
+            <MudSelect @bind-Value="statusFilter" Label="Status" Class="ml-2" Style="min-width: 150px;">
+                <MudSelectItem Value="@("Todos")">Todos</MudSelectItem>
+                <MudSelectItem Value="@("Novo")">Novo</MudSelectItem>
+                <MudSelectItem Value="@("Qualificado")">Qualificado</MudSelectItem>
+                <MudSelectItem Value="@("Negociacao")">Negociação</MudSelectItem>
+                <MudSelectItem Value="@("Ganho")">Ganho</MudSelectItem>
+                <MudSelectItem Value="@("Perdido")">Perdido</MudSelectItem>
+            </MudSelect>
+            <MudButton Variant="Variant.Filled" Color="Color.Primary" 
+                       StartIcon="@Icons.Material.Filled.Add" OnClick="OpenCreateDialog">
+                Novo Lead
+            </MudButton>
+        </MudStack>
+
+        @if (loading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudTable Items="@FilteredLeads" Hover="true" Breakpoint="Breakpoint.Sm" Loading="@loading" 
+                      LoadingProgressColor="Color.Primary" Dense="true">
+                <HeaderContent>
+                    <MudTh>Nome</MudTh>
+                    <MudTh>Email</MudTh>
+                    <MudTh>Telefone</MudTh>
+                    <MudTh>Empresa</MudTh>
+                    <MudTh>Status</MudTh>
+                    <MudTh>Score</MudTh>
+                    <MudTh>Ações</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Nome">@context.Name</MudTd>
+                    <MudTd DataLabel="Email">@context.Email</MudTd>
+                    <MudTd DataLabel="Telefone">@context.Phone</MudTd>
+                    <MudTd DataLabel="Empresa">@context.Company</MudTd>
+                    <MudTd DataLabel="Status">
+                        <MudChip T="string" Color="@GetStatusColor(context.Status)" Size="Size.Small">
+                            @context.Status
+                        </MudChip>
+                    </MudTd>
+                    <MudTd DataLabel="Score">
+                        <MudRating ReadOnly="true" SelectedValue="@((int)(context.Score / 20))" MaxValue="5" Size="Size.Small" />
+                    </MudTd>
+                    <MudTd DataLabel="Ações">
+                        <MudIconButton Icon="@Icons.Material.Filled.Edit" Size="Size.Small" 
+                                       Color="Color.Primary" OnClick="@(() => OpenEditDialog(context))" />
+                        <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" 
+                                       Color="Color.Error" OnClick="@(() => DeleteLead(context.Id))" />
+                    </MudTd>
+                </RowTemplate>
+            </MudTable>
+        }
+    </MudCardContent>
+</MudCard>
+
+<MudDialog @bind-Visible="dialogVisible" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            @(editingLead?.Id == null ? "Novo Lead" : "Editar Lead")
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudTextField @bind-Value="editingLead.Name" Label="Nome Completo" Required="true" />
+            <MudTextField @bind-Value="editingLead.Email" Label="Email" InputType="InputType.Email" Required="true" />
+            <MudTextField @bind-Value="editingLead.Phone" Label="Telefone" />
+            <MudTextField @bind-Value="editingLead.Company" Label="Empresa" />
+            <MudSelect @bind-Value="editingLead.Status" Label="Status" Required="true">
+                <MudSelectItem Value="@("Novo")">Novo</MudSelectItem>
+                <MudSelectItem Value="@("Qualificado")">Qualificado</MudSelectItem>
+                <MudSelectItem Value="@("Negociacao")">Negociação</MudSelectItem>
+                <MudSelectItem Value="@("Ganho")">Ganho</MudSelectItem>
+                <MudSelectItem Value="@("Perdido")">Perdido</MudSelectItem>
+            </MudSelect>
+            <MudNumericField @bind-Value="editingLead.Score" Label="Score (0-100)" Min="0" Max="100" />
+            <MudTextField @bind-Value="editingLead.Source" Label="Origem" Placeholder="Site, Indicação, Evento..." />
+            <MudTextField @bind-Value="editingLead.Notes" Label="Observações" Lines="3" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseDialog">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveLead">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private List<Lead> leads = new();
+    private Lead editingLead = new();
+    private bool loading = true;
+    private bool dialogVisible = false;
+    private string searchString = "";
+    private string statusFilter = "Todos";
+    
+    private DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Small, FullWidth = true };
+
+    private IEnumerable<Lead> FilteredLeads => leads
+        .Where(l => (string.IsNullOrEmpty(searchString) || 
+                     l.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                     l.Email.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                     (l.Company?.Contains(searchString, StringComparison.OrdinalIgnoreCase) ?? false)) &&
+                    (statusFilter == "Todos" || l.Status == statusFilter));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadLeads();
+    }
+
+    private async Task LoadLeads()
+    {
+        loading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<LeadsResponse>("http://localhost:5056/api/leads");
+            leads = response?.Data ?? new List<Lead>();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar leads: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void OpenCreateDialog()
+    {
+        editingLead = new Lead { Status = "Novo", Score = 50 };
+        dialogVisible = true;
+    }
+
+    private void OpenEditDialog(Lead lead)
+    {
+        editingLead = new Lead
+        {
+            Id = lead.Id,
+            Name = lead.Name,
+            Email = lead.Email,
+            Phone = lead.Phone,
+            Company = lead.Company,
+            Status = lead.Status,
+            Score = lead.Score,
+            Source = lead.Source,
+            Notes = lead.Notes
+        };
+        dialogVisible = true;
+    }
+
+    private void CloseDialog()
+    {
+        dialogVisible = false;
+        editingLead = new();
+    }
+
+    private async Task SaveLead()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(editingLead.Id))
+            {
+                var response = await Http.PostAsJsonAsync("http://localhost:5056/api/leads", editingLead);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Lead criado com sucesso!", Severity.Success);
+                }
+            }
+            else
+            {
+                var response = await Http.PutAsJsonAsync($"http://localhost:5056/api/leads/{editingLead.Id}", editingLead);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Lead atualizado com sucesso!", Severity.Success);
+                }
+            }
+            
+            CloseDialog();
+            await LoadLeads();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao salvar lead: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DeleteLead(string id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"http://localhost:5056/api/leads/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Lead excluído com sucesso!", Severity.Success);
+                await LoadLeads();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao excluir lead: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Novo" => Color.Info,
+        "Qualificado" => Color.Primary,
+        "Negociacao" => Color.Warning,
+        "Ganho" => Color.Success,
+        "Perdido" => Color.Error,
+        _ => Color.Default
+    };
+
+    public class Lead
+    {
+        public string? Id { get; set; }
+        public string Name { get; set; } = "";
+        public string Email { get; set; } = "";
+        public string? Phone { get; set; }
+        public string? Company { get; set; }
+        public string Status { get; set; } = "Novo";
+        public int Score { get; set; } = 50;
+        public string? Source { get; set; }
+        public string? Notes { get; set; }
+    }
+
+    public class LeadsResponse
+    {
+        public bool Success { get; set; }
+        public List<Lead> Data { get; set; } = new();
+    }
+}

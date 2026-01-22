@@ -1,0 +1,385 @@
+@page "/github"
+
+<PageTitle>GitHub - Avila Dashboard</PageTitle>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>🐙 GitHub Integration</h1>
+        <p>Gerencie seus repositórios, atividades e integrações GitHub</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button @GetTabClass("repos")" @onclick="@(() => SetActiveTab("repos"))">
+                Repositórios
+            </button>
+            <button class="tab-button @GetTabClass("activity")" @onclick="@(() => SetActiveTab("activity"))">
+                Atividades
+            </button>
+            <button class="tab-button @GetTabClass("stats")" @onclick="@(() => SetActiveTab("stats"))">
+                Estatísticas
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            @if (activeTab == "repos")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadRepos">
+                            <i class="bi bi-arrow-clockwise"></i> Atualizar Repositórios
+                        </button>
+                        <button class="btn btn-secondary" @onclick="SyncGitHubData">
+                            <i class="bi bi-cloud-download"></i> Sincronizar Dados
+                        </button>
+                        <button class="btn btn-info" @onclick="ExportGitHubData">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exportar Dados
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando repositórios...</p>
+                        </div>
+                    }
+                    else if (repositories.Any())
+                    {
+                        <div class="repos-grid">
+                            @foreach (var repo in repositories)
+                            {
+                                <div class="repo-card">
+                                    <div class="repo-header">
+                                        <h5>
+                                            <a href="@repo.Url" target="_blank" rel="noopener noreferrer">
+                                                @repo.Name
+                                            </a>
+                                        </h5>
+                                        <span class="badge bg-@GetVisibilityColor(repo.Visibility)">@repo.Visibility</span>
+                                    </div>
+                                    <p class="repo-description">@repo.Description</p>
+                                    <div class="repo-stats">
+                                        <span title="Stars">⭐ @repo.Stars</span>
+                                        <span title="Forks">🍴 @repo.Forks</span>
+                                        <span title="Watchers">👀 @repo.Watchers</span>
+                                        <span title="Language">@repo.Language</span>
+                                    </div>
+                                    <div class="repo-dates">
+                                        <small>Criado: @repo.CreatedAt.ToString("dd/MM/yyyy")</small>
+                                        <small>Atualizado: @repo.UpdatedAt.ToString("dd/MM/yyyy")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-github display-4 text-muted"></i>
+                            <h4>Nenhum repositório encontrado</h4>
+                            <p>Verifique se o token do GitHub está configurado corretamente.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "activity")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadActivity">
+                            <i class="bi bi-arrow-clockwise"></i> Atualizar Atividades
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterActivity("today"))">
+                            Hoje
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterActivity("week"))">
+                            Semana
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterActivity("month"))">
+                            Mês
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando atividades...</p>
+                        </div>
+                    }
+                    else if (activities.Any())
+                    {
+                        <div class="activity-feed">
+                            @foreach (var activity in activities)
+                            {
+                                <div class="activity-item">
+                                    <div class="activity-icon">@activity.Icon</div>
+                                    <div class="activity-content">
+                                        <p>@activity.Message</p>
+                                        <small>@activity.Timestamp.ToString("dd/MM/yyyy HH:mm")</small>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-activity display-4 text-muted"></i>
+                            <h4>Nenhuma atividade recente</h4>
+                            <p>As atividades do GitHub aparecerão aqui.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "stats")
+            {
+                <div class="tab-content">
+                    <div class="stats-overview">
+                        <div class="stat-card">
+                            <div class="stat-icon">📁</div>
+                            <div class="stat-content">
+                                <h3>@githubStats.TotalRepos</h3>
+                                <p>Total de Repos</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">⭐</div>
+                            <div class="stat-content">
+                                <h3>@githubStats.TotalStars</h3>
+                                <p>Stars Totais</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">🍴</div>
+                            <div class="stat-content">
+                                <h3>@githubStats.TotalForks</h3>
+                                <p>Forks Totais</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon">👥</div>
+                            <div class="stat-content">
+                                <h3>@githubStats.Followers</h3>
+                                <p>Seguidores</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="stats-details">
+                        <h4>📊 Estatísticas Detalhadas</h4>
+                        <div class="stats-breakdown">
+                            <div class="stat-breakdown-item">
+                                <h5>Repositórios por Linguagem</h5>
+                                @if (githubStats.LanguageStats.Any())
+                                {
+                                    @foreach (var lang in githubStats.LanguageStats.OrderByDescending(l => l.Count))
+                                    {
+                                        <div class="language-stat">
+                                            <span class="language-name">@lang.Language</span>
+                                            <span class="language-count">@lang.Count repos</span>
+                                            <div class="progress">
+                                                <div class="progress-bar" style="width: @(lang.Percentage)%"></div>
+                                            </div>
+                                        </div>
+                                    }
+                                }
+                                else
+                                {
+                                    <p class="text-muted">Dados não disponíveis</p>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "repos";
+    private bool isLoading = false;
+    private List<Repository> repositories = new();
+    private List<ActivityItem> activities = new();
+    private GitHubStats githubStats = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadRepos();
+        await LoadStats();
+    }
+
+    private string GetTabClass(string tabName) => activeTab == tabName ? "active" : "";
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        StateHasChanged();
+    }
+
+    private async Task LoadRepos()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1500);
+            repositories = new List<Repository>
+            {
+                new Repository
+                {
+                    Name = "avila-dashboard",
+                    Description = "Dashboard unificado para gerenciamento de projetos",
+                    Url = "https://github.com/username/avila-dashboard",
+                    Visibility = "Public",
+                    Stars = 42,
+                    Forks = 8,
+                    Watchers = 15,
+                    Language = "JavaScript",
+                    CreatedAt = DateTime.Now.AddMonths(-6),
+                    UpdatedAt = DateTime.Now.AddDays(-2)
+                },
+                new Repository
+                {
+                    Name = "manager-api",
+                    Description = "API backend para o sistema de gerenciamento",
+                    Url = "https://github.com/username/manager-api",
+                    Visibility = "Private",
+                    Stars = 12,
+                    Forks = 3,
+                    Watchers = 8,
+                    Language = "C#",
+                    CreatedAt = DateTime.Now.AddMonths(-4),
+                    UpdatedAt = DateTime.Now.AddDays(-5)
+                },
+                new Repository
+                {
+                    Name = "crm-integration",
+                    Description = "Integração com sistemas CRM",
+                    Url = "https://github.com/username/crm-integration",
+                    Visibility = "Public",
+                    Stars = 28,
+                    Forks = 15,
+                    Watchers = 22,
+                    Language = "Python",
+                    CreatedAt = DateTime.Now.AddMonths(-8),
+                    UpdatedAt = DateTime.Now.AddDays(-10)
+                }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadActivity()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+            activities = new List<ActivityItem>
+            {
+                new ActivityItem { Icon = "📤", Message = "Push em avila-dashboard - Adicionadas novas funcionalidades", Timestamp = DateTime.Now.AddMinutes(-30) },
+                new ActivityItem { Icon = "🔄", Message = "Pull Request criado em manager-api", Timestamp = DateTime.Now.AddHours(-2) },
+                new ActivityItem { Icon = "⭐", Message = "Star recebido em crm-integration", Timestamp = DateTime.Now.AddHours(-4) },
+                new ActivityItem { Icon = "🍴", Message = "Fork em avila-dashboard", Timestamp = DateTime.Now.AddHours(-6) },
+                new ActivityItem { Icon = "📝", Message = "Issue fechada em manager-api", Timestamp = DateTime.Now.AddHours(-8) }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStats()
+    {
+        githubStats = new GitHubStats
+        {
+            TotalRepos = 15,
+            TotalStars = 127,
+            TotalForks = 43,
+            Followers = 89,
+            LanguageStats = new List<LanguageStat>
+            {
+                new LanguageStat { Language = "JavaScript", Count = 5, Percentage = 33 },
+                new LanguageStat { Language = "C#", Count = 4, Percentage = 27 },
+                new LanguageStat { Language = "Python", Count = 3, Percentage = 20 },
+                new LanguageStat { Language = "TypeScript", Count = 2, Percentage = 13 },
+                new LanguageStat { Language = "Other", Count = 1, Percentage = 7 }
+            }
+        };
+    }
+
+    private string GetVisibilityColor(string visibility)
+    {
+        return visibility.ToLower() == "public" ? "success" : "secondary";
+    }
+
+    private void FilterActivity(string period)
+    {
+        // TODO: Implement filtering
+    }
+
+    private void SyncGitHubData()
+    {
+        // TODO: Implement sync
+    }
+
+    private void ExportGitHubData()
+    {
+        // TODO: Implement export
+    }
+
+    public class Repository
+    {
+        public string Name { get; set; } = "";
+        public string Description { get; set; } = "";
+        public string Url { get; set; } = "";
+        public string Visibility { get; set; } = "";
+        public int Stars { get; set; }
+        public int Forks { get; set; }
+        public int Watchers { get; set; }
+        public string Language { get; set; } = "";
+        public DateTime CreatedAt { get; set; }
+        public DateTime UpdatedAt { get; set; }
+    }
+
+    public class ActivityItem
+    {
+        public string Icon { get; set; } = "";
+        public string Message { get; set; } = "";
+        public DateTime Timestamp { get; set; }
+    }
+
+    public class GitHubStats
+    {
+        public int TotalRepos { get; set; }
+        public int TotalStars { get; set; }
+        public int TotalForks { get; set; }
+        public int Followers { get; set; }
+        public List<LanguageStat> LanguageStats { get; set; } = new();
+    }
+
+    public class LanguageStat
+    {
+        public string Language { get; set; } = "";
+        public int Count { get; set; }
+        public double Percentage { get; set; }
+    }
+}

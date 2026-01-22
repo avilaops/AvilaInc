@@ -1,0 +1,33 @@
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.deps.json
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.csproj.AssemblyReference.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.AssemblyInfoInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.AssemblyInfo.cs
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.csproj.CoreCompileInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager..4989B744.Up2Date
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\refint\Manager.Integrations.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Integrations\obj\Debug\net10.0\ref\Manager.Integrations.dll
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.deps.json
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.dll
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Integrations.pdb
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.csproj.AssemblyReference.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.AssemblyInfoInputs.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.AssemblyInfo.cs
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager..4989B744.Up2Date
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.dll
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\refint\Manager.Integrations.dll
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.pdb
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\ref\Manager.Integrations.dll
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Contracts.dll
+D:\Projetos\Admin\src\Manager.Integrations\bin\Debug\net10.0\Manager.Contracts.pdb
+D:\Projetos\Admin\src\Manager.Integrations\obj\Debug\net10.0\Manager.Integrations.sourcelink.json

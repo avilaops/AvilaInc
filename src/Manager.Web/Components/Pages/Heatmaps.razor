@@ -1,0 +1,217 @@
+@page "/heatmaps"
+@using Manager.Core.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IJSRuntime JS
+
+<PageTitle>Heatmaps</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <MudText Typo="Typo.h4" Class="mb-2">
+        <MudIcon Icon="@Icons.Material.Filled.Whatshot" Class="mr-2" />
+        Heatmaps de Cliques e Scroll
+    </MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">
+        Veja onde os usuários clicam e até onde fazem scroll. 
+        <MudLink Href="/help" Color="Color.Primary">Como usar heatmaps</MudLink>
+    </MudText>
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudGrid>
+            <MudItem xs="12" md="3">
+                <MudSelect T="string" Label="Site" @bind-Value="selectedSiteId" Variant="Variant.Outlined">
+                    @if (sites != null)
+                    {
+                        @foreach (var site in sites)
+                        {
+                            <MudSelectItem Value="@site.SiteId">@site.Name</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+            </MudItem>
+            <MudItem xs="12" md="3">
+                <MudTextField @bind-Value="pathFilter" Label="Caminho da Página" Variant="Variant.Outlined" Placeholder="/home" />
+            </MudItem>
+            <MudItem xs="12" md="2">
+                <MudDatePicker Label="Data Inicial" @bind-Date="startDate" Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" md="2">
+                <MudDatePicker Label="Data Final" @bind-Date="endDate" Variant="Variant.Outlined" />
+            </MudItem>
+            <MudItem xs="12" md="2">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="LoadHeatmaps" FullWidth="true" Class="mt-2">
+                    Carregar
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    @if (loading)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+    }
+    else
+    {
+        <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+            <MudTabPanel Text="Mapa de Cliques" Icon="@Icons.Material.Filled.TouchApp">
+                <MudText Typo="Typo.h6" Class="mb-3">Cliques Registrados: @(clicksData?.Count ?? 0)</MudText>
+                
+                @if (clicksData != null && clicksData.Any())
+                {
+                    <MudPaper Class="pa-4" Style="position: relative; height: 600px; background: #f5f5f5; overflow: auto;">
+                        @foreach (var click in clicksData)
+                        {
+                            <div style="position: absolute; left: @($"{click.X}%"); top: @($"{click.Y}%"); width: 20px; height: 20px; background: rgba(255, 0, 0, 0.3); border-radius: 50%; border: 2px solid red;"></div>
+                        }
+                    </MudPaper>
+                }
+                else
+                {
+                    <MudAlert Severity="Severity.Info">Nenhum clique registrado para este período</MudAlert>
+                }
+            </MudTabPanel>
+
+            <MudTabPanel Text="Profundidade de Scroll" Icon="@Icons.Material.Filled.Height">
+                @if (scrollData != null)
+                {
+                    <MudGrid>
+                        <MudItem xs="12" md="4">
+                            <MudPaper Class="pa-4 text-center">
+                                <MudText Typo="Typo.h4" Color="Color.Primary">@($"{scrollData.AvgDepth}%")</MudText>
+                                <MudText Typo="Typo.body2">Profundidade Média</MudText>
+                            </MudPaper>
+                        </MudItem>
+                        <MudItem xs="12" md="8">
+                            <MudPaper Class="pa-4">
+                                <MudText Typo="Typo.h6" Class="mb-3">Distribuição de Scroll</MudText>
+                                <MudProgressLinear Value="25" Color="Color.Error" Size="Size.Large" Class="mb-2">
+                                    <MudText Typo="Typo.body2">0-25%: @scrollData.Ranges.Depth_0_25 visitantes</MudText>
+                                </MudProgressLinear>
+                                <MudProgressLinear Value="50" Color="Color.Warning" Size="Size.Large" Class="mb-2">
+                                    <MudText Typo="Typo.body2">25-50%: @scrollData.Ranges.Depth_25_50 visitantes</MudText>
+                                </MudProgressLinear>
+                                <MudProgressLinear Value="75" Color="Color.Info" Size="Size.Large" Class="mb-2">
+                                    <MudText Typo="Typo.body2">50-75%: @scrollData.Ranges.Depth_50_75 visitantes</MudText>
+                                </MudProgressLinear>
+                                <MudProgressLinear Value="100" Color="Color.Success" Size="Size.Large">
+                                    <MudText Typo="Typo.body2">75-100%: @scrollData.Ranges.Depth_75_100 visitantes</MudText>
+                                </MudProgressLinear>
+                            </MudPaper>
+                        </MudItem>
+                    </MudGrid>
+                }
+            </MudTabPanel>
+        </MudTabs>
+    }
+</MudContainer>
+
+@code {
+    private List<Site>? sites;
+    private string? selectedSiteId;
+    private string? pathFilter;
+    private DateTime? startDate = DateTime.Now.AddDays(-7);
+    private DateTime? endDate = DateTime.Now;
+    private bool loading = false;
+    private List<ClickData>? clicksData;
+    private ScrollDepthData? scrollData;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSites();
+        if (sites?.Any() == true)
+        {
+            selectedSiteId = sites.First().SiteId;
+        }
+    }
+
+    private async Task LoadSites()
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ApiResponse<List<Site>>>("http://localhost:5056/api/sites");
+            if (response?.Success == true)
+            {
+                sites = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar sites: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task LoadHeatmaps()
+    {
+        if (string.IsNullOrEmpty(selectedSiteId)) return;
+
+        loading = true;
+        try
+        {
+            var pathParam = !string.IsNullOrEmpty(pathFilter) ? $"&path={pathFilter}" : "";
+            
+            // Load clicks
+            var clicksUrl = $"http://localhost:5056/api/heatmaps/clicks/{selectedSiteId}?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}{pathParam}";
+            var clicksResponse = await Http.GetFromJsonAsync<ClicksResponse>(clicksUrl);
+            if (clicksResponse?.Success == true)
+            {
+                clicksData = clicksResponse.Data;
+            }
+
+            // Load scroll depth
+            var scrollUrl = $"http://localhost:5056/api/heatmaps/scroll-depth/{selectedSiteId}?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}{pathParam}";
+            var scrollResponse = await Http.GetFromJsonAsync<ScrollResponse>(scrollUrl);
+            if (scrollResponse?.Success == true)
+            {
+                scrollData = scrollResponse.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar heatmaps: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public T? Data { get; set; }
+    }
+
+    class ClicksResponse
+    {
+        public bool Success { get; set; }
+        public List<ClickData>? Data { get; set; }
+    }
+
+    class ClickData
+    {
+        public double X { get; set; }
+        public double Y { get; set; }
+        public string Path { get; set; } = "";
+    }
+
+    class ScrollResponse
+    {
+        public bool Success { get; set; }
+        public ScrollDepthData? Data { get; set; }
+    }
+
+    class ScrollDepthData
+    {
+        public double AvgDepth { get; set; }
+        public ScrollRanges Ranges { get; set; } = new();
+        public int Total { get; set; }
+    }
+
+    class ScrollRanges
+    {
+        public int Depth_0_25 { get; set; }
+        public int Depth_25_50 { get; set; }
+        public int Depth_50_75 { get; set; }
+        public int Depth_75_100 { get; set; }
+    }
+}

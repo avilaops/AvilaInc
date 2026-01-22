@@ -1,0 +1,38 @@
+@using Manager.Core.Enums
+
+@code {
+    [Parameter]
+    public JobStatus Status { get; set; }
+
+    private string GetBadgeClass()
+    {
+        return Status switch
+        {
+            JobStatus.Queued => "bg-secondary",
+            JobStatus.Running => "bg-info",
+            JobStatus.Succeeded => "bg-success",
+            JobStatus.Failed => "bg-danger",
+            JobStatus.Retrying => "bg-warning",
+            JobStatus.Canceled => "bg-dark",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetIcon()
+    {
+        return Status switch
+        {
+            JobStatus.Queued => "bi-clock",
+            JobStatus.Running => "bi-arrow-repeat spinner-border-sm",
+            JobStatus.Succeeded => "bi-check-circle",
+            JobStatus.Failed => "bi-x-circle",
+            JobStatus.Retrying => "bi-arrow-clockwise",
+            JobStatus.Canceled => "bi-dash-circle",
+            _ => "bi-question-circle"
+        };
+    }
+}
+
+<span class="badge @GetBadgeClass()">
+    <i class="bi @GetIcon()"></i> @Status.ToString()
+</span>

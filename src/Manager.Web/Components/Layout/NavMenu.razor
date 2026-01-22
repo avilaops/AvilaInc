@@ -1,0 +1,70 @@
+﻿<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Filled.Dashboard">
+        Dashboard
+    </MudNavLink>
+
+    <MudNavGroup Title="CRM" Icon="@Icons.Material.Filled.People" Expanded="true">
+        <MudNavLink Href="/leads" Icon="@Icons.Material.Filled.PersonAdd">
+            Leads
+        </MudNavLink>
+        <MudNavLink Href="/contacts" Icon="@Icons.Material.Filled.Contacts">
+            Contatos
+        </MudNavLink>
+        <MudNavLink Href="/campaigns" Icon="@Icons.Material.Filled.Campaign">
+            Campanhas
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Financeiro" Icon="@Icons.Material.Filled.AttachMoney">
+        <MudNavLink Href="/finance" Icon="@Icons.Material.Filled.AccountBalance">
+            Contas
+        </MudNavLink>
+        <MudNavLink Href="/payments" Icon="@Icons.Material.Filled.Payment">
+            Pagamentos
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Gestores" Icon="@Icons.Material.Filled.SupervisorAccount">
+        <MudNavLink Href="/gestores" Icon="@Icons.Material.Filled.ManageAccounts">
+            Lista de Gestores
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Integrações" Icon="@Icons.Material.Filled.Extension">
+        <MudNavLink Href="/gmail" Icon="@Icons.Material.Filled.Email">
+            Gmail
+        </MudNavLink>
+        <MudNavLink Href="/openai" Icon="@Icons.Material.Filled.AutoAwesome">
+            OpenAI
+        </MudNavLink>
+        <MudNavLink Href="/stripe" Icon="@Icons.Material.Filled.CreditCard">
+            Stripe
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudNavGroup Title="Analytics" Icon="@Icons.Material.Filled.Insights" Expanded="false">
+        <MudNavLink Href="/sites" Icon="@Icons.Material.Filled.Language">
+            Sites
+        </MudNavLink>
+        <MudNavLink Href="/analytics" Icon="@Icons.Material.Filled.Analytics">
+            Dashboard Analytics
+        </MudNavLink>
+        <MudNavLink Href="/funnels" Icon="@Icons.Material.Filled.FilterAlt">
+            Funis de Conversão
+        </MudNavLink>
+        <MudNavLink Href="/heatmaps" Icon="@Icons.Material.Filled.Whatshot">
+            Heatmaps
+        </MudNavLink>
+    </MudNavGroup>
+
+    <MudDivider Class="my-2" />
+
+    <MudNavLink Href="/help" Icon="@Icons.Material.Filled.Help" Match="NavLinkMatch.All">
+        Ajuda / Como Usar
+    </MudNavLink>
+
+    <MudNavLink Href="/settings" Icon="@Icons.Material.Filled.Settings">
+        Configurações
+    </MudNavLink>
+</MudNavMenu>
+

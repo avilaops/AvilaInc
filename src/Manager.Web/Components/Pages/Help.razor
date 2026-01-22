@@ -1,0 +1,468 @@
+@page "/help"
+@inject IJSRuntime JS
+
+<PageTitle>Ajuda - Como Usar o Analytics</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudText Typo="Typo.h3" Class="mb-2">
+        <MudIcon Icon="@Icons.Material.Filled.Help" Size="Size.Large" Class="mr-2" />
+        Guia Completo - Avila Analytics
+    </MudText>
+    <MudText Typo="Typo.body1" Class="mb-4">
+        Sistema completo de analytics sem dependências externas. Substitui Google Analytics, Facebook Pixel, Hotjar e Tawk.to.
+    </MudText>
+
+    <MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+        
+        <!-- TAB 1: INÍCIO RÁPIDO -->
+        <MudTabPanel Text="🚀 Início Rápido" Icon="@Icons.Material.Filled.Rocket">
+            <MudText Typo="Typo.h5" Class="mb-3">Como Começar em 3 Passos</MudText>
+            
+            <MudTimeline TimelineOrientation="TimelineOrientation.Vertical">
+                <MudTimelineItem Color="Color.Primary" Size="Size.Large">
+                    <ItemContent>
+                        <MudText Typo="Typo.h6" Class="mb-2">1. Cadastre um Site</MudText>
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            Acesse <MudLink Href="/sites" Color="Color.Primary">Sites</MudLink> e clique em "Novo Site":
+                        </MudText>
+                        <MudPaper Class="pa-3" Style="background: #f5f5f5;">
+                            • <strong>Nome:</strong> Nome do site do cliente<br/>
+                            • <strong>Domínio:</strong> exemplo.com.br<br/>
+                            • <strong>Chat:</strong> Marque se quiser chat ao vivo
+                        </MudPaper>
+                    </ItemContent>
+                </MudTimelineItem>
+
+                <MudTimelineItem Color="Color.Success" Size="Size.Large">
+                    <ItemContent>
+                        <MudText Typo="Typo.h6" Class="mb-2">2. Copie o Código de Rastreamento</MudText>
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            Clique no ícone <MudIcon Icon="@Icons.Material.Filled.Code" Size="Size.Small" /> ao lado do site e copie o código:
+                        </MudText>
+                        <MudPaper Class="pa-3" Style="background: #263238; color: #aed581; font-family: monospace; overflow-x: auto;">
+&lt;script src="http://sua-api.com/analytics.js" 
+        data-site-id="AVA_XXXXXXXX"&gt;
+&lt;/script&gt;
+                        </MudPaper>
+                        <MudButton Color="Color.Primary" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ContentCopy" OnClick="CopyCode1" Class="mt-2">
+                            Copiar Exemplo
+                        </MudButton>
+                    </ItemContent>
+                </MudTimelineItem>
+
+                <MudTimelineItem Color="Color.Info" Size="Size.Large">
+                    <ItemContent>
+                        <MudText Typo="Typo.h6" Class="mb-2">3. Adicione no Site do Cliente</MudText>
+                        <MudText Typo="Typo.body2" Class="mb-2">
+                            Cole o código no <code>&lt;head&gt;</code> do HTML do site. Pronto! ✅
+                        </MudText>
+                        <MudAlert Severity="Severity.Success" Class="mt-2">
+                            O analytics já está rastreando visitantes, pageviews, cliques e scroll automaticamente!
+                        </MudAlert>
+                    </ItemContent>
+                </MudTimelineItem>
+            </MudTimeline>
+        </MudTabPanel>
+
+        <!-- TAB 2: EVENTOS CUSTOMIZADOS -->
+        <MudTabPanel Text="🎯 Eventos" Icon="@Icons.Material.Filled.TrackChanges">
+            <MudText Typo="Typo.h5" Class="mb-3">Rastreamento de Eventos Customizados</MudText>
+            
+            <MudText Typo="Typo.h6" Class="mb-2">O que são eventos?</MudText>
+            <MudText Typo="Typo.body2" Class="mb-4">
+                Eventos são ações específicas dos usuários: cliques em botões, downloads, envio de formulários, compras, etc.
+            </MudText>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Como rastrear um evento</MudText>
+            <MudPaper Class="pa-3 mb-3" Style="background: #263238; color: #aed581; font-family: monospace; overflow-x: auto;">
+// Evento simples
+avilaTrack('botao_contato_clicado');
+
+// Evento com categoria
+avilaTrack('download_ebook', {
+    category: 'conversao',
+    label: 'Ebook Marketing Digital'
+});
+
+// Evento com valor monetário
+avilaTrack('compra_finalizada', {
+    category: 'ecommerce',
+    label: 'Produto XYZ',
+    value: 199.90,
+    metadata: {
+        produto_id: '12345',
+        quantidade: 2
+    }
+});
+            </MudPaper>
+            <MudButton Color="Color.Primary" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ContentCopy" OnClick="CopyCode2" Class="mb-4">
+                Copiar Exemplos
+            </MudButton>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Exemplos Práticos</MudText>
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel Text="🛒 Rastrear Compras">
+                    <MudPaper Class="pa-3" Style="background: #263238; color: #aed581; font-family: monospace;">
+document.getElementById('finalizar-compra').addEventListener('click', function() {
+    avilaTrack('compra_realizada', {
+        category: 'ecommerce',
+        value: valorTotal
+    });
+});
+                    </MudPaper>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="📧 Rastrear Envio de Formulário">
+                    <MudPaper Class="pa-3" Style="background: #263238; color: #aed581; font-family: monospace;">
+document.getElementById('form-contato').addEventListener('submit', function(e) {
+    avilaTrack('formulario_enviado', {
+        category: 'lead',
+        label: 'Formulário de Contato'
+    });
+});
+                    </MudPaper>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="📥 Rastrear Downloads">
+                    <MudPaper Class="pa-3" Style="background: #263238; color: #aed581; font-family: monospace;">
+document.querySelectorAll('a[download]').forEach(link => {
+    link.addEventListener('click', function() {
+        avilaTrack('download', {
+            category: 'conteudo',
+            label: this.getAttribute('href')
+        });
+    });
+});
+                    </MudPaper>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="▶️ Rastrear Vídeos">
+                    <MudPaper Class="pa-3" Style="background: #263238; color: #aed581; font-family: monospace;">
+const video = document.getElementById('meu-video');
+
+video.addEventListener('play', () => {
+    avilaTrack('video_play', { category: 'engajamento' });
+});
+
+video.addEventListener('ended', () => {
+    avilaTrack('video_concluido', { category: 'engajamento' });
+});
+                    </MudPaper>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudTabPanel>
+
+        <!-- TAB 3: FUNIS DE CONVERSÃO -->
+        <MudTabPanel Text="📈 Funis" Icon="@Icons.Material.Filled.FilterAlt">
+            <MudText Typo="Typo.h5" Class="mb-3">Funis de Conversão</MudText>
+            
+            <MudText Typo="Typo.h6" Class="mb-2">O que é um funil?</MudText>
+            <MudText Typo="Typo.body2" Class="mb-4">
+                Um funil rastreia o caminho do usuário até completar uma ação (compra, cadastro, etc.). 
+                Mostra quantos visitantes passam por cada etapa e onde desistem.
+            </MudText>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Exemplo: Funil de Checkout</MudText>
+            <MudPaper Class="pa-3 mb-3" Style="background: #f5f5f5;">
+                <MudText Typo="Typo.body2"><strong>Etapa 1:</strong> Visualizar Produto (/produto)</MudText>
+                <MudText Typo="Typo.body2"><strong>Etapa 2:</strong> Adicionar ao Carrinho (/carrinho)</MudText>
+                <MudText Typo="Typo.body2"><strong>Etapa 3:</strong> Dados Pessoais (/checkout)</MudText>
+                <MudText Typo="Typo.body2"><strong>Etapa 4:</strong> Pagamento (evento: compra_finalizada)</MudText>
+            </MudPaper>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Como criar um funil</MudText>
+            <MudList T="string" Dense="true">
+                <MudListItem T="string" Icon="@Icons.Material.Filled.ArrowRight">
+                    Acesse <MudLink Href="/funnels" Color="Color.Primary">Funis de Conversão</MudLink>
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.ArrowRight">
+                    Clique em "Novo Funil"
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.ArrowRight">
+                    Defina as etapas (URLs ou eventos)
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.ArrowRight">
+                    Salve e acompanhe as estatísticas!
+                </MudListItem>
+            </MudList>
+
+            <MudAlert Severity="Severity.Info" Class="mt-3">
+                <strong>Dica:</strong> O analytics rastreia automaticamente quando o usuário passa por cada etapa. 
+                Não precisa adicionar código extra!
+            </MudAlert>
+        </MudTabPanel>
+
+        <!-- TAB 4: HEATMAPS -->
+        <MudTabPanel Text="🔥 Heatmaps" Icon="@Icons.Material.Filled.Whatshot">
+            <MudText Typo="Typo.h5" Class="mb-3">Mapas de Calor (Heatmaps)</MudText>
+            
+            <MudText Typo="Typo.h6" Class="mb-2">O que são heatmaps?</MudText>
+            <MudText Typo="Typo.body2" Class="mb-4">
+                Visualização de onde os usuários clicam e até onde fazem scroll na página. 
+                Ajuda a entender o comportamento visual dos visitantes.
+            </MudText>
+
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h6">🖱️ Mapa de Cliques</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Typo="Typo.body2">
+                                Mostra onde os usuários clicam na página. Pontos vermelhos indicam áreas mais clicadas.
+                            </MudText>
+                            <MudText Typo="Typo.body2" Class="mt-2">
+                                <strong>Use para:</strong><br/>
+                                • Ver se os botões estão em bons lugares<br/>
+                                • Identificar elementos que confundem<br/>
+                                • Otimizar CTAs (calls-to-action)
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudCard>
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.h6">📊 Profundidade de Scroll</MudText>
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudText Typo="Typo.body2">
+                                Mostra até onde os usuários rolam a página (0-100%).
+                            </MudText>
+                            <MudText Typo="Typo.body2" Class="mt-2">
+                                <strong>Use para:</strong><br/>
+                                • Ver se conteúdo importante está visível<br/>
+                                • Identificar onde perdem interesse<br/>
+                                • Decidir posição de CTAs
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+
+            <MudAlert Severity="Severity.Success" Class="mt-3">
+                ✅ <strong>Rastreamento Automático!</strong> Os heatmaps já estão sendo coletados automaticamente. 
+                Acesse <MudLink Href="/heatmaps" Color="Color.Primary">Heatmaps</MudLink> para visualizar.
+            </MudAlert>
+        </MudTabPanel>
+
+        <!-- TAB 5: CHAT AO VIVO -->
+        <MudTabPanel Text="💬 Chat" Icon="@Icons.Material.Filled.Chat">
+            <MudText Typo="Typo.h5" Class="mb-3">Chat ao Vivo (Alternativa ao Tawk.to)</MudText>
+            
+            <MudText Typo="Typo.h6" Class="mb-2">Como ativar o chat</MudText>
+            <MudList T="string" Dense="true" Class="mb-3">
+                <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
+                    Em <MudLink Href="/sites" Color="Color.Primary">Sites</MudLink>, marque "Habilitar Chat"
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
+                    Adicione o widget de chat no site do cliente
+                </MudListItem>
+                <MudListItem T="string" Icon="@Icons.Material.Filled.CheckCircle">
+                    Responda mensagens em tempo real!
+                </MudListItem>
+            </MudList>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Código do Widget de Chat</MudText>
+            <MudPaper Class="pa-3 mb-3" Style="background: #263238; color: #aed581; font-family: monospace; overflow-x: auto;">
+&lt;script src="http://sua-api.com/chat.js" 
+        data-site-id="AVA_XXXXXXXX"&gt;
+&lt;/script&gt;
+            </MudPaper>
+            <MudButton Color="Color.Primary" Variant="Variant.Text" StartIcon="@Icons.Material.Filled.ContentCopy" OnClick="CopyCode3" Class="mb-3">
+                Copiar Código
+            </MudButton>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Customizações</MudText>
+            <MudPaper Class="pa-3" Style="background: #f5f5f5;">
+                • <strong>Posição:</strong> bottom-right, bottom-left, top-right, top-left<br/>
+                • <strong>Cor:</strong> Personalize a cor do botão e cabeçalho<br/>
+                • <strong>Mensagem de Boas-vindas:</strong> Customize a primeira mensagem<br/>
+                • <strong>Mensagem Offline:</strong> Quando não há atendentes online
+            </MudPaper>
+
+            <MudAlert Severity="Severity.Info" Class="mt-3">
+                Configure as personalizações em <MudLink Href="/sites" Color="Color.Primary">Sites</MudLink> ao editar o site.
+            </MudAlert>
+        </MudTabPanel>
+
+        <!-- TAB 6: DASHBOARD -->
+        <MudTabPanel Text="📊 Dashboard" Icon="@Icons.Material.Filled.Dashboard">
+            <MudText Typo="Typo.h5" Class="mb-3">Interpretando o Dashboard Analytics</MudText>
+            
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudCard Class="mb-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">Total de Pageviews</MudText>
+                            <MudText Typo="Typo.body2">
+                                Quantas páginas foram visualizadas no período. Inclui múltiplas visitas do mesmo usuário.
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudCard Class="mb-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Success">Visitantes Únicos</MudText>
+                            <MudText Typo="Typo.body2">
+                                Quantas pessoas diferentes visitaram o site. Cada pessoa é contada apenas uma vez.
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudCard Class="mb-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Info">Total de Sessões</MudText>
+                            <MudText Typo="Typo.body2">
+                                Quantas visitas ocorreram. Uma nova sessão inicia após 30 minutos de inatividade.
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+
+                <MudItem xs="12" md="6">
+                    <MudCard Class="mb-3">
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Warning">Taxa de Rejeição</MudText>
+                            <MudText Typo="Typo.body2">
+                                % de visitantes que saíram sem interagir (viram apenas 1 página). 
+                                <strong>Menor é melhor!</strong> Ideal: abaixo de 40%.
+                            </MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+
+            <MudText Typo="Typo.h6" Class="mb-2 mt-3">Páginas Mais Visitadas</MudText>
+            <MudText Typo="Typo.body2" Class="mb-3">
+                Lista as páginas com mais visualizações. Use para identificar conteúdo popular e otimizar as páginas mais acessadas.
+            </MudText>
+
+            <MudText Typo="Typo.h6" Class="mb-2">Tempo Real</MudText>
+            <MudText Typo="Typo.body2">
+                Mostra visitantes ativos nos últimos 5 minutos e as páginas que estão acessando agora. 
+                Atualiza automaticamente a cada 10 segundos.
+            </MudText>
+        </MudTabPanel>
+
+        <!-- TAB 7: FAQ -->
+        <MudTabPanel Text="❓ FAQ" Icon="@Icons.Material.Filled.QuestionAnswer">
+            <MudText Typo="Typo.h5" Class="mb-3">Perguntas Frequentes</MudText>
+            
+            <MudExpansionPanels MultiExpansion="true">
+                <MudExpansionPanel Text="Os dados são privados?">
+                    <MudText Typo="Typo.body2">
+                        ✅ <strong>Sim, 100% privados!</strong> Todos os dados ficam no seu servidor MongoDB. 
+                        Não compartilhamos com terceiros (Google, Facebook, etc.).
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Preciso de cookies?">
+                    <MudText Typo="Typo.body2">
+                        Usamos localStorage para identificar visitantes (sem cookies de terceiros). 
+                        Isso é melhor para LGPD/GDPR.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Funciona em SPAs (React, Vue, Angular)?">
+                    <MudText Typo="Typo.body2">
+                        ✅ <strong>Sim!</strong> O analytics.js detecta mudanças de página automaticamente em Single Page Applications.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Posso rastrear múltiplos sites?">
+                    <MudText Typo="Typo.body2">
+                        ✅ <strong>Sim!</strong> Cadastre quantos sites quiser em <MudLink Href="/sites">Sites</MudLink>. 
+                        Cada um tem seu próprio tracking code.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Como exportar relatórios?">
+                    <MudText Typo="Typo.body2">
+                        🔄 <strong>Em desenvolvimento.</strong> Futuramente você poderá exportar para PDF/Excel.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Tem limite de pageviews?">
+                    <MudText Typo="Typo.body2">
+                        ✅ <strong>Sem limites!</strong> Só depende da capacidade do seu servidor e MongoDB. 
+                        Escala conforme necessário.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Consigo ver histórico de visitantes?">
+                    <MudText Typo="Typo.body2">
+                        ✅ <strong>Sim!</strong> Todas as sessões e eventos de cada visitante ficam salvos. 
+                        Você pode rastrear a jornada completa.
+                    </MudText>
+                </MudExpansionPanel>
+
+                <MudExpansionPanel Text="Como configurar alertas?">
+                    <MudText Typo="Typo.body2">
+                        🔄 <strong>Recurso futuro.</strong> Você poderá criar alertas quando um evento específico ocorrer.
+                    </MudText>
+                </MudExpansionPanel>
+            </MudExpansionPanels>
+        </MudTabPanel>
+
+    </MudTabs>
+
+    <MudPaper Class="pa-4 mt-4" Style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+        <MudText Typo="Typo.h5" Class="mb-2">💡 Precisa de Ajuda?</MudText>
+        <MudText Typo="Typo.body1">
+            Este sistema substitui ferramentas pagas como Google Analytics, Hotjar e Tawk.to. 
+            Todos os dados são seus e ficam no seu servidor!
+        </MudText>
+        <MudText Typo="Typo.body2" Class="mt-2">
+            <strong>Dica:</strong> Comece cadastrando um site de teste e experimente os recursos antes de usar em produção.
+        </MudText>
+    </MudPaper>
+</MudContainer>
+
+@code {
+    private async Task CopyCode1()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", 
+            @"<script src=""http://sua-api.com/analytics.js"" data-site-id=""AVA_XXXXXXXX""></script>");
+    }
+
+    private async Task CopyCode2()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", 
+            @"// Evento simples
+avilaTrack('botao_contato_clicado');
+
+// Evento com categoria
+avilaTrack('download_ebook', {
+    category: 'conversao',
+    label: 'Ebook Marketing Digital'
+});
+
+// Evento com valor monetário
+avilaTrack('compra_finalizada', {
+    category: 'ecommerce',
+    label: 'Produto XYZ',
+    value: 199.90,
+    metadata: {
+        produto_id: '12345',
+        quantidade: 2
+    }
+});");
+    }
+
+    private async Task CopyCode3()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", 
+            @"<script src=""http://sua-api.com/chat.js"" data-site-id=""AVA_XXXXXXXX""></script>");
+    }
+}

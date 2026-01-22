@@ -1,0 +1,334 @@
+@page "/campaigns"
+@using System.Net.Http.Json
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Campanhas - Avila Manager</PageTitle>
+
+<MudText Typo="Typo.h3" GutterBottom="true">📢 Campanhas</MudText>
+<MudText Typo="Typo.body1" Class="mb-6">Gerencie campanhas de marketing e comunicação</MudText>
+
+<MudCard Elevation="2">
+    <MudCardContent>
+        <MudStack Row="true" Spacing="3" Class="mb-4">
+            <MudTextField @bind-Value="searchString" Placeholder="Buscar campanhas..." 
+                          Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" 
+                          IconSize="Size.Medium" Class="flex-grow-1" Immediate="true" />
+            <MudSelect @bind-Value="statusFilter" Label="Status" Style="min-width: 150px;">
+                <MudSelectItem Value="@("Todos")">Todos</MudSelectItem>
+                <MudSelectItem Value="@("Rascunho")">Rascunho</MudSelectItem>
+                <MudSelectItem Value="@("Agendada")">Agendada</MudSelectItem>
+                <MudSelectItem Value="@("Enviando")">Enviando</MudSelectItem>
+                <MudSelectItem Value="@("Enviada")">Enviada</MudSelectItem>
+                <MudSelectItem Value="@("Pausada")">Pausada</MudSelectItem>
+            </MudSelect>
+            <MudButton Variant="Variant.Filled" Color="Color.Info" 
+                       StartIcon="@Icons.Material.Filled.Campaign" OnClick="OpenCreateDialog">
+                Nova Campanha
+            </MudButton>
+        </MudStack>
+
+        @if (loading)
+        {
+            <MudProgressLinear Color="Color.Primary" Indeterminate="true" />
+        }
+        else
+        {
+            <MudGrid>
+                @foreach (var campaign in FilteredCampaigns)
+                {
+                    <MudItem xs="12" sm="6" md="4">
+                        <MudCard Elevation="3" Class="pa-4">
+                            <MudCardHeader>
+                                <CardHeaderContent>
+                                    <MudText Typo="Typo.h6">@campaign.Name</MudText>
+                                    <MudChip T="string" Size="Size.Small" Color="@GetStatusColor(campaign.Status)">
+                                        @campaign.Status
+                                    </MudChip>
+                                </CardHeaderContent>
+                                <CardHeaderActions>
+                                    <MudMenu Icon="@Icons.Material.Filled.MoreVert">
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Edit" 
+                                                     OnClick="@(() => OpenEditDialog(campaign))">Editar</MudMenuItem>
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Send" 
+                                                     OnClick="@(() => SendCampaign(campaign.Id))">Enviar</MudMenuItem>
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Pause" 
+                                                     OnClick="@(() => PauseCampaign(campaign.Id))">Pausar</MudMenuItem>
+                                        <MudDivider />
+                                        <MudMenuItem Icon="@Icons.Material.Filled.Delete" IconColor="Color.Error"
+                                                     OnClick="@(() => DeleteCampaign(campaign.Id))">Excluir</MudMenuItem>
+                                    </MudMenu>
+                                </CardHeaderActions>
+                            </MudCardHeader>
+                            <MudCardContent>
+                                <MudText Typo="Typo.body2" Color="Color.Secondary" Class="mb-2">
+                                    @campaign.Description
+                                </MudText>
+                                <MudStack Row="true" Spacing="2" Class="mt-3">
+                                    <MudChip T="string" Size="Size.Small" Icon="@Icons.Material.Filled.Email" Variant="Variant.Outlined">
+                                        @campaign.Type
+                                    </MudChip>
+                                    <MudChip T="string" Size="Size.Small" Icon="@Icons.Material.Filled.People" Variant="Variant.Outlined">
+                                        @campaign.TargetAudience destinatários
+                                    </MudChip>
+                                </MudStack>
+                                
+                                @if (campaign.Status == "Enviada")
+                                {
+                                    <MudDivider Class="my-3" />
+                                    <MudStack Row="true" Justify="Justify.SpaceBetween" Class="mt-3">
+                                        <MudStack Spacing="0">
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">Enviados</MudText>
+                                            <MudText Typo="Typo.body1">@campaign.SentCount</MudText>
+                                        </MudStack>
+                                        <MudStack Spacing="0">
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">Abertos</MudText>
+                                            <MudText Typo="Typo.body1">@campaign.OpenedCount</MudText>
+                                        </MudStack>
+                                        <MudStack Spacing="0">
+                                            <MudText Typo="Typo.caption" Color="Color.Secondary">Cliques</MudText>
+                                            <MudText Typo="Typo.body1">@campaign.ClickedCount</MudText>
+                                        </MudStack>
+                                    </MudStack>
+                                    <MudProgressLinear Color="Color.Success" Value="@campaign.OpenRate" Class="mt-2" />
+                                }
+                            </MudCardContent>
+                            <MudCardActions>
+                                <MudButton StartIcon="@Icons.Material.Filled.Visibility" Size="Size.Small" 
+                                           OnClick="@(() => ViewStats(campaign))">Ver Estatísticas</MudButton>
+                            </MudCardActions>
+                        </MudCard>
+                    </MudItem>
+                }
+            </MudGrid>
+        }
+    </MudCardContent>
+</MudCard>
+
+<MudDialog @bind-Visible="dialogVisible" Options="dialogOptions">
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            @(editingCampaign?.Id == null ? "Nova Campanha" : "Editar Campanha")
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudStack Spacing="3">
+            <MudTextField @bind-Value="editingCampaign.Name" Label="Nome da Campanha" Required="true" />
+            <MudTextField @bind-Value="editingCampaign.Description" Label="Descrição" Lines="2" />
+            <MudSelect @bind-Value="editingCampaign.Type" Label="Tipo" Required="true">
+                <MudSelectItem Value="@("Email")">Email</MudSelectItem>
+                <MudSelectItem Value="@("SMS")">SMS</MudSelectItem>
+                <MudSelectItem Value="@("WhatsApp")">WhatsApp</MudSelectItem>
+                <MudSelectItem Value="@("Social Media")">Redes Sociais</MudSelectItem>
+            </MudSelect>
+            <MudSelect @bind-Value="editingCampaign.Status" Label="Status" Required="true">
+                <MudSelectItem Value="@("Rascunho")">Rascunho</MudSelectItem>
+                <MudSelectItem Value="@("Agendada")">Agendada</MudSelectItem>
+                <MudSelectItem Value="@("Enviando")">Enviando</MudSelectItem>
+                <MudSelectItem Value="@("Enviada")">Enviada</MudSelectItem>
+                <MudSelectItem Value="@("Pausada")">Pausada</MudSelectItem>
+            </MudSelect>
+            <MudTextField @bind-Value="editingCampaign.Subject" Label="Assunto" />
+            <MudTextField @bind-Value="editingCampaign.TargetAudience" Label="Público Alvo (nº destinatários)" 
+                          InputType="InputType.Number" />
+            <MudDatePicker @bind-Date="editingCampaign.ScheduledDate" Label="Data de Envio" />
+        </MudStack>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="CloseDialog">Cancelar</MudButton>
+        <MudButton Color="Color.Info" Variant="Variant.Filled" OnClick="SaveCampaign">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private List<Campaign> campaigns = new();
+    private Campaign editingCampaign = new();
+    private bool loading = true;
+    private bool dialogVisible = false;
+    private string searchString = "";
+    private string statusFilter = "Todos";
+    
+    private DialogOptions dialogOptions = new() { MaxWidth = MaxWidth.Medium, FullWidth = true };
+
+    private IEnumerable<Campaign> FilteredCampaigns => campaigns
+        .Where(c => (string.IsNullOrEmpty(searchString) || 
+                     c.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                     (c.Description?.Contains(searchString, StringComparison.OrdinalIgnoreCase) ?? false)) &&
+                    (statusFilter == "Todos" || c.Status == statusFilter));
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadCampaigns();
+    }
+
+    private async Task LoadCampaigns()
+    {
+        loading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<CampaignsResponse>("http://localhost:5056/api/campaigns");
+            campaigns = response?.Data ?? new List<Campaign>();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar campanhas: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void OpenCreateDialog()
+    {
+        editingCampaign = new Campaign 
+        { 
+            Status = "Rascunho", 
+            Type = "Email",
+            ScheduledDate = DateTime.Now.AddDays(1)
+        };
+        dialogVisible = true;
+    }
+
+    private void OpenEditDialog(Campaign campaign)
+    {
+        editingCampaign = new Campaign
+        {
+            Id = campaign.Id,
+            Name = campaign.Name,
+            Description = campaign.Description,
+            Type = campaign.Type,
+            Status = campaign.Status,
+            Subject = campaign.Subject,
+            TargetAudience = campaign.TargetAudience,
+            ScheduledDate = campaign.ScheduledDate
+        };
+        dialogVisible = true;
+    }
+
+    private void CloseDialog()
+    {
+        dialogVisible = false;
+        editingCampaign = new();
+    }
+
+    private async Task SaveCampaign()
+    {
+        try
+        {
+            if (string.IsNullOrEmpty(editingCampaign.Id))
+            {
+                var response = await Http.PostAsJsonAsync("http://localhost:5056/api/campaigns", editingCampaign);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Campanha criada com sucesso!", Severity.Success);
+                }
+            }
+            else
+            {
+                var response = await Http.PutAsJsonAsync($"http://localhost:5056/api/campaigns/{editingCampaign.Id}", editingCampaign);
+                if (response.IsSuccessStatusCode)
+                {
+                    Snackbar.Add("Campanha atualizada com sucesso!", Severity.Success);
+                }
+            }
+            
+            CloseDialog();
+            await LoadCampaigns();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao salvar campanha: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task SendCampaign(string id)
+    {
+        try
+        {
+            var response = await Http.PostAsync($"http://localhost:5056/api/campaigns/{id}/send", null);
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Campanha enviada!", Severity.Success);
+                await LoadCampaigns();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao enviar campanha: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task PauseCampaign(string id)
+    {
+        try
+        {
+            var response = await Http.PostAsync($"http://localhost:5056/api/campaigns/{id}/pause", null);
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Campanha pausada!", Severity.Info);
+                await LoadCampaigns();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao pausar campanha: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DeleteCampaign(string id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"http://localhost:5056/api/campaigns/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Campanha excluída com sucesso!", Severity.Success);
+                await LoadCampaigns();
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao excluir campanha: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void ViewStats(Campaign campaign)
+    {
+        Snackbar.Add($"Ver estatísticas de {campaign.Name}", Severity.Info);
+        // TODO: Implementar modal de estatísticas detalhadas
+    }
+
+    private Color GetStatusColor(string status) => status switch
+    {
+        "Rascunho" => Color.Default,
+        "Agendada" => Color.Info,
+        "Enviando" => Color.Warning,
+        "Enviada" => Color.Success,
+        "Pausada" => Color.Secondary,
+        _ => Color.Default
+    };
+
+    public class Campaign
+    {
+        public string? Id { get; set; }
+        public string Name { get; set; } = "";
+        public string? Description { get; set; }
+        public string Type { get; set; } = "Email";
+        public string Status { get; set; } = "Rascunho";
+        public string? Subject { get; set; }
+        public int TargetAudience { get; set; }
+        public DateTime? ScheduledDate { get; set; }
+        public int SentCount { get; set; }
+        public int OpenedCount { get; set; }
+        public int ClickedCount { get; set; }
+        public double OpenRate => SentCount > 0 ? (OpenedCount * 100.0 / SentCount) : 0;
+    }
+
+    public class CampaignsResponse
+    {
+        public bool Success { get; set; }
+        public List<Campaign> Data { get; set; } = new();
+    }
+}

@@ -1,0 +1,492 @@
+@page "/payments"
+
+<PageTitle>Pagamentos - Avila Dashboard</PageTitle>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>💰 Gestão de Pagamentos</h1>
+        <p>Gerencie pagamentos, saldo e transações com Stripe e PayPal</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button @GetTabClass("overview")" @onclick="@(() => SetActiveTab("overview"))">
+                Visão Geral
+            </button>
+            <button class="tab-button @GetTabClass("stripe")" @onclick="@(() => SetActiveTab("stripe"))">
+                Stripe
+            </button>
+            <button class="tab-button @GetTabClass("paypal")" @onclick="@(() => SetActiveTab("paypal"))">
+                PayPal
+            </button>
+            <button class="tab-button @GetTabClass("transactions")" @onclick="@(() => SetActiveTab("transactions"))">
+                Transações
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            @if (activeTab == "overview")
+            {
+                <div class="tab-content">
+                    <div class="balance-overview">
+                        <div class="balance-card stripe-card">
+                            <div class="balance-header">
+                                <h4>💳 Stripe</h4>
+                            </div>
+                            <div class="balance-amount">
+                                <span class="currency">R$</span>
+                                <span class="amount">@stripeBalance.ToString("N2")</span>
+                            </div>
+                            <p class="balance-label">Saldo Disponível</p>
+                        </div>
+
+                        <div class="balance-card paypal-card">
+                            <div class="balance-header">
+                                <h4>🅿️ PayPal</h4>
+                            </div>
+                            <div class="balance-amount">
+                                <span class="currency">R$</span>
+                                <span class="amount">@paypalBalance.ToString("N2")</span>
+                            </div>
+                            <p class="balance-label">Saldo Disponível</p>
+                        </div>
+
+                        <div class="balance-card total-card">
+                            <div class="balance-header">
+                                <h4>💰 Total</h4>
+                            </div>
+                            <div class="balance-amount">
+                                <span class="currency">R$</span>
+                                <span class="amount">@(stripeBalance + paypalBalance).ToString("N2")</span>
+                            </div>
+                            <p class="balance-label">Saldo Consolidado</p>
+                        </div>
+                    </div>
+
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="RefreshBalances">
+                            <i class="bi bi-arrow-clockwise"></i> Atualizar Saldos
+                        </button>
+                        <button class="btn btn-secondary" @onclick="GenerateReport">
+                            <i class="bi bi-file-earmark-bar-graph"></i> Gerar Relatório
+                        </button>
+                        <button class="btn btn-info" @onclick="ExportTransactions">
+                            <i class="bi bi-file-earmark-spreadsheet"></i> Exportar Transações
+                        </button>
+                    </div>
+
+                    <div class="recent-transactions">
+                        <h4>📈 Transações Recentes</h4>
+                        @if (recentTransactions.Any())
+                        {
+                            <div class="transactions-list">
+                                @foreach (var transaction in recentTransactions)
+                                {
+                                    <div class="transaction-item">
+                                        <div class="transaction-icon">@transaction.Icon</div>
+                                        <div class="transaction-details">
+                                            <div class="transaction-header">
+                                                <span class="transaction-id">@transaction.Id</span>
+                                                <span class="transaction-amount @GetAmountClass(transaction.Amount)">
+                                                    @transaction.Amount.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                                                </span>
+                                            </div>
+                                            <div class="transaction-meta">
+                                                <span class="transaction-provider">@transaction.Provider</span>
+                                                <span class="transaction-date">@transaction.Date.ToString("dd/MM/yyyy HH:mm")</span>
+                                                <span class="badge bg-@GetStatusColor(transaction.Status)">@transaction.Status</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="bi bi-receipt display-4 text-muted"></i>
+                                <h5>Nenhuma transação recente</h5>
+                                <p>As transações aparecerão aqui quando houver atividade.</p>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+            else if (activeTab == "stripe")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadStripeBalance">
+                            <i class="bi bi-wallet"></i> Carregar Saldo
+                        </button>
+                        <button class="btn btn-secondary" @onclick="LoadStripeCharges">
+                            <i class="bi bi-receipt"></i> Carregar Cobranças
+                        </button>
+                        <button class="btn btn-info" @onclick="LoadStripeCustomers">
+                            <i class="bi bi-people"></i> Carregar Clientes
+                        </button>
+                    </div>
+
+                    <div class="stripe-details">
+                        <div class="detail-section">
+                            <h4>Saldo Detalhado</h4>
+                            <div class="balance-breakdown">
+                                <div class="balance-item">
+                                    <span class="label">Disponível:</span>
+                                    <span class="value">@stripeBalance.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</span>
+                                </div>
+                                <div class="balance-item">
+                                    <span class="label">Pendente:</span>
+                                    <span class="value">@stripePending.ToString("C", new System.Globalization.CultureInfo("pt-BR"))</span>
+                                </div>
+                                <div class="balance-item total">
+                                    <span class="label">Total:</span>
+                                    <span class="value">@(stripeBalance + stripePending).ToString("C", new System.Globalization.CultureInfo("pt-BR"))</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="detail-section">
+                            <h4>Últimas Cobranças</h4>
+                            @if (stripeCharges.Any())
+                            {
+                                <div class="charges-list">
+                                    @foreach (var charge in stripeCharges)
+                                    {
+                                        <div class="charge-item">
+                                            <div class="charge-header">
+                                                <span class="charge-id">@charge.Id</span>
+                                                <span class="charge-amount @GetAmountClass(charge.Amount)">
+                                                    @charge.Amount.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                                                </span>
+                                            </div>
+                                            <div class="charge-details">
+                                                <p><strong>Cliente:</strong> @charge.CustomerName</p>
+                                                <p><strong>Data:</strong> @charge.Date.ToString("dd/MM/yyyy HH:mm")</p>
+                                                <p><strong>Status:</strong> <span class="badge bg-@GetStatusColor(charge.Status)">@charge.Status</span></p>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                            else
+                            {
+                                <p class="text-muted">Nenhuma cobrança encontrada.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (activeTab == "paypal")
+            {
+                <div class="tab-content">
+                    <div class="paypal-placeholder">
+                        <div class="placeholder-content">
+                            <i class="bi bi-paypal display-1 text-primary"></i>
+                            <h3>🅿️ PayPal Integration</h3>
+                            <p>Integração com PayPal em desenvolvimento.</p>
+                            <div class="coming-features">
+                                <h5>Funcionalidades Planejadas:</h5>
+                                <ul>
+                                    <li>✅ Saldo da conta PayPal</li>
+                                    <li>✅ Histórico de transações</li>
+                                    <li>✅ Gestão de pagamentos</li>
+                                    <li>✅ Relatórios financeiros</li>
+                                    <li>✅ Webhooks automáticos</li>
+                                </ul>
+                            </div>
+                            <div class="integration-status">
+                                <span class="badge bg-warning">Em Desenvolvimento</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (activeTab == "transactions")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadAllTransactions">
+                            <i class="bi bi-arrow-clockwise"></i> Carregar Todas
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterTransactions("today"))">
+                            Hoje
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterTransactions("week"))">
+                            Semana
+                        </button>
+                        <button class="btn btn-info" @onclick="@(() => FilterTransactions("month"))">
+                            Mês
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando transações...</p>
+                        </div>
+                    }
+                    else if (allTransactions.Any())
+                    {
+                        <div class="data-table-container">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Provedor</th>
+                                        <th>Valor</th>
+                                        <th>Status</th>
+                                        <th>Data</th>
+                                        <th>Cliente</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach (var transaction in allTransactions)
+                                    {
+                                        <tr>
+                                            <td>@transaction.Id</td>
+                                            <td><span class="badge bg-@GetProviderColor(transaction.Provider)">@transaction.Provider</span></td>
+                                            <td class="@GetAmountClass(transaction.Amount)">
+                                                @transaction.Amount.ToString("C", new System.Globalization.CultureInfo("pt-BR"))
+                                            </td>
+                                            <td><span class="badge bg-@GetStatusColor(transaction.Status)">@transaction.Status</span></td>
+                                            <td>@transaction.Date.ToString("dd/MM/yyyy HH:mm")</td>
+                                            <td>@transaction.CustomerName</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-graph-up display-4 text-muted"></i>
+                            <h4>Nenhuma transação encontrada</h4>
+                            <p>As transações aparecerão aqui quando houver atividade.</p>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "overview";
+    private bool isLoading = false;
+    private decimal stripeBalance = 0;
+    private decimal stripePending = 0;
+    private decimal paypalBalance = 0;
+    private List<Transaction> recentTransactions = new();
+    private List<StripeCharge> stripeCharges = new();
+    private List<Transaction> allTransactions = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadOverviewData();
+    }
+
+    private string GetTabClass(string tabName) => activeTab == tabName ? "active" : "";
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        StateHasChanged();
+    }
+
+    private async Task LoadOverviewData()
+    {
+        // Simulate loading balances
+        stripeBalance = 15420.50m;
+        paypalBalance = 0; // PayPal not implemented yet
+        stripePending = 250.75m;
+
+        // Load recent transactions
+        recentTransactions = new List<Transaction>
+        {
+            new Transaction
+            {
+                Id = "ch_1234567890",
+                Provider = "Stripe",
+                Amount = 1250.00m,
+                Status = "Pago",
+                Date = DateTime.Now.AddHours(-2),
+                CustomerName = "João Silva",
+                Icon = "💳"
+            },
+            new Transaction
+            {
+                Id = "ch_0987654321",
+                Provider = "Stripe",
+                Amount = 890.50m,
+                Status = "Pago",
+                Date = DateTime.Now.AddHours(-5),
+                CustomerName = "Maria Santos",
+                Icon = "💳"
+            },
+            new Transaction
+            {
+                Id = "inv_abcdef123",
+                Provider = "Stripe",
+                Amount = -50.00m, // Refund
+                Status = "Reembolsado",
+                Date = DateTime.Now.AddDays(-1),
+                CustomerName = "Pedro Oliveira",
+                Icon = "↩️"
+            }
+        };
+    }
+
+    private async Task RefreshBalances()
+    {
+        await LoadOverviewData();
+    }
+
+    private async Task LoadStripeBalance()
+    {
+        // Simulate API call
+        await Task.Delay(1000);
+        stripeBalance = 15420.50m;
+        stripePending = 250.75m;
+        StateHasChanged();
+    }
+
+    private async Task LoadStripeCharges()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1500);
+            stripeCharges = new List<StripeCharge>
+            {
+                new StripeCharge
+                {
+                    Id = "ch_1234567890",
+                    Amount = 1250.00m,
+                    CustomerName = "João Silva",
+                    Status = "Pago",
+                    Date = DateTime.Now.AddHours(-2)
+                },
+                new StripeCharge
+                {
+                    Id = "ch_0987654321",
+                    Amount = 890.50m,
+                    CustomerName = "Maria Santos",
+                    Status = "Pago",
+                    Date = DateTime.Now.AddHours(-5)
+                },
+                new StripeCharge
+                {
+                    Id = "ch_abcdef1234",
+                    Amount = 2100.00m,
+                    CustomerName = "Empresa XYZ",
+                    Status = "Pendente",
+                    Date = DateTime.Now.AddDays(-1)
+                }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task LoadStripeCustomers()
+    {
+        // TODO: Implement customer loading
+    }
+
+    private async Task LoadAllTransactions()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+            allTransactions = new List<Transaction>
+            {
+                new Transaction { Id = "ch_1234567890", Provider = "Stripe", Amount = 1250.00m, Status = "Pago", Date = DateTime.Now.AddHours(-2), CustomerName = "João Silva" },
+                new Transaction { Id = "ch_0987654321", Provider = "Stripe", Amount = 890.50m, Status = "Pago", Date = DateTime.Now.AddHours(-5), CustomerName = "Maria Santos" },
+                new Transaction { Id = "inv_abcdef123", Provider = "Stripe", Amount = -50.00m, Status = "Reembolsado", Date = DateTime.Now.AddDays(-1), CustomerName = "Pedro Oliveira" },
+                new Transaction { Id = "pp_123456789", Provider = "PayPal", Amount = 750.00m, Status = "Pago", Date = DateTime.Now.AddDays(-3), CustomerName = "Ana Costa" }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private string GetAmountClass(decimal amount)
+    {
+        return amount >= 0 ? "text-success" : "text-danger";
+    }
+
+    private string GetStatusColor(string status)
+    {
+        return status.ToLower() switch
+        {
+            "pago" => "success",
+            "pendente" => "warning",
+            "falhou" => "danger",
+            "reembolsado" => "info",
+            _ => "secondary"
+        };
+    }
+
+    private string GetProviderColor(string provider)
+    {
+        return provider.ToLower() switch
+        {
+            "stripe" => "primary",
+            "paypal" => "info",
+            _ => "secondary"
+        };
+    }
+
+    private void FilterTransactions(string period)
+    {
+        // TODO: Implement filtering
+    }
+
+    private void GenerateReport()
+    {
+        // TODO: Implement report generation
+    }
+
+    private void ExportTransactions()
+    {
+        // TODO: Implement export
+    }
+
+    public class Transaction
+    {
+        public string Id { get; set; } = "";
+        public string Provider { get; set; } = "";
+        public decimal Amount { get; set; }
+        public string Status { get; set; } = "";
+        public DateTime Date { get; set; }
+        public string CustomerName { get; set; } = "";
+        public string Icon { get; set; } = "";
+    }
+
+    public class StripeCharge
+    {
+        public string Id { get; set; } = "";
+        public decimal Amount { get; set; }
+        public string CustomerName { get; set; } = "";
+        public string Status { get; set; } = "";
+        public DateTime Date { get; set; }
+    }
+}

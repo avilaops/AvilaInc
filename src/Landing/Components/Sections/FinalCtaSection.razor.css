@@ -1,0 +1,49 @@
+.final-cta {
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.cta-content h2 {
+    font-size: 42px;
+    margin-bottom: 20px;
+}
+
+.cta-content p {
+    font-size: 20px;
+    margin-bottom: 40px;
+    opacity: 0.95;
+}
+
+.btn-large {
+    font-size: 20px;
+    padding: 20px 50px;
+    background: white;
+    color: var(--color-primary);
+}
+
+.btn-large:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.contact-info {
+    margin-top: 30px;
+    font-size: 18px;
+    opacity: 0.9;
+}
+
+@media (max-width: 768px) {
+    .cta-content h2 {
+        font-size: 28px;
+    }
+
+    .cta-content p {
+        font-size: 16px;
+    }
+
+    .btn-large {
+        width: 100%;
+        font-size: 18px;
+    }
+}

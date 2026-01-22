@@ -1,0 +1,44 @@
+@using Manager.Core.Enums
+
+@code {
+    [Parameter]
+    public ProjectStatus Status { get; set; }
+
+    private string GetBadgeClass()
+    {
+        return Status switch
+        {
+            ProjectStatus.Draft => "bg-secondary",
+            ProjectStatus.AwaitingSpec => "bg-warning",
+            ProjectStatus.AwaitingPayment => "bg-warning",
+            ProjectStatus.QueuedProvisioning => "bg-info",
+            ProjectStatus.ProvisioningRepo => "bg-info",
+            ProjectStatus.Deploying => "bg-info",
+            ProjectStatus.AwaitingDNS => "bg-warning",
+            ProjectStatus.Live => "bg-success",
+            ProjectStatus.Suspended => "bg-danger",
+            ProjectStatus.Error => "bg-danger",
+            _ => "bg-secondary"
+        };
+    }
+
+    private string GetStatusText()
+    {
+        return Status switch
+        {
+            ProjectStatus.Draft => "Draft",
+            ProjectStatus.AwaitingSpec => "Awaiting Spec",
+            ProjectStatus.AwaitingPayment => "Awaiting Payment",
+            ProjectStatus.QueuedProvisioning => "Queued",
+            ProjectStatus.ProvisioningRepo => "Provisioning",
+            ProjectStatus.Deploying => "Deploying",
+            ProjectStatus.AwaitingDNS => "Awaiting DNS",
+            ProjectStatus.Live => "Live",
+            ProjectStatus.Suspended => "Suspended",
+            ProjectStatus.Error => "Error",
+            _ => Status.ToString()
+        };
+    }
+}
+
+<span class="badge @GetBadgeClass()">@GetStatusText()</span>

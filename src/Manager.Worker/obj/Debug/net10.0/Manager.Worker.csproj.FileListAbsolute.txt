@@ -1,0 +1,211 @@
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.Build.Locator.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe.config
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.IO.Redist.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Newtonsoft.Json.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Buffers.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Collections.Immutable.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.CommandLine.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Memory.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Numerics.Vectors.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Runtime.CompilerServices.Unsafe.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Threading.Tasks.Extensions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\cs\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\de\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\es\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\fr\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\it\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ja\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ko\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\pl\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\pt-BR\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ru\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\tr\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\zh-Hans\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\zh-Hant\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.Build.Locator.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.deps.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll.config
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Newtonsoft.Json.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\System.Collections.Immutable.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\System.CommandLine.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\cs\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\de\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\es\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\fr\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\it\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ja\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ko\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\pl\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\pt-BR\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ru\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\tr\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\zh-Hans\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\zh-Hant\System.CommandLine.resources.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\appsettings.Development.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\appsettings.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.exe
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.deps.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.runtimeconfig.json
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Binder.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.CommandLine.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Json.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Diagnostics.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Hosting.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Configuration.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Console.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Debug.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.EventLog.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.EventSource.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Options.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Primitives.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Npgsql.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\System.Diagnostics.EventLog.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Diagnostics.EventLog.Messages.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Diagnostics.EventLog.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Infrastructure.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Infrastructure.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.csproj.AssemblyReference.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.AssemblyInfoInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.AssemblyInfo.cs
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.csproj.CoreCompileInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager..207257A8.Up2Date
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\refint\Manager.Worker.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.genruntimeconfig.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Worker\obj\Debug\net10.0\ref\Manager.Worker.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.Build.Locator.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.exe.config
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Microsoft.IO.Redist.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\Newtonsoft.Json.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Buffers.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Collections.Immutable.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.CommandLine.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Memory.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Numerics.Vectors.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Runtime.CompilerServices.Unsafe.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\System.Threading.Tasks.Extensions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\cs\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\de\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\es\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\fr\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\it\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ja\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ko\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\pl\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\pt-BR\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\ru\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\tr\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\zh-Hans\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-net472\zh-Hant\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.Build.Locator.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.deps.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.dll.config
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Microsoft.CodeAnalysis.Workspaces.MSBuild.BuildHost.runtimeconfig.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\Newtonsoft.Json.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\System.Collections.Immutable.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\System.CommandLine.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\cs\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\de\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\es\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\fr\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\it\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ja\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ko\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\pl\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\pt-BR\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\ru\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\tr\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\zh-Hans\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\BuildHost-netcore\zh-Hant\System.CommandLine.resources.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\appsettings.Development.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\appsettings.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.exe
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.deps.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.runtimeconfig.json
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Worker.pdb
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.EntityFrameworkCore.Relational.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Caching.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Caching.Memory.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Binder.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.CommandLine.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.EnvironmentVariables.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.FileExtensions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.Json.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Configuration.UserSecrets.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.DependencyInjection.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Diagnostics.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Diagnostics.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileProviders.Physical.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.FileSystemGlobbing.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Hosting.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Hosting.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Abstractions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Configuration.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Console.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.Debug.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.EventLog.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Logging.EventSource.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Options.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Options.ConfigurationExtensions.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Microsoft.Extensions.Primitives.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Npgsql.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\System.Diagnostics.EventLog.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Diagnostics.EventLog.Messages.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\runtimes\win\lib\net10.0\System.Diagnostics.EventLog.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Infrastructure.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Infrastructure.pdb
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.csproj.AssemblyReference.cache
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.AssemblyInfoInputs.cache
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.AssemblyInfo.cs
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager..207257A8.Up2Date
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.dll
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\refint\Manager.Worker.dll
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.pdb
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\Manager.Worker.genruntimeconfig.cache
+D:\Projetos\Admin\src\Manager.Worker\obj\Debug\net10.0\ref\Manager.Worker.dll
+D:\Projetos\Admin\src\Manager.Worker\bin\Debug\net10.0\NetTopologySuite.dll

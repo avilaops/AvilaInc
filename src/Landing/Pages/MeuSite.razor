@@ -1,0 +1,267 @@
+@page "/meu-site/{RequestId}"
+@using Manager.Contracts.DTOs
+@using Manager.Core.Enums
+@using Landing.Services
+@inject ManagerApiClient Api
+
+<PageTitle>Meu Site - Avila.Inc</PageTitle>
+
+<div class="site-preview-container">
+    @if (_isLoading)
+    {
+        <div class="loading-state">
+            <div class="spinner"></div>
+            <h2>Carregando...</h2>
+        </div>
+    }
+    else if (_error != null)
+    {
+        <div class="error-state">
+            <h2>❌ Erro</h2>
+            <p>@_error</p>
+            <a href="/criar-site" class="btn btn-primary">Voltar</a>
+        </div>
+    }
+    else if (_request != null)
+    {
+        <div class="site-status-header">
+            <h1>@_request.BusinessName</h1>
+            <div class="status-badge status-@_request.Status.ToString().ToLower()">
+                @GetStatusText(_request.Status)
+            </div>
+        </div>
+
+        <div class="status-timeline">
+            <div class="timeline-item @(GetTimelineClass(WebsiteRequestStatus.Received))">
+                <div class="timeline-icon">📝</div>
+                <div class="timeline-content">
+                    <h3>Pedido Recebido</h3>
+                    <p>@_request.CreatedAt.ToString("dd/MM/yyyy HH:mm")</p>
+                </div>
+            </div>
+
+            <div class="timeline-item @(GetTimelineClass(WebsiteRequestStatus.Generating))">
+                <div class="timeline-icon">⚙️</div>
+                <div class="timeline-content">
+                    <h3>Gerando Site</h3>
+                    <p>IA criando conteúdo personalizado</p>
+                </div>
+            </div>
+
+            <div class="timeline-item @(GetTimelineClass(WebsiteRequestStatus.ReadyForReview))">
+                <div class="timeline-icon">👀</div>
+                <div class="timeline-content">
+                    <h3>Pronto para Revisar</h3>
+                    @if (_project != null)
+                    {
+                        <a href="@_project.PreviewUrl" target="_blank" class="btn btn-small">Ver Preview</a>
+                    }
+                </div>
+            </div>
+
+            <div class="timeline-item @(GetTimelineClass(WebsiteRequestStatus.Published))">
+                <div class="timeline-icon">🚀</div>
+                <div class="timeline-content">
+                    <h3>Publicado</h3>
+                    @if (_request.Status == WebsiteRequestStatus.Published && _project != null)
+                    {
+                        <a href="@_project.LiveUrl" target="_blank" class="btn btn-small btn-primary">Visitar Site</a>
+                    }
+                </div>
+            </div>
+        </div>
+
+        @if (_request.Status == WebsiteRequestStatus.ReadyForReview && _project != null)
+        {
+            <div class="preview-section">
+                <h2>Preview do Seu Site</h2>
+                <div class="preview-frame">
+                    <iframe src="@_project.PreviewUrl" frameborder="0"></iframe>
+                </div>
+
+                <div class="preview-actions">
+                    <button class="btn btn-secondary" @onclick="RequestChanges">Solicitar Alterações</button>
+                    <button class="btn btn-primary btn-large" @onclick="PublishSite" disabled="@_isPublishing">
+                        @(_isPublishing ? "Publicando..." : "✅ Publicar Site")
+                    </button>
+                </div>
+            </div>
+
+            @if (_showContentEditor)
+            {
+                <div class="content-editor">
+                    <h3>Editar Conteúdo</h3>
+                    
+                    <div class="form-group">
+                        <label>Headline Principal</label>
+                        <input @bind="_editableContent.HeroHeadline" class="form-input" />
+                    </div>
+
+                    <div class="form-group">
+                        <label>Subheadline</label>
+                        <textarea @bind="_editableContent.HeroSubheadline" class="form-textarea" rows="2"></textarea>
+                    </div>
+
+                    <button class="btn btn-primary" @onclick="SaveChanges" disabled="@_isSaving">
+                        @(_isSaving ? "Salvando..." : "Salvar Alterações")
+                    </button>
+                </div>
+            }
+        }
+
+        @if (_request.Status == WebsiteRequestStatus.Published && _project != null)
+        {
+            <div class="published-section">
+                <h2>🎉 Seu site está no ar!</h2>
+                <div class="site-url">
+                    <a href="@_project.LiveUrl" target="_blank">@_project.LiveUrl</a>
+                </div>
+
+                <div class="share-section">
+                    <h3>Compartilhar</h3>
+                    <div class="share-buttons">
+                        <a href="@GetWhatsAppShareUrl()" target="_blank" class="btn btn-success">
+                            📱 Compartilhar no WhatsApp
+                        </a>
+                        <button class="btn btn-secondary" @onclick="CopyUrl">
+                            📋 Copiar Link
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        @if (_request.Status == WebsiteRequestStatus.Failed)
+        {
+            <div class="error-section">
+                <h2>❌ Erro na Geração</h2>
+                <p>@_request.ErrorMessage</p>
+                <a href="/criar-site" class="btn btn-primary">Tentar Novamente</a>
+            </div>
+        }
+    }
+</div>
+
+@code {
+    [Parameter] public string RequestId { get; set; } = "";
+
+    private bool _isLoading = true;
+    private bool _isPublishing = false;
+    private bool _isSaving = false;
+    private bool _showContentEditor = false;
+    private string? _error = null;
+    private WebsiteRequestResponseDto? _request;
+    private WebsiteProjectDto? _project;
+    private WebsiteContentDto _editableContent = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+        _isLoading = true;
+        _error = null;
+
+        try
+        {
+            _request = await Api.GetWebsiteRequestStatusAsync(RequestId);
+
+            if (_request?.Status >= WebsiteRequestStatus.ReadyForReview)
+            {
+                _project = await Api.GetWebsitePreviewAsync(RequestId);
+                if (_project != null)
+                {
+                    _editableContent = _project.Content;
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            _error = ex.Message;
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+
+    private async Task PublishSite()
+    {
+        _isPublishing = true;
+
+        try
+        {
+            await Api.PublishWebsiteAsync(RequestId);
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Erro ao publicar: {ex.Message}";
+        }
+        finally
+        {
+            _isPublishing = false;
+        }
+    }
+
+    private void RequestChanges()
+    {
+        _showContentEditor = !_showContentEditor;
+    }
+
+    private async Task SaveChanges()
+    {
+        _isSaving = true;
+
+        try
+        {
+            // TODO: Implementar endpoint de atualização de conteúdo
+            await Task.Delay(1000); // Simulação
+            _showContentEditor = false;
+            await LoadDataAsync();
+        }
+        catch (Exception ex)
+        {
+            _error = $"Erro ao salvar: {ex.Message}";
+        }
+        finally
+        {
+            _isSaving = false;
+        }
+    }
+
+    private async Task CopyUrl()
+    {
+        // TODO: Implementar cópia para clipboard
+        await Task.CompletedTask;
+    }
+
+    private string GetStatusText(WebsiteRequestStatus status)
+    {
+        return status switch
+        {
+            WebsiteRequestStatus.Received => "📝 Recebido",
+            WebsiteRequestStatus.Generating => "⚙️ Gerando",
+            WebsiteRequestStatus.ReadyForReview => "👀 Pronto para Revisar",
+            WebsiteRequestStatus.Published => "🚀 Publicado",
+            WebsiteRequestStatus.Failed => "❌ Erro",
+            _ => status.ToString()
+        };
+    }
+
+    private string GetTimelineClass(WebsiteRequestStatus status)
+    {
+        if (_request == null) return "";
+        if (_request.Status == status) return "active";
+        if (_request.Status > status) return "completed";
+        return "";
+    }
+
+    private string GetWhatsAppShareUrl()
+    {
+        var message = Uri.EscapeDataString($"Confira meu novo site: {_project?.LiveUrl}");
+        return $"https://wa.me/?text={message}";
+    }
+}

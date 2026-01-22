@@ -1,0 +1,424 @@
+@page "/settings"
+
+<PageTitle>Configurações - Avila Dashboard</PageTitle>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>⚙️ Configurações</h1>
+        <p>Gerencie as configurações do sistema e integrações</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button @GetTabClass("general")" @onclick="@(() => SetActiveTab("general"))">
+                Geral
+            </button>
+            <button class="tab-button @GetTabClass("integrations")" @onclick="@(() => SetActiveTab("integrations"))">
+                Integrações
+            </button>
+            <button class="tab-button @GetTabClass("security")" @onclick="@(() => SetActiveTab("security"))">
+                Segurança
+            </button>
+            <button class="tab-button @GetTabClass("appearance")" @onclick="@(() => SetActiveTab("appearance"))">
+                Aparência
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            @if (activeTab == "general")
+            {
+                <div class="tab-content">
+                    <div class="settings-section">
+                        <h4>📊 Informações do Sistema</h4>
+                        <div class="info-grid">
+                            <div class="info-item">
+                                <label>Versão da Aplicação:</label>
+                                <span>v2.1.0</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Ambiente:</label>
+                                <span class="badge bg-info">Desenvolvimento</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Servidor:</label>
+                                <span>localhost:5168</span>
+                            </div>
+                            <div class="info-item">
+                                <label>Última Atualização:</label>
+                                <span>@DateTime.Now.ToString("dd/MM/yyyy HH:mm")</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>💾 Backup e Manutenção</h4>
+                        <div class="actions-grid">
+                            <button class="btn btn-primary" @onclick="CreateBackup">
+                                <i class="bi bi-cloud-upload"></i> Criar Backup Completo
+                            </button>
+                            <button class="btn btn-secondary" @onclick="ClearCache">
+                                <i class="bi bi-trash"></i> Limpar Cache
+                            </button>
+                            <button class="btn btn-warning" @onclick="ResetSettings">
+                                <i class="bi bi-arrow-counterclockwise"></i> Resetar Configurações
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>📧 Notificações</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="emailNotifications" id="emailNotif">
+                            <label class="form-check-label" for="emailNotif">
+                                Receber notificações por email
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="systemNotifications" id="systemNotif">
+                            <label class="form-check-label" for="systemNotif">
+                                Mostrar notificações do sistema
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="errorNotifications" id="errorNotif">
+                            <label class="form-check-label" for="errorNotif">
+                                Alertas de erro
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (activeTab == "integrations")
+            {
+                <div class="tab-content">
+                    <div class="integration-section">
+                        <h4>🐙 GitHub</h4>
+                        <div class="integration-status">
+                            <span class="status-indicator @GetStatusClass(githubConfigured)"></span>
+                            <span>@(githubConfigured ? "Configurado" : "Não configurado")</span>
+                        </div>
+                        @if (githubConfigured)
+                        {
+                            <div class="integration-details">
+                                <p><strong>Usuário:</strong> @githubUsername</p>
+                                <p><strong>Token:</strong> @MaskToken(githubToken)</p>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="DisconnectGitHub">
+                                    Desconectar
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="integration-setup">
+                                <input type="text" class="form-control mb-2" @bind="githubUsername" placeholder="Nome de usuário" />
+                                <input type="password" class="form-control mb-2" @bind="githubToken" placeholder="Token de acesso" />
+                                <button class="btn btn-success" @onclick="ConnectGitHub" disabled="@(!CanConnectGitHub)">
+                                    Conectar GitHub
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="integration-section">
+                        <h4>🍃 MongoDB</h4>
+                        <div class="integration-status">
+                            <span class="status-indicator @GetStatusClass(mongoConfigured)"></span>
+                            <span>@(mongoConfigured ? "Configurado" : "Não configurado")</span>
+                        </div>
+                        @if (mongoConfigured)
+                        {
+                            <div class="integration-details">
+                                <p><strong>Connection String:</strong> @MaskConnectionString(mongoConnectionString)</p>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="DisconnectMongoDB">
+                                    Desconectar
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="integration-setup">
+                                <input type="text" class="form-control mb-2" @bind="mongoConnectionString" placeholder="Connection String" />
+                                <button class="btn btn-success" @onclick="ConnectMongoDB" disabled="@string.IsNullOrEmpty(mongoConnectionString)">
+                                    Conectar MongoDB
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="integration-section">
+                        <h4>💳 Stripe</h4>
+                        <div class="integration-status">
+                            <span class="status-indicator @GetStatusClass(stripeConfigured)"></span>
+                            <span>@(stripeConfigured ? "Configurado" : "Não configurado")</span>
+                        </div>
+                        @if (stripeConfigured)
+                        {
+                            <div class="integration-details">
+                                <p><strong>Chave Pública:</strong> @MaskToken(stripePublicKey)</p>
+                                <p><strong>Chave Secreta:</strong> @MaskToken(stripeSecretKey)</p>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="DisconnectStripe">
+                                    Desconectar
+                                </button>
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="integration-setup">
+                                <input type="text" class="form-control mb-2" @bind="stripePublicKey" placeholder="Chave Pública" />
+                                <input type="password" class="form-control mb-2" @bind="stripeSecretKey" placeholder="Chave Secreta" />
+                                <button class="btn btn-success" @onclick="ConnectStripe" disabled="@(!CanConnectStripe)">
+                                    Conectar Stripe
+                                </button>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="integration-section">
+                        <h4>🅿️ PayPal</h4>
+                        <div class="integration-status">
+                            <span class="status-indicator status-warning"></span>
+                            <span>Em desenvolvimento</span>
+                        </div>
+                        <p>Integração com PayPal será implementada em breve.</p>
+                    </div>
+                </div>
+            }
+            else if (activeTab == "security")
+            {
+                <div class="tab-content">
+                    <div class="settings-section">
+                        <h4>🔐 Autenticação</h4>
+                        <div class="form-group">
+                            <label>Senha Atual:</label>
+                            <input type="password" class="form-control" @bind="currentPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label>Nova Senha:</label>
+                            <input type="password" class="form-control" @bind="newPassword" />
+                        </div>
+                        <div class="form-group">
+                            <label>Confirmar Nova Senha:</label>
+                            <input type="password" class="form-control" @bind="confirmPassword" />
+                        </div>
+                        <button class="btn btn-primary" @onclick="ChangePassword" disabled="@(!CanChangePassword)">
+                            Alterar Senha
+                        </button>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>🔑 Tokens de API</h4>
+                        <div class="api-tokens">
+                            <div class="token-item">
+                                <div class="token-info">
+                                    <strong>Token Principal</strong>
+                                    <small>Criado em @DateTime.Now.AddDays(-30).ToString("dd/MM/yyyy")</small>
+                                </div>
+                                <button class="btn btn-outline-danger btn-sm" @onclick="RevokeToken">
+                                    Revogar
+                                </button>
+                            </div>
+                            <button class="btn btn-success" @onclick="GenerateNewToken">
+                                <i class="bi bi-plus"></i> Gerar Novo Token
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>📊 Logs de Segurança</h4>
+                        <div class="security-logs">
+                            @if (securityLogs.Any())
+                            {
+                                @foreach (var log in securityLogs)
+                                {
+                                    <div class="log-entry">
+                                        <span class="log-time">@log.Timestamp.ToString("HH:mm")</span>
+                                        <span class="log-action">@log.Action</span>
+                                        <span class="log-ip">@log.IPAddress</span>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                <p class="text-muted">Nenhum log de segurança encontrado.</p>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+            else if (activeTab == "appearance")
+            {
+                <div class="tab-content">
+                    <div class="settings-section">
+                        <h4>🎨 Tema</h4>
+                        <div class="theme-options">
+                            <div class="theme-option">
+                                <input type="radio" id="light" name="theme" @bind="selectedTheme" />
+                                <label for="light">
+                                    <i class="bi bi-sun"></i> Claro
+                                </label>
+                            </div>
+                            <div class="theme-option">
+                                <input type="radio" id="dark" name="theme" @bind="selectedTheme" />
+                                <label for="dark">
+                                    <i class="bi bi-moon"></i> Escuro
+                                </label>
+                            </div>
+                            <div class="theme-option">
+                                <input type="radio" id="auto" name="theme" @bind="selectedTheme" />
+                                <label for="auto">
+                                    <i class="bi bi-circle-half"></i> Automático
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>📏 Layout</h4>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="compactMode" id="compactMode">
+                            <label class="form-check-label" for="compactMode">
+                                Modo compacto
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" @bind="showSidebar" id="showSidebar">
+                            <label class="form-check-label" for="showSidebar">
+                                Mostrar barra lateral
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="settings-section">
+                        <h4>💾 Preferências</h4>
+                        <div class="form-group">
+                            <label>Itens por página:</label>
+                            <select class="form-select" @bind="itemsPerPage">
+                                <option value="10">10</option>
+                                <option value="25">25</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Idioma:</label>
+                            <select class="form-select" @bind="selectedLanguage">
+                                <option value="pt-BR">Português (Brasil)</option>
+                                <option value="en-US">English (US)</option>
+                                <option value="es-ES">Español</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "general";
+
+    // General settings
+    private bool emailNotifications = true;
+    private bool systemNotifications = true;
+    private bool errorNotifications = true;
+
+    // Integration settings
+    private bool githubConfigured = false;
+    private string githubUsername = "";
+    private string githubToken = "";
+    private bool mongoConfigured = false;
+    private string mongoConnectionString = "";
+    private bool stripeConfigured = false;
+    private string stripePublicKey = "";
+    private string stripeSecretKey = "";
+
+    // Security settings
+    private string currentPassword = "";
+    private string newPassword = "";
+    private string confirmPassword = "";
+    private List<SecurityLog> securityLogs = new();
+
+    // Appearance settings
+    private string selectedTheme = "light";
+    private bool compactMode = false;
+    private bool showSidebar = true;
+    private int itemsPerPage = 25;
+    private string selectedLanguage = "pt-BR";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSettings();
+        await LoadSecurityLogs();
+    }
+
+    private string GetTabClass(string tabName) => activeTab == tabName ? "active" : "";
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        StateHasChanged();
+    }
+
+    private async Task LoadSettings()
+    {
+        // Simulate loading settings from storage
+        githubConfigured = true;
+        githubUsername = "nicolasrosa";
+        githubToken = "ghp_1234567890abcdef";
+        mongoConfigured = true;
+        mongoConnectionString = "mongodb+srv://user:pass@cluster.mongodb.net/";
+        stripeConfigured = true;
+        stripePublicKey = "pk_live_1234567890";
+        stripeSecretKey = "sk_live_1234567890";
+    }
+
+    private async Task LoadSecurityLogs()
+    {
+        securityLogs = new List<SecurityLog>
+        {
+            new SecurityLog { Timestamp = DateTime.Now.AddMinutes(-5), Action = "Login realizado", IPAddress = "192.168.1.100" },
+            new SecurityLog { Timestamp = DateTime.Now.AddHours(-2), Action = "Senha alterada", IPAddress = "192.168.1.100" },
+            new SecurityLog { Timestamp = DateTime.Now.AddDays(-1), Action = "Token API gerado", IPAddress = "192.168.1.100" }
+        };
+    }
+
+    private string GetStatusClass(bool configured) => configured ? "status-success" : "status-error";
+
+    private string MaskToken(string token)
+    {
+        if (string.IsNullOrEmpty(token) || token.Length < 8) return token;
+        return token.Substring(0, 8) + "****" + token.Substring(token.Length - 4);
+    }
+
+    private string MaskConnectionString(string connString)
+    {
+        if (string.IsNullOrEmpty(connString)) return "";
+        // Simple masking for demo
+        return connString.Replace("mongodb+srv://", "mongodb+srv://***:***@");
+    }
+
+    private bool CanConnectGitHub => !string.IsNullOrEmpty(githubUsername) && !string.IsNullOrEmpty(githubToken);
+    private bool CanConnectStripe => !string.IsNullOrEmpty(stripePublicKey) && !string.IsNullOrEmpty(stripeSecretKey);
+    private bool CanChangePassword => !string.IsNullOrEmpty(currentPassword) && !string.IsNullOrEmpty(newPassword) && newPassword == confirmPassword;
+
+    private void ConnectGitHub() { githubConfigured = true; StateHasChanged(); }
+    private void DisconnectGitHub() { githubConfigured = false; githubUsername = ""; githubToken = ""; StateHasChanged(); }
+    private void ConnectMongoDB() { mongoConfigured = true; StateHasChanged(); }
+    private void DisconnectMongoDB() { mongoConfigured = false; mongoConnectionString = ""; StateHasChanged(); }
+    private void ConnectStripe() { stripeConfigured = true; StateHasChanged(); }
+    private void DisconnectStripe() { stripeConfigured = false; stripePublicKey = ""; stripeSecretKey = ""; StateHasChanged(); }
+
+    private void ChangePassword() { /* TODO: Implement password change */ }
+    private void RevokeToken() { /* TODO: Implement token revocation */ }
+    private void GenerateNewToken() { /* TODO: Implement token generation */ }
+    private void CreateBackup() { /* TODO: Implement backup */ }
+    private void ClearCache() { /* TODO: Implement cache clearing */ }
+    private void ResetSettings() { /* TODO: Implement settings reset */ }
+
+    public class SecurityLog
+    {
+        public DateTime Timestamp { get; set; }
+        public string Action { get; set; } = "";
+        public string IPAddress { get; set; } = "";
+    }
+}

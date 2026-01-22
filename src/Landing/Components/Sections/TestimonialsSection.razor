@@ -1,0 +1,51 @@
+@using Landing.Models
+
+<section class="testimonials section section-gray">
+    <div class="container">
+        <h2 class="section-title reveal">O Que Nossos Clientes Dizem</h2>
+        
+        <div class="testimonials-grid grid grid-3">
+            @foreach (var testimonial in Testimonials)
+            {
+                <div class="testimonial-card reveal">
+                    @if (testimonial.IsExample)
+                    {
+                        <div class="example-badge">Exemplo</div>
+                    }
+                    <div class="testimonial-avatar">
+                        <div class="avatar-placeholder">👤</div>
+                    </div>
+                    <p class="testimonial-text">"@testimonial.Text"</p>
+                    <div class="testimonial-author">
+                        <strong>@testimonial.Name</strong>
+                        <span>@testimonial.Company</span>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+@code {
+    private List<Testimonial> Testimonials = new()
+    {
+        new() { 
+            Name = "João Silva", 
+            Company = "E-commerce XYZ", 
+            Text = "O sistema de analytics transformou como tomamos decisões. Agora temos 100% dos dados em nossas mãos.",
+            IsExample = true 
+        },
+        new() { 
+            Name = "Maria Santos", 
+            Company = "Consultoria ABC", 
+            Text = "A automação de marketing economizou horas do nosso time. Recomendo para qualquer empresa.",
+            IsExample = true 
+        },
+        new() { 
+            Name = "Pedro Costa", 
+            Company = "Tech Startup", 
+            Text = "Suporte impecável e sistema funcional desde o dia 1. Valeu cada centavo investido.",
+            IsExample = true 
+        }
+    };
+}

@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "AwwpYa9JZWw=",
+  "success": true,
+  "projectFilePath": "D:\\Projetos\\Admin\\src\\Manager.Core\\Manager.Core.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Administrador\\.nuget\\packages\\mongodb.bson\\3.6.0\\mongodb.bson.3.6.0.nupkg.sha512",
+    "C:\\Users\\Administrador\\.nuget\\packages\\nettopologysuite\\2.6.0\\nettopologysuite.2.6.0.nupkg.sha512"
+  ],
+  "logs": []
+}

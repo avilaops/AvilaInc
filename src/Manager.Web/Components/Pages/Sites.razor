@@ -1,0 +1,247 @@
+@page "/sites"
+@using Manager.Core.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+@inject IJSRuntime JS
+
+<PageTitle>Sites</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.Large" Class="mt-4">
+    <MudText Typo="Typo.h4" Class="mb-2">
+        <MudIcon Icon="@Icons.Material.Filled.Language" Class="mr-2" />
+        Gerenciar Sites
+    </MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">
+        Cadastre sites dos clientes e obtenha o código de rastreamento. 
+        <MudLink Href="/help" Color="Color.Primary">Ver guia completo</MudLink>
+    </MudText>
+
+    <MudPaper Class="pa-4 mb-4">
+        <MudGrid>
+            <MudItem xs="12" md="8">
+                <MudTextField @bind-Value="searchString" Label="Buscar" Variant="Variant.Outlined"
+                              Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" />
+            </MudItem>
+            <MudItem xs="12" md="4">
+                <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="OpenCreateDialog" FullWidth="true" Class="mt-2">
+                    <MudIcon Icon="@Icons.Material.Filled.Add" /> Novo Site
+                </MudButton>
+            </MudItem>
+        </MudGrid>
+    </MudPaper>
+
+    @if (loading)
+    {
+        <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+    }
+    else if (sites == null || !sites.Any())
+    {
+        <MudAlert Severity="Severity.Info">Nenhum site cadastrado</MudAlert>
+    }
+    else
+    {
+        <MudTable Items="@FilteredSites" Hover="true" Striped="true">
+            <HeaderContent>
+                <MudTh>Nome</MudTh>
+                <MudTh>Domínio</MudTh>
+                <MudTh>Tracking Code</MudTh>
+                <MudTh>Status</MudTh>
+                <MudTh>Chat</MudTh>
+                <MudTh>Ações</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Nome">@context.Name</MudTd>
+                <MudTd DataLabel="Domínio">@context.Domain</MudTd>
+                <MudTd DataLabel="Tracking Code">
+                    <MudChip T="string" Size="Size.Small">@context.TrackingCode</MudChip>
+                </MudTd>
+                <MudTd DataLabel="Status">
+                    <MudChip T="string" Color="@(context.Active ? Color.Success : Color.Default)" Size="Size.Small">
+                        @(context.Active ? "Ativo" : "Inativo")
+                    </MudChip>
+                </MudTd>
+                <MudTd DataLabel="Chat">
+                    <MudIcon Icon="@(context.ChatEnabled ? Icons.Material.Filled.Chat : Icons.Material.Filled.ChatBubbleOutline)"
+                             Color="@(context.ChatEnabled ? Color.Success : Color.Default)" />
+                </MudTd>
+                <MudTd DataLabel="Ações">
+                    <MudIconButton Icon="@Icons.Material.Filled.Code" Color="Color.Info" OnClick="@(() => ShowTrackingCode(context))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Edit" Color="Color.Primary" OnClick="@(() => OpenEditDialog(context))" />
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Color="Color.Error" OnClick="@(() => DeleteSite(context.Id))" />
+                </MudTd>
+            </RowTemplate>
+        </MudTable>
+    }
+</MudContainer>
+
+<!-- Dialog Create/Edit -->
+<MudDialog @bind-Visible="dialogVisible">
+    <DialogContent>
+        <MudTextField @bind-Value="editingSite.Name" Label="Nome do Site" Variant="Variant.Outlined" Required="true" />
+        <MudTextField @bind-Value="editingSite.Domain" Label="Domínio" Variant="Variant.Outlined" Required="true" Class="mt-3" />
+        <MudSwitch @bind-Value="editingSite.ChatEnabled" Label="Habilitar Chat" Color="Color.Primary" Class="mt-3" />
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => dialogVisible = false)">Cancelar</MudButton>
+        <MudButton Color="Color.Primary" Variant="Variant.Filled" OnClick="SaveSite">Salvar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+<!-- Dialog Tracking Code -->
+<MudDialog @bind-Visible="codeDialogVisible" Options="@(new DialogOptions { MaxWidth = MaxWidth.Medium, FullWidth = true })">
+    <DialogContent>
+        <MudText Typo="Typo.h6" Class="mb-3">Código de Rastreamento</MudText>
+        <MudText Typo="Typo.body2" Class="mb-2">Adicione este código no &lt;head&gt; do seu site:</MudText>
+        <MudPaper Class="pa-3" Style="background: #f5f5f5; overflow-x: auto;">
+            <code style="white-space: pre;">@trackingCodeSnippet</code>
+        </MudPaper>
+        <MudButton Color="Color.Primary" Variant="Variant.Text" OnClick="CopyTrackingCode" Class="mt-3">
+            <MudIcon Icon="@Icons.Material.Filled.ContentCopy" /> Copiar Código
+        </MudButton>
+    </DialogContent>
+    <DialogActions>
+        <MudButton OnClick="@(() => codeDialogVisible = false)">Fechar</MudButton>
+    </DialogActions>
+</MudDialog>
+
+@code {
+    private List<Site>? sites;
+    private string searchString = "";
+    private bool loading = false;
+    private bool dialogVisible = false;
+    private bool codeDialogVisible = false;
+    private CreateSiteDto editingSite = new();
+    private string? editingId = null;
+    private string trackingCodeSnippet = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSites();
+    }
+
+    private IEnumerable<Site> FilteredSites =>
+        sites?.Where(s => string.IsNullOrEmpty(searchString) ||
+                         s.Name.Contains(searchString, StringComparison.OrdinalIgnoreCase) ||
+                         s.Domain.Contains(searchString, StringComparison.OrdinalIgnoreCase)) ?? Enumerable.Empty<Site>();
+
+    private async Task LoadSites()
+    {
+        loading = true;
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ApiResponse<List<Site>>>("http://localhost:5056/api/sites");
+            if (response?.Success == true)
+            {
+                sites = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar sites: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void OpenCreateDialog()
+    {
+        editingSite = new CreateSiteDto();
+        editingId = null;
+        dialogVisible = true;
+    }
+
+    private void OpenEditDialog(Site site)
+    {
+        editingSite = new CreateSiteDto
+        {
+            Name = site.Name,
+            Domain = site.Domain,
+            ChatEnabled = site.ChatEnabled
+        };
+        editingId = site.Id;
+        dialogVisible = true;
+    }
+
+    private async Task SaveSite()
+    {
+        try
+        {
+            HttpResponseMessage response;
+
+            if (string.IsNullOrEmpty(editingId))
+            {
+                response = await Http.PostAsJsonAsync("http://localhost:5056/api/sites", editingSite);
+            }
+            else
+            {
+                response = await Http.PutAsJsonAsync($"http://localhost:5056/api/sites/{editingId}", editingSite);
+            }
+
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Site salvo com sucesso!", Severity.Success);
+                dialogVisible = false;
+                await LoadSites();
+            }
+            else
+            {
+                Snackbar.Add("Erro ao salvar site", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task DeleteSite(string id)
+    {
+        try
+        {
+            var response = await Http.DeleteAsync($"http://localhost:5056/api/sites/{id}");
+            if (response.IsSuccessStatusCode)
+            {
+                Snackbar.Add("Site deletado com sucesso!", Severity.Success);
+                await LoadSites();
+            }
+            else
+            {
+                Snackbar.Add("Erro ao deletar site", Severity.Error);
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private void ShowTrackingCode(Site site)
+    {
+        trackingCodeSnippet = $@"<script src=""http://localhost:5056/analytics.js"" 
+        data-site-id=""{site.SiteId}"" 
+        data-api-url=""http://localhost:5056/api/analytics"">
+</script>";
+        codeDialogVisible = true;
+    }
+
+    private async Task CopyTrackingCode()
+    {
+        await JS.InvokeVoidAsync("navigator.clipboard.writeText", trackingCodeSnippet);
+        Snackbar.Add("Código copiado!", Severity.Success);
+    }
+
+    class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public T? Data { get; set; }
+    }
+
+    class CreateSiteDto
+    {
+        public string Name { get; set; } = "";
+        public string Domain { get; set; } = "";
+        public bool ChatEnabled { get; set; } = false;
+    }
+}

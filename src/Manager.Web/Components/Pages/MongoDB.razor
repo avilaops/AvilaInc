@@ -1,0 +1,386 @@
+@page "/mongodb"
+
+<PageTitle>MongoDB - Avila Dashboard</PageTitle>
+
+<div class="page-container">
+    <div class="page-header">
+        <h1>🍃 MongoDB Atlas</h1>
+        <p>Gerencie suas bases de dados, collections e conexões MongoDB</p>
+    </div>
+
+    <div class="tabs-container">
+        <div class="tabs-header">
+            <button class="tab-button @GetTabClass("databases")" @onclick="@(() => SetActiveTab("databases"))">
+                Databases
+            </button>
+            <button class="tab-button @GetTabClass("collections")" @onclick="@(() => SetActiveTab("collections"))">
+                Collections
+            </button>
+            <button class="tab-button @GetTabClass("explorer")" @onclick="@(() => SetActiveTab("explorer"))">
+                Explorer
+            </button>
+        </div>
+
+        <div class="tabs-content">
+            @if (activeTab == "databases")
+            {
+                <div class="tab-content">
+                    <div class="actions-bar">
+                        <button class="btn btn-primary" @onclick="LoadDatabases">
+                            <i class="bi bi-arrow-clockwise"></i> Atualizar Databases
+                        </button>
+                        <button class="btn btn-success" @onclick="CreateDatabase">
+                            <i class="bi bi-plus-circle"></i> Criar Database
+                        </button>
+                        <button class="btn btn-info" @onclick="ViewConnectionString">
+                            <i class="bi bi-link"></i> Ver Connection String
+                        </button>
+                    </div>
+
+                    @if (isLoading)
+                    {
+                        <div class="loading-container">
+                            <div class="spinner-border text-primary" role="status">
+                                <span class="visually-hidden">Carregando...</span>
+                            </div>
+                            <p>⏳ Carregando databases...</p>
+                        </div>
+                    }
+                    else if (databases.Any())
+                    {
+                        <div class="databases-grid">
+                            @foreach (var db in databases)
+                            {
+                                <div class="database-card">
+                                    <div class="database-header">
+                                        <h4>@db.Name</h4>
+                                        <span class="database-size">@FormatBytes(db.SizeOnDisk)</span>
+                                    </div>
+                                    <div class="database-stats">
+                                        <div class="stat">
+                                            <span class="stat-label">Collections:</span>
+                                            <span class="stat-value">@db.CollectionsCount</span>
+                                        </div>
+                                        <div class="stat">
+                                            <span class="stat-label">Documentos:</span>
+                                            <span class="stat-value">@db.TotalDocuments.ToString("N0")</span>
+                                        </div>
+                                    </div>
+                                    <div class="database-actions">
+                                        <button class="btn btn-sm btn-outline-primary" @onclick="() => ViewCollections(db)">
+                                            <i class="bi bi-list"></i> Ver Collections
+                                        </button>
+                                        <button class="btn btn-sm btn-outline-info" @onclick="() => ExportDatabase(db)">
+                                            <i class="bi bi-download"></i> Exportar
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="empty-state">
+                            <i class="bi bi-database display-4 text-muted"></i>
+                            <h4>Nenhum database encontrado</h4>
+                            <p>Verifique se a conexão com MongoDB está configurada corretamente.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "collections")
+            {
+                <div class="tab-content">
+                    @if (selectedDatabase != null)
+                    {
+                        <div class="collection-header">
+                            <h4>Collections do Database: @selectedDatabase.Name</h4>
+                            <button class="btn btn-secondary" @onclick="BackToDatabases">
+                                <i class="bi bi-arrow-left"></i> Voltar
+                            </button>
+                        </div>
+
+                        <div class="actions-bar">
+                            <button class="btn btn-success" @onclick="CreateCollection">
+                                <i class="bi bi-plus-circle"></i> Criar Collection
+                            </button>
+                            <button class="btn btn-info" @onclick="RefreshCollections">
+                                <i class="bi bi-arrow-clockwise"></i> Atualizar
+                            </button>
+                        </div>
+
+                        @if (collections.Any())
+                        {
+                            <div class="collections-list">
+                                @foreach (var collection in collections)
+                                {
+                                    <div class="collection-item">
+                                        <div class="collection-info">
+                                            <h5>@collection.Name</h5>
+                                            <div class="collection-stats">
+                                                <span>📄 @collection.DocumentCount.ToString("N0") documentos</span>
+                                                <span>💾 @FormatBytes(collection.Size)</span>
+                                            </div>
+                                        </div>
+                                        <div class="collection-actions">
+                                            <button class="btn btn-sm btn-outline-primary" @onclick="() => ExploreCollection(collection)">
+                                                <i class="bi bi-search"></i> Explorar
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-info" @onclick="() => ExportCollection(collection)">
+                                                <i class="bi bi-download"></i> Exportar
+                                            </button>
+                                            <button class="btn btn-sm btn-outline-danger" @onclick="() => DeleteCollection(collection)">
+                                                <i class="bi bi-trash"></i> Excluir
+                                            </button>
+                                        </div>
+                                    </div>
+                                }
+                            </div>
+                        }
+                        else
+                        {
+                            <div class="empty-state">
+                                <i class="bi bi-folder display-4 text-muted"></i>
+                                <h5>Nenhuma collection encontrada</h5>
+                                <p>Este database não possui collections.</p>
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <div class="select-database-prompt">
+                            <i class="bi bi-arrow-up-circle display-4 text-primary"></i>
+                            <h4>Selecione um Database</h4>
+                            <p>Clique em "Ver Collections" em um database para explorar suas collections.</p>
+                        </div>
+                    }
+                </div>
+            }
+            else if (activeTab == "explorer")
+            {
+                <div class="tab-content">
+                    <div class="query-builder">
+                        <h4>🔍 Query Builder</h4>
+                        <div class="query-form">
+                            <div class="form-group">
+                                <label>Database:</label>
+                                <select class="form-select" @bind="selectedQueryDb">
+                                    <option value="">Selecione...</option>
+                                    @foreach (var db in databases)
+                                    {
+                                        <option value="@db.Name">@db.Name</option>
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Collection:</label>
+                                <select class="form-select" @bind="selectedQueryCollection">
+                                    <option value="">Selecione...</option>
+                                    @if (queryCollections.Any())
+                                    {
+                                        @foreach (var coll in queryCollections)
+                                        {
+                                            <option value="@coll.Name">@coll.Name</option>
+                                        }
+                                    }
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Query (JSON):</label>
+                                <textarea class="form-control" rows="3" @bind="queryText" placeholder='{"status": "active"}'></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label>Limit:</label>
+                                <input type="number" class="form-control" @bind="queryLimit" min="1" max="1000" />
+                            </div>
+                            <button class="btn btn-primary" @onclick="ExecuteQuery" disabled="@(!CanExecuteQuery)">
+                                <i class="bi bi-play"></i> Executar Query
+                            </button>
+                        </div>
+                    </div>
+
+                    @if (queryResults.Any())
+                    {
+                        <div class="query-results">
+                            <h4>📊 Resultados (@queryResults.Count documentos)</h4>
+                            <div class="results-actions">
+                                <button class="btn btn-sm btn-outline-info" @onclick="ExportResults">
+                                    <i class="bi bi-download"></i> Exportar JSON
+                                </button>
+                                <button class="btn btn-sm btn-outline-secondary" @onclick="ClearResults">
+                                    <i class="bi bi-x-circle"></i> Limpar
+                                </button>
+                            </div>
+                            <div class="results-json">
+                                <pre>@FormatJsonResults()</pre>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@code {
+    private string activeTab = "databases";
+    private bool isLoading = false;
+    private List<DatabaseInfo> databases = new();
+    private DatabaseInfo? selectedDatabase;
+    private List<CollectionInfo> collections = new();
+    private List<CollectionInfo> queryCollections = new();
+    private string selectedQueryDb = "";
+    private string selectedQueryCollection = "";
+    private string queryText = "{}";
+    private int queryLimit = 10;
+    private List<dynamic> queryResults = new();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDatabases();
+    }
+
+    private string GetTabClass(string tabName) => activeTab == tabName ? "active" : "";
+
+    private void SetActiveTab(string tabName)
+    {
+        activeTab = tabName;
+        StateHasChanged();
+    }
+
+    private async Task LoadDatabases()
+    {
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1500);
+            databases = new List<DatabaseInfo>
+            {
+                new DatabaseInfo
+                {
+                    Name = "avila_dashboard",
+                    SizeOnDisk = 52428800, // 50MB
+                    CollectionsCount = 8,
+                    TotalDocuments = 15420
+                },
+                new DatabaseInfo
+                {
+                    Name = "avila_crm",
+                    SizeOnDisk = 31457280, // 30MB
+                    CollectionsCount = 5,
+                    TotalDocuments = 8750
+                },
+                new DatabaseInfo
+                {
+                    Name = "avila_gmail",
+                    SizeOnDisk = 20971520, // 20MB
+                    CollectionsCount = 3,
+                    TotalDocuments = 4520
+                }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            StateHasChanged();
+        }
+    }
+
+    private async Task ViewCollections(DatabaseInfo database)
+    {
+        selectedDatabase = database;
+        isLoading = true;
+        StateHasChanged();
+
+        try
+        {
+            // Simulate API call
+            await Task.Delay(1000);
+            collections = new List<CollectionInfo>
+            {
+                new CollectionInfo { Name = "users", DocumentCount = 1250, Size = 2097152 },
+                new CollectionInfo { Name = "sessions", DocumentCount = 890, Size = 1048576 },
+                new CollectionInfo { Name = "logs", DocumentCount = 15420, Size = 5242880 },
+                new CollectionInfo { Name = "config", DocumentCount = 15, Size = 32768 }
+            };
+        }
+        finally
+        {
+            isLoading = false;
+            SetActiveTab("collections");
+        }
+    }
+
+    private void BackToDatabases()
+    {
+        selectedDatabase = null;
+        collections.Clear();
+        SetActiveTab("databases");
+    }
+
+    private async Task ExecuteQuery()
+    {
+        if (string.IsNullOrEmpty(selectedQueryDb) || string.IsNullOrEmpty(selectedQueryCollection))
+            return;
+
+        // Simulate query execution
+        await Task.Delay(800);
+        queryResults = new List<dynamic>
+        {
+            new { id = "507f1f77bcf86cd799439011", name = "João Silva", email = "joao@email.com", status = "active" },
+            new { id = "507f1f77bcf86cd799439012", name = "Maria Santos", email = "maria@email.com", status = "active" },
+            new { id = "507f1f77bcf86cd799439013", name = "Pedro Oliveira", email = "pedro@email.com", status = "inactive" }
+        };
+        StateHasChanged();
+    }
+
+    private bool CanExecuteQuery => !string.IsNullOrEmpty(selectedQueryDb) && !string.IsNullOrEmpty(selectedQueryCollection);
+
+    private string FormatBytes(long bytes)
+    {
+        string[] sizes = { "B", "KB", "MB", "GB", "TB" };
+        int order = 0;
+        double size = bytes;
+        while (size >= 1024 && order < sizes.Length - 1)
+        {
+            order++;
+            size /= 1024;
+        }
+        return $"{size:0.##} {sizes[order]}";
+    }
+
+    private string FormatJsonResults()
+    {
+        // Simple JSON formatting for display
+        return System.Text.Json.JsonSerializer.Serialize(queryResults, new System.Text.Json.JsonSerializerOptions { WriteIndented = true });
+    }
+
+    private void CreateDatabase() { /* TODO */ }
+    private void ViewConnectionString() { /* TODO */ }
+    private void CreateCollection() { /* TODO */ }
+    private void RefreshCollections() { /* TODO */ }
+    private void ExploreCollection(CollectionInfo collection) { /* TODO */ }
+    private void ExportCollection(CollectionInfo collection) { /* TODO */ }
+    private void DeleteCollection(CollectionInfo collection) { /* TODO */ }
+    private void ExportDatabase(DatabaseInfo db) { /* TODO */ }
+    private void ExportResults() { /* TODO */ }
+    private void ClearResults() { queryResults.Clear(); StateHasChanged(); }
+
+    public class DatabaseInfo
+    {
+        public string Name { get; set; } = "";
+        public long SizeOnDisk { get; set; }
+        public int CollectionsCount { get; set; }
+        public int TotalDocuments { get; set; }
+    }
+
+    public class CollectionInfo
+    {
+        public string Name { get; set; } = "";
+        public int DocumentCount { get; set; }
+        public long Size { get; set; }
+    }
+}

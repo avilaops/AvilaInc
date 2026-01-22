@@ -1,0 +1,56 @@
+.how-it-works {
+    text-align: center;
+}
+
+.timeline {
+    max-width: 900px;
+    margin: 60px auto 0;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+
+.timeline-item {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+    text-align: left;
+    position: relative;
+}
+
+.timeline-number {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 32px;
+    font-weight: 700;
+    flex-shrink: 0;
+}
+
+.timeline-content h3 {
+    margin-bottom: 10px;
+    color: var(--color-primary);
+}
+
+.timeline-content p {
+    color: #666;
+    font-size: 18px;
+}
+
+@media (max-width: 768px) {
+    .timeline-item {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .timeline-number {
+        width: 60px;
+        height: 60px;
+        font-size: 24px;
+    }
+}

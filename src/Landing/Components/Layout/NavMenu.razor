@@ -1,0 +1,47 @@
+@inject Landing.Services.ScrollService ScrollService
+
+<header class="header">
+    <div class="container header__inner">
+        <a class="brand" href="#topo" @onclick="@(() => ScrollTo("topo"))" @onclick:preventDefault>
+            <span class="brand__logo">🚀</span>
+            <span class="brand__name">Tech Solutions</span>
+        </a>
+
+        <button class="menuBtn"
+                type="button"
+                aria-controls="primaryNav"
+                aria-expanded="@isMenuOpen"
+                @onclick="ToggleMenu">
+            <span class="sr-only">Abrir menu</span>
+            ☰
+        </button>
+
+        <nav id="primaryNav" class="nav @(isMenuOpen ? "is-open" : "")">
+            <a class="nav__link" href="#servicos" @onclick="@(() => NavClick("servicos"))" @onclick:preventDefault>Serviços</a>
+            <a class="nav__link" href="#beneficios" @onclick="@(() => NavClick("beneficios"))" @onclick:preventDefault>Sobre</a>
+            <a class="nav__link" href="#como-funciona" @onclick="@(() => NavClick("como-funciona"))" @onclick:preventDefault>Como Funciona</a>
+            <a class="nav__link" href="#faq" @onclick="@(() => NavClick("faq"))" @onclick:preventDefault>FAQ</a>
+            <a class="nav__link nav__cta" href="#contato" @onclick="@(() => NavClick("contato"))" @onclick:preventDefault>Contato</a>
+        </nav>
+    </div>
+</header>
+
+@code {
+    private bool isMenuOpen = false;
+
+    private void ToggleMenu()
+    {
+        isMenuOpen = !isMenuOpen;
+    }
+
+    private async Task NavClick(string id)
+    {
+        isMenuOpen = false;
+        await ScrollService.ScrollToIdAsync(id);
+    }
+
+    private async Task ScrollTo(string id)
+    {
+        await ScrollService.ScrollToIdAsync(id);
+    }
+}

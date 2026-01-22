@@ -1,0 +1,275 @@
+@page "/analytics"
+@using Manager.Core.Entities
+@inject HttpClient Http
+@inject ISnackbar Snackbar
+
+<PageTitle>Analytics Dashboard</PageTitle>
+
+<MudContainer MaxWidth="MaxWidth.ExtraLarge" Class="mt-4">
+    <MudText Typo="Typo.h4" Class="mb-2">
+        <MudIcon Icon="@Icons.Material.Filled.Analytics" Class="mr-2" />
+        Analytics Dashboard
+    </MudText>
+    <MudText Typo="Typo.body2" Class="mb-4">
+        Visualize métricas de visitantes, pageviews, sessões e mais. 
+        <MudLink Href="/help" Color="Color.Primary">Ver como interpretar os dados</MudLink>
+    </MudText>
+
+    @if (sites == null || !sites.Any())
+    {
+        <MudAlert Severity="Severity.Info">
+            Nenhum site cadastrado. <MudLink Href="/sites">Cadastre um site</MudLink> para começar a rastrear.
+        </MudAlert>
+    }
+    else
+    {
+        <MudPaper Class="pa-4 mb-4">
+            <MudGrid>
+                <MudItem xs="12" md="4">
+                    <MudSelect T="string" Label="Site" @bind-Value="selectedSiteId" Variant="Variant.Outlined">
+                        @foreach (var site in sites)
+                        {
+                            <MudSelectItem Value="@site.SiteId">@site.Name (@site.Domain)</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="3">
+                    <MudDatePicker Label="Data Inicial" @bind-Date="startDate" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="3">
+                    <MudDatePicker Label="Data Final" @bind-Date="endDate" Variant="Variant.Outlined" />
+                </MudItem>
+                <MudItem xs="12" md="2">
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="LoadDashboard" FullWidth="true" Class="mt-2">
+                        Atualizar
+                    </MudButton>
+                </MudItem>
+            </MudGrid>
+        </MudPaper>
+
+        @if (loading)
+        {
+            <MudProgressLinear Indeterminate="true" Color="Color.Primary" />
+        }
+        else if (dashboardData != null)
+        {
+            <!-- Stats Cards -->
+            <MudGrid Class="mb-4">
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Primary">@dashboardData.TotalPageviews</MudText>
+                            <MudText Typo="Typo.body2">Total de Pageviews</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Success">@dashboardData.UniqueVisitors</MudText>
+                            <MudText Typo="Typo.body2">Visitantes Únicos</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Info">@dashboardData.TotalSessions</MudText>
+                            <MudText Typo="Typo.body2">Sessões</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+                <MudItem xs="12" sm="6" md="3">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudText Typo="Typo.h6" Color="Color.Warning">@($"{dashboardData.BounceRate:F1}%")</MudText>
+                            <MudText Typo="Typo.body2">Taxa de Rejeição</MudText>
+                        </MudCardContent>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+
+            <!-- Top Pages -->
+            <MudPaper Class="pa-4 mb-4">
+                <MudText Typo="Typo.h6" Class="mb-3">Páginas Mais Visitadas</MudText>
+                <MudTable Items="@dashboardData.TopPages" Dense="true" Hover="true">
+                    <HeaderContent>
+                        <MudTh>Página</MudTh>
+                        <MudTh>Título</MudTh>
+                        <MudTh>Visualizações</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Página">@context.Path</MudTd>
+                        <MudTd DataLabel="Título">@context.Title</MudTd>
+                        <MudTd DataLabel="Visualizações">
+                            <MudChip T="string" Color="Color.Primary" Size="Size.Small">@context.Views</MudChip>
+                        </MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudPaper>
+
+            <!-- Realtime -->
+            <MudPaper Class="pa-4">
+                <MudText Typo="Typo.h6" Class="mb-3">
+                    <MudIcon Icon="@Icons.Material.Filled.FiberManualRecord" Color="Color.Success" Size="Size.Small" />
+                    Tempo Real (últimos 5 min)
+                </MudText>
+                <MudText Typo="Typo.body1" Class="mb-3">
+                    <strong>@realtimeData?.ActiveVisitors</strong> visitantes ativos
+                </MudText>
+                @if (realtimeData?.RecentPages != null && realtimeData.RecentPages.Any())
+                {
+                    <MudList T="string" Dense="true">
+                        @foreach (var page in realtimeData.RecentPages)
+                        {
+                            <MudListItem T="string">
+                                <MudText Typo="Typo.body2">@($"{page.Path} - {page.Timestamp.ToLocalTime():HH:mm:ss}")</MudText>
+                            </MudListItem>
+                        }
+                    </MudList>
+                }
+            </MudPaper>
+        }
+    }
+</MudContainer>
+
+@code {
+    private List<Site>? sites;
+    private string? selectedSiteId;
+    private DateTime? startDate = DateTime.Now.AddDays(-30);
+    private DateTime? endDate = DateTime.Now;
+    private bool loading = false;
+    private DashboardData? dashboardData;
+    private RealtimeData? realtimeData;
+    private System.Threading.Timer? realtimeTimer;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadSites();
+        if (sites?.Any() == true)
+        {
+            selectedSiteId = sites.First().SiteId;
+            await LoadDashboard();
+            StartRealtimeUpdates();
+        }
+    }
+
+    private async Task LoadSites()
+    {
+        try
+        {
+            var response = await Http.GetFromJsonAsync<ApiResponse<List<Site>>>("http://localhost:5056/api/sites");
+            if (response?.Success == true)
+            {
+                sites = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar sites: {ex.Message}", Severity.Error);
+        }
+    }
+
+    private async Task LoadDashboard()
+    {
+        if (string.IsNullOrEmpty(selectedSiteId)) return;
+
+        loading = true;
+        try
+        {
+            var url = $"http://localhost:5056/api/analytics/dashboard/{selectedSiteId}?startDate={startDate:yyyy-MM-dd}&endDate={endDate:yyyy-MM-dd}";
+            var response = await Http.GetFromJsonAsync<DashboardResponse>(url);
+            
+            if (response?.Success == true)
+            {
+                dashboardData = response.Data;
+            }
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Erro ao carregar dashboard: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            loading = false;
+        }
+    }
+
+    private void StartRealtimeUpdates()
+    {
+        realtimeTimer = new System.Threading.Timer(async _ =>
+        {
+            await LoadRealtime();
+            await InvokeAsync(StateHasChanged);
+        }, null, TimeSpan.Zero, TimeSpan.FromSeconds(10));
+    }
+
+    private async Task LoadRealtime()
+    {
+        if (string.IsNullOrEmpty(selectedSiteId)) return;
+
+        try
+        {
+            var response = await Http.GetFromJsonAsync<RealtimeResponse>($"http://localhost:5056/api/analytics/realtime/{selectedSiteId}");
+            if (response?.Success == true)
+            {
+                realtimeData = response.Data;
+            }
+        }
+        catch { /* Ignore errors in background updates */ }
+    }
+
+    public void Dispose()
+    {
+        realtimeTimer?.Dispose();
+    }
+
+    // Response classes
+    class ApiResponse<T>
+    {
+        public bool Success { get; set; }
+        public T? Data { get; set; }
+    }
+
+    class DashboardResponse
+    {
+        public bool Success { get; set; }
+        public DashboardData? Data { get; set; }
+    }
+
+    class DashboardData
+    {
+        public long TotalPageviews { get; set; }
+        public long UniqueVisitors { get; set; }
+        public long TotalSessions { get; set; }
+        public double AvgSessionDuration { get; set; }
+        public double BounceRate { get; set; }
+        public List<TopPage> TopPages { get; set; } = new();
+    }
+
+    class TopPage
+    {
+        public string Path { get; set; } = string.Empty;
+        public string? Title { get; set; }
+        public int Views { get; set; }
+    }
+
+    class RealtimeResponse
+    {
+        public bool Success { get; set; }
+        public RealtimeData? Data { get; set; }
+    }
+
+    class RealtimeData
+    {
+        public long ActiveVisitors { get; set; }
+        public List<RecentPage> RecentPages { get; set; } = new();
+    }
+
+    class RecentPage
+    {
+        public string Path { get; set; } = string.Empty;
+        public string? Title { get; set; }
+        public DateTime Timestamp { get; set; }
+    }
+}

@@ -1,0 +1,188 @@
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.exe
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\EmbeddedAttribute.cs
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\ValidatableTypeAttribute.cs
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.csproj.AssemblyReference.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\rpswa.dswa.cache.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.AssemblyInfoInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.AssemblyInfo.cs
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.csproj.CoreCompileInputs.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.MvcApplicationPartsAssemblyInfo.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Contracts.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Contracts.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\rjimswa.dswa.cache.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\bundle\Manager.Web.styles.css
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\projectbundle\Manager.Web.bundle.scp.css
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\3okurqm2ou-{0}-unu6x2vvzr-unu6x2vvzr.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ecspne7iko-{0}-bqjiyaj88i-bqjiyaj88i.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\9tst2x809q-{0}-c2jlpeoesf-c2jlpeoesf.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6i0n6pbma9-{0}-erw9l3u2r3-erw9l3u2r3.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\jo6cadpk9t-{0}-aexeepp0ev-aexeepp0ev.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\xhhho3ufro-{0}-d7shbmvgxk-d7shbmvgxk.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\x5ig9wu260-{0}-ausgxo2sd3-ausgxo2sd3.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\bzn0zpqahd-{0}-k8d9w2qqmf-k8d9w2qqmf.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6w7urddmni-{0}-cosvhxvwiu-cosvhxvwiu.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\10awdlmpju-{0}-ub07r2b239-ub07r2b239.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\b87t0yjboc-{0}-fvhpjtyr6v-fvhpjtyr6v.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\trrhrb7mle-{0}-b7pk76d08c-b7pk76d08c.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ap3arcdra4-{0}-fsbi9cje9m-fsbi9cje9m.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\surnb3bvto-{0}-rzd6atqjts-rzd6atqjts.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6eexcg24e0-{0}-ee0r1s7dh0-ee0r1s7dh0.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\0aautsufzx-{0}-dxx9fxp4il-dxx9fxp4il.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\vc2v1djaru-{0}-jd9uben2k1-jd9uben2k1.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\mq7nzxolg2-{0}-khv3u5hwcm-khv3u5hwcm.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\1fsdqz8vnl-{0}-r4e9w2rdcm-r4e9w2rdcm.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\02gaa60s1o-{0}-lcd1t2u6c8-lcd1t2u6c8.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\8y7ttbj1kj-{0}-c2oey78nd0-c2oey78nd0.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\k76mh8qtze-{0}-tdbxkamptv-tdbxkamptv.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\awxdd6oowt-{0}-j5mq2jizvt-j5mq2jizvt.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\gbb76fqh9p-{0}-06098lyss8-06098lyss8.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\eajp1xmnhf-{0}-nvvlpmu67g-nvvlpmu67g.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ov16fnils7-{0}-s35ty4nyc5-s35ty4nyc5.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\7shxsztz5w-{0}-pj5nd1wqec-pj5nd1wqec.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\o4axnh97vy-{0}-46ein0sx1k-46ein0sx1k.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\a2ytzaad9y-{0}-v0zj4ognzu-v0zj4ognzu.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\w1nrst391r-{0}-37tfw0ft22-37tfw0ft22.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\j3fvkeufj3-{0}-hrwsygsryq-hrwsygsryq.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\5jz1wnas2v-{0}-pk9g2wxc8p-pk9g2wxc8p.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\o8s5al9rbx-{0}-ft3s53vfgj-ft3s53vfgj.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\jdinl6g7ba-{0}-6cfz1n2cew-6cfz1n2cew.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\cffpt4kisz-{0}-6pdc2jztkx-6pdc2jztkx.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\zj2218ifd1-{0}-493y06b0oq-493y06b0oq.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\vficltyoxi-{0}-iovd86k7lj-iovd86k7lj.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\uw6toufbjk-{0}-vr1egmr9el-vr1egmr9el.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\7t8n0o5xti-{0}-kbrnm935zg-kbrnm935zg.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\q8mlvo6e4l-{0}-jj8uyg4cgr-jj8uyg4cgr.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\wx6eaq6d2v-{0}-y7v9cxd14o-y7v9cxd14o.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\g33fhktl19-{0}-notf2xhcfb-notf2xhcfb.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\y3ajal8awv-{0}-h1s4sie4z3-h1s4sie4z3.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\8n734yjohw-{0}-63fj8s7r0e-63fj8s7r0e.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\f0y56f2rl9-{0}-0j3bgjxly4-0j3bgjxly4.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ltn87u66ch-{0}-abdmv1u4y3-abdmv1u4y3.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\j9622bpocs-{0}-2i0r6wwb69-2i0r6wwb69.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\kvyosdrxxo-{0}-iz83ucvm53-iz83ucvm53.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\hyarprp1mg-{0}-f67j6dxbld-f67j6dxbld.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\compressed\roag4yg8rp-{0}-f67j6dxbld-f67j6dxbld.gz
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.development.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\swae.build.ex.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\refint\Manager.Web.dll
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\appsettings.Development.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\appsettings.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.staticwebassets.runtime.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.staticwebassets.endpoints.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.deps.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.runtimeconfig.json
+D:\Projetos\## Avx\## Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.pdb
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager..50EFB8ED.Up2Date
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.genruntimeconfig.cache
+D:\Projetos\## Avx\## Admin\src\Manager.Web\obj\Debug\net10.0\ref\Manager.Web.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\appsettings.Development.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\appsettings.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.staticwebassets.endpoints.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.staticwebassets.runtime.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.exe
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.deps.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.runtimeconfig.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Web.pdb
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Contracts.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Contracts.pdb
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\EmbeddedAttribute.cs
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\ValidatableTypeAttribute.cs
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.csproj.AssemblyReference.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\rpswa.dswa.cache.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.AssemblyInfoInputs.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.AssemblyInfo.cs
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.MvcApplicationPartsAssemblyInfo.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\rjimswa.dswa.cache.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\MainLayout.razor.rz.scp.css
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\NavMenu.razor.rz.scp.css
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\Components\Layout\ReconnectModal.razor.rz.scp.css
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\bundle\Manager.Web.styles.css
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\scopedcss\projectbundle\Manager.Web.bundle.scp.css
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\3okurqm2ou-{0}-unu6x2vvzr-unu6x2vvzr.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ecspne7iko-{0}-bqjiyaj88i-bqjiyaj88i.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\9tst2x809q-{0}-c2jlpeoesf-c2jlpeoesf.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6i0n6pbma9-{0}-erw9l3u2r3-erw9l3u2r3.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\jo6cadpk9t-{0}-aexeepp0ev-aexeepp0ev.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\xhhho3ufro-{0}-d7shbmvgxk-d7shbmvgxk.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\x5ig9wu260-{0}-ausgxo2sd3-ausgxo2sd3.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\bzn0zpqahd-{0}-k8d9w2qqmf-k8d9w2qqmf.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6w7urddmni-{0}-cosvhxvwiu-cosvhxvwiu.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\10awdlmpju-{0}-ub07r2b239-ub07r2b239.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\b87t0yjboc-{0}-fvhpjtyr6v-fvhpjtyr6v.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\trrhrb7mle-{0}-b7pk76d08c-b7pk76d08c.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ap3arcdra4-{0}-fsbi9cje9m-fsbi9cje9m.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\surnb3bvto-{0}-rzd6atqjts-rzd6atqjts.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\6eexcg24e0-{0}-ee0r1s7dh0-ee0r1s7dh0.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\0aautsufzx-{0}-dxx9fxp4il-dxx9fxp4il.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\vc2v1djaru-{0}-jd9uben2k1-jd9uben2k1.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\mq7nzxolg2-{0}-khv3u5hwcm-khv3u5hwcm.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\1fsdqz8vnl-{0}-r4e9w2rdcm-r4e9w2rdcm.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\02gaa60s1o-{0}-lcd1t2u6c8-lcd1t2u6c8.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\8y7ttbj1kj-{0}-c2oey78nd0-c2oey78nd0.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\k76mh8qtze-{0}-tdbxkamptv-tdbxkamptv.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\awxdd6oowt-{0}-j5mq2jizvt-j5mq2jizvt.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\gbb76fqh9p-{0}-06098lyss8-06098lyss8.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\eajp1xmnhf-{0}-nvvlpmu67g-nvvlpmu67g.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ov16fnils7-{0}-s35ty4nyc5-s35ty4nyc5.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\7shxsztz5w-{0}-pj5nd1wqec-pj5nd1wqec.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\o4axnh97vy-{0}-46ein0sx1k-46ein0sx1k.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\a2ytzaad9y-{0}-v0zj4ognzu-v0zj4ognzu.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\w1nrst391r-{0}-37tfw0ft22-37tfw0ft22.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\j3fvkeufj3-{0}-hrwsygsryq-hrwsygsryq.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\5jz1wnas2v-{0}-pk9g2wxc8p-pk9g2wxc8p.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\o8s5al9rbx-{0}-ft3s53vfgj-ft3s53vfgj.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\jdinl6g7ba-{0}-6cfz1n2cew-6cfz1n2cew.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\cffpt4kisz-{0}-6pdc2jztkx-6pdc2jztkx.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\zj2218ifd1-{0}-493y06b0oq-493y06b0oq.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\vficltyoxi-{0}-iovd86k7lj-iovd86k7lj.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\uw6toufbjk-{0}-vr1egmr9el-vr1egmr9el.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\7t8n0o5xti-{0}-kbrnm935zg-kbrnm935zg.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\q8mlvo6e4l-{0}-jj8uyg4cgr-jj8uyg4cgr.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\wx6eaq6d2v-{0}-y7v9cxd14o-y7v9cxd14o.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\g33fhktl19-{0}-notf2xhcfb-notf2xhcfb.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\y3ajal8awv-{0}-h1s4sie4z3-h1s4sie4z3.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\8n734yjohw-{0}-63fj8s7r0e-63fj8s7r0e.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\f0y56f2rl9-{0}-0j3bgjxly4-0j3bgjxly4.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\ltn87u66ch-{0}-abdmv1u4y3-abdmv1u4y3.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\j9622bpocs-{0}-2i0r6wwb69-2i0r6wwb69.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\kvyosdrxxo-{0}-iz83ucvm53-iz83ucvm53.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\hyarprp1mg-{0}-f67j6dxbld-f67j6dxbld.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\roag4yg8rp-{0}-f67j6dxbld-f67j6dxbld.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.json.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.development.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\staticwebassets.build.endpoints.json
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\swae.build.ex.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager..50EFB8ED.Up2Date
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.dll
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\refint\Manager.Web.dll
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.pdb
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.genruntimeconfig.cache
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\ref\Manager.Web.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\NetTopologySuite.dll
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\Manager.Web.sourcelink.json
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\MongoDB.Bson.dll
+D:\Projetos\Admin\src\Manager.Web\bin\Debug\net10.0\MudBlazor.dll
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\tzxjg6is5z-{0}-7c7lhmh1j6-7c7lhmh1j6.gz
+D:\Projetos\Admin\src\Manager.Web\obj\Debug\net10.0\compressed\0wz98yz2xy-{0}-f96y5mhlyw-f96y5mhlyw.gz

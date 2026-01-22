@@ -1,0 +1,146 @@
+@page "/projects/{Id:guid}"
+@using Manager.Contracts.DTOs
+@inject HttpClient Http
+
+<PageTitle>@(project?.Name ?? "Project") - Manager</PageTitle>
+
+@if (project == null)
+{
+    <div class="text-center">
+        <div class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+}
+else
+{
+    <div class="container-fluid">
+        <div class="row mb-4">
+            <div class="col">
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/projects">Projects</a></li>
+                        <li class="breadcrumb-item active">@project.Name</li>
+                    </ol>
+                </nav>
+                <h1>@project.Name</h1>
+                <StatusBadge Status="@project.Status" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5 class="mb-0">Project Details</h5>
+                    </div>
+                    <div class="card-body">
+                        <dl class="row">
+                            <dt class="col-sm-3">Type</dt>
+                            <dd class="col-sm-9">@project.Type</dd>
+
+                            <dt class="col-sm-3">Status</dt>
+                            <dd class="col-sm-9"><StatusBadge Status="@project.Status" /></dd>
+
+                            <dt class="col-sm-3">Description</dt>
+                            <dd class="col-sm-9">@(project.Description ?? "-")</dd>
+
+                            <dt class="col-sm-3">Domain</dt>
+                            <dd class="col-sm-9">
+                                @if (!string.IsNullOrEmpty(project.Domain))
+                                {
+                                    <a href="https://@project.Domain" target="_blank">@project.Domain</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not configured</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-3">Repository</dt>
+                            <dd class="col-sm-9">
+                                @if (!string.IsNullOrEmpty(project.RepositoryUrl))
+                                {
+                                    <a href="@project.RepositoryUrl" target="_blank">@project.RepositoryUrl</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not created</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-3">Deployment URL</dt>
+                            <dd class="col-sm-9">
+                                @if (!string.IsNullOrEmpty(project.DeploymentUrl))
+                                {
+                                    <a href="@project.DeploymentUrl" target="_blank">@project.DeploymentUrl</a>
+                                }
+                                else
+                                {
+                                    <span class="text-muted">Not deployed</span>
+                                }
+                            </dd>
+
+                            <dt class="col-sm-3">Created</dt>
+                            <dd class="col-sm-9">@project.CreatedAt.ToString("dd/MM/yyyy HH:mm")</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                @if (project.Spec != null)
+                {
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h5 class="mb-0">Project Specification</h5>
+                        </div>
+                        <div class="card-body">
+                            <dl class="row">
+                                <dt class="col-sm-3">Brand</dt>
+                                <dd class="col-sm-9">@project.Spec.Brand</dd>
+
+                                <dt class="col-sm-3">Vertical</dt>
+                                <dd class="col-sm-9">@(project.Spec.Vertical ?? "-")</dd>
+
+                                <dt class="col-sm-3">Goal</dt>
+                                <dd class="col-sm-9">@(project.Spec.Goal ?? "-")</dd>
+                            </dl>
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Playbook Runs</h5>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Recent executions will appear here</p>
+                        <a href="/playbook-runs?projectId=@Id" class="btn btn-sm btn-outline-primary">
+                            View All Runs
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private ProjectDetailResponse? project;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            project = await Http.GetFromJsonAsync<ProjectDetailResponse>($"api/projects/{Id}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error loading project: {ex.Message}");
+        }
+    }
+}

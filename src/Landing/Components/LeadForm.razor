@@ -1,0 +1,142 @@
+@using System.ComponentModel.DataAnnotations
+@using Landing.Services
+@inject ManagerApiClient ApiClient
+
+<div class="lead-form-container">
+    @if (_submitted)
+    {
+        <div class="success-message">
+            <div class="success-icon">✓</div>
+            <h3>Obrigado pelo seu interesse!</h3>
+            <p>Recebemos suas informações e entraremos em contato em breve.</p>
+        </div>
+    }
+    else
+    {
+        <EditForm Model="_model" OnValidSubmit="HandleSubmit" class="lead-form">
+            <DataAnnotationsValidator />
+            
+            <div class="form-group">
+                <label for="name">Nome Completo *</label>
+                <InputText id="name" @bind-Value="_model.Name" 
+                           placeholder="Seu nome" 
+                           disabled="@_isSubmitting" />
+                <ValidationMessage For="@(() => _model.Name)" />
+            </div>
+
+            <div class="form-group">
+                <label for="email">Email *</label>
+                <InputText id="email" type="email" @bind-Value="_model.Email" 
+                           placeholder="seu@email.com" 
+                           disabled="@_isSubmitting" />
+                <ValidationMessage For="@(() => _model.Email)" />
+            </div>
+
+            <div class="form-group">
+                <label for="phone">Telefone *</label>
+                <InputText id="phone" @bind-Value="_model.Phone" 
+                           placeholder="(11) 98765-4321" 
+                           disabled="@_isSubmitting" />
+                <ValidationMessage For="@(() => _model.Phone)" />
+            </div>
+
+            <div class="form-group">
+                <label for="message">Mensagem (Opcional)</label>
+                <InputTextArea id="message" @bind-Value="_model.Message" 
+                               placeholder="Como podemos ajudar você?"
+                               rows="4"
+                               disabled="@_isSubmitting" />
+                <ValidationMessage For="@(() => _model.Message)" />
+            </div>
+
+            @if (!string.IsNullOrEmpty(_errorMessage))
+            {
+                <div class="error-message">
+                    <span class="error-icon">⚠</span>
+                    @_errorMessage
+                </div>
+            }
+
+            <button type="submit" class="btn-submit" disabled="@_isSubmitting">
+                @if (_isSubmitting)
+                {
+                    <span class="spinner"></span>
+                    <span>Enviando...</span>
+                }
+                else
+                {
+                    <span>Enviar Mensagem</span>
+                }
+            </button>
+        </EditForm>
+    }
+</div>
+
+@code {
+    [Parameter]
+    public string Source { get; set; } = "Landing";
+
+    private FormModel _model = new();
+    private bool _isSubmitting;
+    private bool _submitted;
+    private string? _errorMessage;
+
+    private async Task HandleSubmit()
+    {
+        _isSubmitting = true;
+        _errorMessage = null;
+        StateHasChanged();
+
+        try
+        {
+            var dto = new CreateLeadDto(
+                Name: _model.Name,
+                Email: _model.Email,
+                Phone: _model.Phone,
+                Message: _model.Message,
+                Source: Source
+            );
+
+            var response = await ApiClient.CreateLeadAsync(dto);
+
+            if (response.Success)
+            {
+                _submitted = true;
+                _model = new(); // Reset form
+            }
+            else
+            {
+                _errorMessage = response.ErrorMessage ?? "Erro ao enviar. Tente novamente.";
+            }
+        }
+        catch (Exception)
+        {
+            _errorMessage = "Erro inesperado. Por favor, tente novamente mais tarde.";
+        }
+        finally
+        {
+            _isSubmitting = false;
+            StateHasChanged();
+        }
+    }
+
+    public sealed class FormModel
+    {
+        [Required(ErrorMessage = "Nome é obrigatório")]
+        [MinLength(2, ErrorMessage = "Nome deve ter pelo menos 2 caracteres")]
+        [MaxLength(100, ErrorMessage = "Nome muito longo")]
+        public string Name { get; set; } = "";
+
+        [Required(ErrorMessage = "Email é obrigatório")]
+        [EmailAddress(ErrorMessage = "Email inválido")]
+        public string Email { get; set; } = "";
+
+        [Required(ErrorMessage = "Telefone é obrigatório")]
+        [MinLength(8, ErrorMessage = "Telefone deve ter pelo menos 8 dígitos")]
+        [Phone(ErrorMessage = "Formato de telefone inválido")]
+        public string Phone { get; set; } = "";
+
+        [MaxLength(500, ErrorMessage = "Mensagem muito longa")]
+        public string? Message { get; set; }
+    }
+}
