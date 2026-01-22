@@ -1,5 +1,6 @@
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\appsettings.Development.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\appsettings.json
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\appsettings.Production.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\appsettings.WhatsApp.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.staticwebassets.runtime.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.staticwebassets.endpoints.json
@@ -8,8 +9,15 @@ D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.deps.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.runtimeconfig.json
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.dll
 D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Landing.pdb
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\MongoDB.Bson.dll
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\NetTopologySuite.dll
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Manager.Contracts.dll
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Manager.Core.dll
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Manager.Contracts.pdb
+D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\Manager.Core.pdb
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\EmbeddedAttribute.cs
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\ValidatableTypeAttribute.cs
+D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.csproj.AssemblyReference.cache
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rpswa.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.AssemblyInfoInputs.cache
@@ -22,6 +30,7 @@ D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.sourcelink.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjimswa.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjsmrazor.dswa.cache.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\rjsmcshtml.dswa.cache.json
+D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\zr03ffnbwp-{0}-pxmli389hy-pxmli389hy.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\oxax39t1h4-{0}-5scqgerzcn-5scqgerzcn.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\1kgjxh436j-{0}-0kbplgm5n6-0kbplgm5n6.gz
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\lukj1441tn-{0}-2i0r6wwb69-2i0r6wwb69.gz
@@ -31,10 +40,9 @@ D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\staticwebassets.build.json.cache
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\staticwebassets.development.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\staticwebassets.build.endpoints.json
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\swae.build.ex.cache
+D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.csproj.Up2Date
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.dll
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\refint\Landing.dll
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.pdb
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\Landing.genruntimeconfig.cache
 D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\ref\Landing.dll
-D:\Projetos\Admin\src\Landing\obj\Debug\net10.0\compressed\zr03ffnbwp-{0}-su3yan0xjn-su3yan0xjn.gz
-D:\Projetos\Admin\src\Landing\bin\Debug\net10.0\appsettings.Production.json

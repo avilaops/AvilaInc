@@ -7,4 +7,8 @@
     <ScopedCssEnabled>false</ScopedCssEnabled>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Manager.Contracts\Manager.Contracts.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -8,45 +8,45 @@ public sealed record CreateWebsiteRequestDto
     [Required(ErrorMessage = "Nome do negócio é obrigatório")]
     [MinLength(2, ErrorMessage = "Nome deve ter pelo menos 2 caracteres")]
     [MaxLength(100, ErrorMessage = "Nome deve ter no máximo 100 caracteres")]
-    public string BusinessName { get; init; } = string.Empty;
+    public string BusinessName { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Nicho é obrigatório")]
     [MinLength(3, ErrorMessage = "Nicho deve ter pelo menos 3 caracteres")]
     [MaxLength(50, ErrorMessage = "Nicho deve ter no máximo 50 caracteres")]
-    public string Niche { get; init; } = string.Empty;
+    public string Niche { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Cidade é obrigatória")]
     [MinLength(3, ErrorMessage = "Cidade deve ter pelo menos 3 caracteres")]
     [MaxLength(100, ErrorMessage = "Cidade deve ter no máximo 100 caracteres")]
-    public string City { get; init; } = string.Empty;
+    public string City { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Pelo menos um serviço é obrigatório")]
     [MinLength(1, ErrorMessage = "Informe pelo menos um serviço")]
     [MaxLength(10, ErrorMessage = "Máximo de 10 serviços")]
-    public List<string> Services { get; init; } = new();
+    public List<string> Services { get; set; } = new();
 
     [Required(ErrorMessage = "Diferencial é obrigatório")]
     [MinLength(10, ErrorMessage = "Diferencial deve ter pelo menos 10 caracteres")]
     [MaxLength(500, ErrorMessage = "Diferencial deve ter no máximo 500 caracteres")]
-    public string Differentials { get; init; } = string.Empty;
+    public string Differentials { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "WhatsApp é obrigatório")]
     [Phone(ErrorMessage = "WhatsApp inválido")]
     [RegularExpression(@"^\d{10,15}$", ErrorMessage = "WhatsApp deve conter apenas números (10-15 dígitos)")]
-    public string WhatsApp { get; init; } = string.Empty;
+    public string WhatsApp { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "E-mail é obrigatório")]
     [EmailAddress(ErrorMessage = "E-mail inválido")]
-    public string Email { get; init; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 
     [Required(ErrorMessage = "Template é obrigatório")]
-    public WebsiteTemplateType TemplateType { get; init; }
+    public WebsiteTemplateType TemplateType { get; set; }
 
     [MaxLength(50)]
-    public string? ColorPreference { get; init; }
+    public string? ColorPreference { get; set; }
 
     [Url(ErrorMessage = "URL da logo inválida")]
-    public string? LogoUrl { get; init; }
+    public string? LogoUrl { get; set; }
 }
 
 public sealed record WebsiteRequestResponseDto
@@ -73,14 +73,14 @@ public sealed record WebsiteProjectDto
 
 public sealed record WebsiteContentDto
 {
-    public string BusinessName { get; init; } = string.Empty;
-    public string HeroHeadline { get; init; } = string.Empty;
-    public string HeroSubheadline { get; init; } = string.Empty;
-    public List<ServiceItemDto> Services { get; init; } = new();
-    public List<string> Benefits { get; init; } = new();
-    public List<FaqItemDto> FaqItems { get; init; } = new();
-    public string WhatsApp { get; init; } = string.Empty;
-    public string Email { get; init; } = string.Empty;
+    public string BusinessName { get; set; } = string.Empty;
+    public string HeroHeadline { get; set; } = string.Empty;
+    public string HeroSubheadline { get; set; } = string.Empty;
+    public List<ServiceItemDto> Services { get; set; } = new();
+    public List<string> Benefits { get; set; } = new();
+    public List<FaqItemDto> FaqItems { get; set; } = new();
+    public string WhatsApp { get; set; } = string.Empty;
+    public string Email { get; set; } = string.Empty;
 }
 
 public sealed record ServiceItemDto(string Icon, string Title, string Description);

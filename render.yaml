@@ -1,16 +1,32 @@
 services:
+  # Landing Page .NET (Frontend Principal)
   - type: web
-    name: avila-manager
-    runtime: node
-    env: node
+    name: avila-landing
+    runtime: dotnet
+    env: dotnet
     region: oregon
     plan: free
-    buildCommand: npm install
-    startCommand: node server.js
+    buildCommand: dotnet publish -c Release -o ./publish
+    startCommand: dotnet ./publish/Landing.dll
+    rootDir: src/Landing
     envVars:
-      - key: NODE_VERSION
-        value: 22.22.0
-      - key: NODE_ENV
-        value: production
-      - key: RENDER
-        value: true
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:10000
+
+  # Backend API .NET
+  - type: web
+    name: avila-api
+    runtime: dotnet
+    env: dotnet
+    region: oregon
+    plan: free
+    buildCommand: dotnet publish -c Release -o ./publish
+    startCommand: dotnet ./publish/Manager.Api.dll
+    rootDir: src/Manager.Api
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://0.0.0.0:10000

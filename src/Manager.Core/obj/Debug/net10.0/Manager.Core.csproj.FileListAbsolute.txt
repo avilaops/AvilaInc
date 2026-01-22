@@ -12,13 +12,13 @@ D:\Projetos\## Avx\## Admin\src\Manager.Core\obj\Debug\net10.0\ref\Manager.Core.
 D:\Projetos\Admin\src\Manager.Core\bin\Debug\net10.0\Manager.Core.deps.json
 D:\Projetos\Admin\src\Manager.Core\bin\Debug\net10.0\Manager.Core.dll
 D:\Projetos\Admin\src\Manager.Core\bin\Debug\net10.0\Manager.Core.pdb
+D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.csproj.AssemblyReference.cache
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.GeneratedMSBuildEditorConfig.editorconfig
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.AssemblyInfoInputs.cache
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.AssemblyInfo.cs
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.csproj.CoreCompileInputs.cache
+D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.sourcelink.json
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.dll
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\refint\Manager.Core.dll
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.pdb
 D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\ref\Manager.Core.dll
-D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.csproj.AssemblyReference.cache
-D:\Projetos\Admin\src\Manager.Core\obj\Debug\net10.0\Manager.Core.sourcelink.json

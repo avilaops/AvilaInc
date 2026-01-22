@@ -27,7 +27,8 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-app.UseHttpsRedirection();
+// Remover HTTPS redirect para produção no Render
+// app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
