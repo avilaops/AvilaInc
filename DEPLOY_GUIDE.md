@@ -95,13 +95,23 @@ git push origin main
 
 No GitHub → Settings → Secrets and variables → Actions:
 
-#### Azure Authentication
+#### Azure Authentication (OIDC - opcional)
 - `AZUREAPPSERVICE_CLIENTID_*`
 - `AZUREAPPSERVICE_TENANTID_*`
 - `AZUREAPPSERVICE_SUBSCRIPTIONID_*`
 
-#### Publish Profiles
-- `PUBLISH_PROFILE_API` (Manager API)
+#### Publish Profiles (recomendado)
+- `PUBLISH_PROFILE_API` (Manager API - staging e produção)
+- `PUBLISH_PROFILE_LANDING` (Landing Page - staging e produção)
+
+### 📥 Como obter Publish Profiles
+
+1. **Acesse o Azure Portal**
+2. **Navegue para seu App Service** (ex: landing-web)
+3. **Clique em "Get publish profile"**
+4. **Salve o conteúdo XML no GitHub Secret**
+
+> 💡 **Dica**: Use o mesmo publish profile para staging e produção, pois o slot-name é especificado no workflow.
 
 ---
 

@@ -56,7 +56,6 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     permissions:
-      id-token: write
       contents: read
 
     steps:
@@ -65,20 +64,13 @@ jobs:
         with:
           name: .net-app
 
-      - name: Login to Azure
-        uses: azure/login@v2
-        with:
-          client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_E9B8D096759844348F152750590C7ABA }}
-          tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_E95F5BC51B324E24AC92827E127A070F }}
-          subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_AA4B633697964A6E89479D0F1EBA5BCE }}
-
       - name: Deploy to Azure Web App (Staging)
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v3
         with:
           app-name: 'landing-web'
           slot-name: 'staging'
-          package: .
+          publish-profile: ${{ secrets.PUBLISH_PROFILE_LANDING }}
 
       - name: Health Check
         run: |
