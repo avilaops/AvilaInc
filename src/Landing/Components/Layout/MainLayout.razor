@@ -8,7 +8,6 @@
 </main>
 
 <Landing.Components.Layout.FooterSection />
-<Landing.Components.Shared.BackToTop />
 
 @code {
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -16,6 +15,8 @@
         if (firstRender)
         {
             await ScrollService.InitScrollRevealAsync();
+            await ScrollService.InitBackToTopAsync();
+            await ScrollService.InitPhoneMaskAsync();
         }
     }
 }

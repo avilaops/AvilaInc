@@ -153,12 +153,36 @@
         public string Email { get; set; } = "";
 
         [Required(ErrorMessage = "Telefone é obrigatório")]
-        [MinLength(8, ErrorMessage = "Telefone deve ter pelo menos 8 dígitos")]
-        [Phone(ErrorMessage = "Formato de telefone inválido")]
+        [CustomValidation(typeof(FormModel), nameof(ValidateBrazilianPhone))]
         public string Phone { get; set; } = "";
 
         [MaxLength(500, ErrorMessage = "Mensagem muito longa")]
         public string? Message { get; set; }
+
+        public static ValidationResult? ValidateBrazilianPhone(string phone, ValidationContext context)
+        {
+            if (string.IsNullOrWhiteSpace(phone))
+                return ValidationResult.Success;
+
+            // Remove todos os caracteres não numéricos
+            var cleanPhone = System.Text.RegularExpressions.Regex.Replace(phone, @"[^\d]", "");
+
+            // Deve ter entre 10 e 11 dígitos
+            if (cleanPhone.Length < 10 || cleanPhone.Length > 11)
+                return new ValidationResult("Telefone deve ter 10 ou 11 dígitos");
+
+            // Se tem 11 dígitos, deve começar com 9 (celular)
+            if (cleanPhone.Length == 11 && !cleanPhone.StartsWith("9"))
+                return new ValidationResult("Telefone celular deve começar com 9");
+
+            // Códigos de área válidos (primeiro dígito do DDD)
+            var validAreaCodes = new[] { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
+            var areaCode = cleanPhone.Substring(0, 1);
+            if (!validAreaCodes.Contains(areaCode))
+                return new ValidationResult("Código de área inválido");
+
+            return ValidationResult.Success;
+        }
     }
 
     private string? GetUrlParameter(string paramName)

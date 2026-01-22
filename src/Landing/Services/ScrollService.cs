@@ -26,6 +26,16 @@ public class ScrollService
         await _jsRuntime.InvokeVoidAsync("initScrollReveal");
     }
 
+    public async Task InitBackToTopAsync()
+    {
+        await _jsRuntime.InvokeVoidAsync("initBackToTop");
+    }
+
+    public async Task InitPhoneMaskAsync()
+    {
+        await _jsRuntime.InvokeVoidAsync("initPhoneMask");
+    }
+
     public async Task<int> GetScrollYAsync()
     {
         return await _jsRuntime.InvokeAsync<int>("getScrollY");
