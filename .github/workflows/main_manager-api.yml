@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
     paths:
       - "src/Manager.Api/**"
-      - ".github/workflows/main_manage-api.yml"
+      - ".github/workflows/main_manager-api.yml"
   workflow_dispatch:
 
 jobs:
@@ -33,6 +33,6 @@ jobs:
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v3
         with:
-          app-name: manage-api
+          app-name: manager-api
           publish-profile: ${{ secrets.PUBLISH_PROFILE_API }}
           package: publish
